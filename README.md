@@ -13,16 +13,21 @@ A static site to pull stories from the [stories-of-solidarity-api](https://githu
 
 ### Development
 
-We use [Grunt](http://gruntjs.com/) as our task runner. Get the CLI (command line interface).
+We use [Bower](http://bower.io/) as our front-end package manager.
+
+```bash
+$ npm install bower -g
+```
+
+We use [Grunt](http://gruntjs.com/) as our task runner. Get the CLI (command line interface) and install it globally.
 
 ```bash
 $ npm install grunt-cli -g
 ```
 
-We use [Bower](http://bower.io/) as our front-end package manager.
-
+Now compile and serve the site locally. This will watch for changes as you make them and reload them in the browser window.
 ```bash
-$ npm install bower -g
+$ grunt serve
 ```
 
 
