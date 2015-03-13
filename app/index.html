@@ -15,67 +15,62 @@
     </head>
     <body>
         <!--[if lt IE 10]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+            <p class="warning" id="browsehappy">You are using an <strong>outdated</strong> browser. Please consider <a href="http://browsehappy.com/">upgrading your browser</a> to improve your internet experience.</p>
         <![endif]-->
 
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapsed">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="navbar-brand"><a href="/">Stories of Solidarity</a></div>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navbar-collapsed">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/">View Map<span class="sr-only">(current)</span></a></li>
+                        <li><a href="/read/">Read Stories</a></li>
+                        <li><a href="/share/">Share Story</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
         <div class="container">
-            <div class="header">
-                <ul class="nav nav-pills pull-right">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-                <h3 class="text-muted">Solidarity</h3>
-            </div>
-
-            <div class="jumbotron">
-                <h1>'Allo, 'Allo!</h1>
-                <p class="lead">Always a pleasure scaffolding your apps.</p>
-                <p><a class="btn btn-lg btn-success" href="#">Splendid!</a></p>
-            </div>
-
-            <div class="row text-left">
-                <div class="col-md-offset-4">
-                    <h2>Now Try,</h2>
-                    <h4><b>yo backbone:router</b> &lt;router&gt;</h4>
-                    <h4><b>yo backbone:collection</b> &lt;collection&gt;</h4>
-                    <h4><b>yo backbone:model </b> &lt;model&gt;</h4>
-                    <h4><b>yo backbone:view </b> &lt;view&gt;</h4>
-                </div>
-            </div>
-
-            <div class="row marketing">
-                <div class="col-lg-6">
-                    <h4>HTML5 Boilerplate</h4>
-                    <p>HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.</p>
-
-                    <h4>Bootstrap</h4>
-                    <p>Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
-
-                    <h4>Modernizr</h4>
-                    <p>Modernizr is an open-source JavaScript library that helps you build the next generation of HTML5 and CSS3-powered websites.</p>
-
-                </div>
-                <div class="col-lg-6">
-                    <h4>Backbone.js</h4>
-                    <p>Backbone.js gives structure to web applications by providing models, collections, views and connects it all to your existing API over a RESTful JSON interface.</p>
-
-                    <h4>Lodash.js</h4>
-                    <p>A utility library delivering consistency, customization, performance, & extras. </p>
-
-
-                </div>
-            </div>
-
-            <div class="footer">
-                <p>♥ from the Yeoman team</p>
-            </div>
-
+            <div id="content"></div>
         </div>
 
+        <div class="modal fade" id="loadModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Work in Progress</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Stories of Solidarity is a work in progress. Please feel free to browse and leave us feedback at: </p>
+                        <p><a href="mailto:storiesofsolidarity@gmail.com">storiesofsolidarity@gmail.com</a></p>
+                        <p>Thank you! <br>
+                        Click anywhere to begin.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <footer class="footer">
+            <div class="container">
+                <p>(cc) Stories of Solidarity 2015 </p>
+            </div>
+        </footer>
+
+        <!-- Google Analytics -->
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
@@ -109,6 +104,18 @@
         <!-- build:js({.tmp,app}) scripts/main.js -->
         <script src="scripts/main.js"></script>
         <script src="scripts/templates.js"></script>
+        <script src="scripts/models/story.js"></script>
+        <script src="scripts/collections/stories.js"></script>
+        <script src="scripts/views/map.js"></script>
+        <script src="scripts/views/login.js"></script>
+        <script src="scripts/views/about.js"></script>
+        <script src="scripts/models/user.js"></script>
+        <script src="scripts/views/storyList.js"></script>
+        <script src="scripts/views/storyMap.js"></script>
+        <script src="scripts/views/userList.js"></script>
+        <script src="scripts/views/userFollow.js"></script>
+        <script src="scripts/routes/story.js"></script>
+        <script src="scripts/routes/pages.js"></script>
         <!-- endbuild -->
 </body>
 </html>

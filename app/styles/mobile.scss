@@ -1,0 +1,23 @@
+@import '_variables.scss';
+
+/* Responsive: screen-phone */
+@media screen and (max-width: $grid-float-breakpoint) {
+    .container {
+        max-width: $container-sm;
+    }
+
+    .header,
+    .footer {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .navbar.navbar-default { 
+        a.navbar-brand { border-right: 0; }
+        ul.nav.navbar-nav {
+            width: 100%;
+            li { width: 100%; }
+            
+        }
+    }
+}

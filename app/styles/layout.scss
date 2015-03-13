@@ -1,0 +1,101 @@
+@import '_variables.scss';
+
+html { 
+    position: relative;
+    min-height: 100%;
+}
+
+body { 
+    margin-bottom: $sticky-footer-height;
+}
+
+.warning#browsehappy {
+    margin: 0.2em 0;
+    background-color: #FF8800;
+    color: $gray-lighter;
+    padding: 0.2em 0;
+}
+
+.navbar.navbar-default {
+    border: 0;
+    font-family: $headings-font-family;
+
+    .navbar-collapse {
+        border: 0;
+    }
+
+
+
+    .navbar-brand {    
+        width: 200px;
+        height: 100px;
+        border-right: 1px solid $white;
+        background: #333;
+        padding-top: 10px;
+
+        a {
+            display: inline-block;
+            background-image: url('../images/logo.png');
+            background-size: 160px;
+            background-repeat: no-repeat;
+            text-indent: -999px;
+            width: 160px;
+            height: 86px;
+        }
+    }
+
+    ul.nav.navbar-nav {
+        width: calc(100% - 200px);
+
+        &> li {
+            width: 33%;
+            font-size: 50px;
+            
+            height: 100px;
+            text-align: center;
+
+            border-right: 1px solid $white;
+            &> a {
+                color: $black;
+                line-height: 50px;
+                padding-top: 35px;
+                padding-bottom: 25px;
+            }
+
+            &:nth-of-type(1) { background-color: $orange; }
+            &:nth-of-type(2) { background-color: $orange-2; }
+            &:nth-of-type(3) { background-color: $orange-3; }
+
+            &:hover {
+                background-color: $gray-medium;
+                a { color: $white; }
+                -webkit-transition: border 0.2s ease-in;
+                -webkit-transition: background-color 0.2s ease-in;
+            }
+        }
+    }
+}
+
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+}
+
+
+/* Custom page footer */
+.footer {
+    padding-top: 19px;
+    color: $gray-lighter;
+
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: $sticky-footer-height;
+}
+
+.container-narrow > hr {
+    margin: 30px 0;
+}
