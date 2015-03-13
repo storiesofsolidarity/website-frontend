@@ -27,14 +27,14 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <div class="navbar-brand"><a href="/">Stories of Solidarity</a></div>
+                    <div class="navbar-brand"><a href="#">Stories of Solidarity</a></div>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbar-collapsed">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="/">View Map<span class="sr-only">(current)</span></a></li>
-                        <li><a href="/read/">Read Stories</a></li>
-                        <li><a href="/share/">Share Story</a></li>
+                        <li class="active"><a href="#map">View Map<span class="sr-only">(current)</span></a></li>
+                        <li><a href="#read">Read Stories</a></li>
+                        <li><a href="#share">Share Story</a></li>
                     </ul>
                 </div>
             </div>
@@ -42,31 +42,15 @@
 
         <div class="container">
             <div id="content"></div>
-        </div>
-
-        <div class="modal fade" id="introModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Work in Progress</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Stories of Solidarity is a work in progress. Please feel free to browse and leave us feedback at: </p>
-                        <p><a href="mailto:storiesofsolidarity@gmail.com">storiesofsolidarity@gmail.com</a></p>
-                        <p>Thank you! <br>
-                        Click anywhere to begin.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+        </div>        
 
         <footer class="footer">
             <div class="container">
-                <p>(cc) Stories of Solidarity 2015 </p>
+                <div class="copyright"><a href="#copyright">(cc)</a> Stories of Solidarity 2015</div>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#privacy">Privacy</a></li>
+                </ul>
             </div>
         </footer>
 
@@ -105,18 +89,24 @@
         <!-- build:js({.tmp,app}) scripts/main.js -->
         <script src="scripts/main.js"></script>
         <script src="scripts/templates.js"></script>
+        <script src="scripts/models/base.js"></script>
+        <script src="scripts/collections/base.js"></script>
+        <script src="scripts/views/base.js"></script>
+
         <script src="scripts/models/story.js"></script>
+        <script src="scripts/collections/base.js"></script>
         <script src="scripts/collections/stories.js"></script>
-        <script src="scripts/views/map.js"></script>
         <script src="scripts/views/login.js"></script>
-        <script src="scripts/views/about.js"></script>
         <script src="scripts/models/user.js"></script>
         <script src="scripts/views/storyList.js"></script>
         <script src="scripts/views/storyMap.js"></script>
         <script src="scripts/views/userList.js"></script>
         <script src="scripts/views/userFollow.js"></script>
-        <script src="scripts/routes/story.js"></script>
         <script src="scripts/routes/pages.js"></script>
+        <script src="scripts/routes/stories.js"></script>
+        <script src="scripts/views/page.js"></script>
+        <script src="scripts/views/intro.js"></script>
+        <script src="scripts/views/index.js"></script>
         <!-- endbuild -->
 </body>
 </html>

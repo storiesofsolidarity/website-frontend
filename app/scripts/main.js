@@ -6,26 +6,18 @@ window.Solidarity = {
     Collections: {},
     Views: {},
     Routers: {},
+    apiRoot: 'http://localhost:8000/api/',
     init: function () {
         'use strict';
         console.log('Stories of Solidarity');
 
-        // new this.Views.storyMap({ });
+        // initialize routers
+        new Solidarity.Routers.Pages({});
+        // new Solidarity.Routers.Stories({});
 
-        // show intro modal only on first load
-        if($.cookie('hideModal') === 'true') {
-            // already saw modal, don't show again
-            $('#introModal').modal('hide');
-        } else {
-            $('#introModal').modal('show');
 
-        }
-
-        $('#introModal').on('hidden.bs.modal', function () {
-            console.log('hide modal');
-            $.cookie('hideModal', 'true');
-        });
-        
+        // start history
+        Backbone.history.start();
     }
 };
 
