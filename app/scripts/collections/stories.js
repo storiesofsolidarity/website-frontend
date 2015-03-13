@@ -5,7 +5,7 @@ Solidarity.Collections = Solidarity.Collections || {};
 (function () {
     'use strict';
 
-    Solidarity.Collections.Stories = Backbone.Collection.extend({
+    Solidarity.Collections.Stories = Solidarity.Collections.BaseCollection.extend({
 
         model: Solidarity.Models.Stories
 

@@ -5,9 +5,10 @@ Solidarity.Models = Solidarity.Models || {};
 (function () {
     'use strict';
 
-    Solidarity.Models.User = Backbone.Model.extend({
+    Solidarity.Models.User = Solidarity.Models.BaseModel.extend({
 
         url: '',
+        idAttributemodel: 'username',
 
         initialize: function() {
         },
