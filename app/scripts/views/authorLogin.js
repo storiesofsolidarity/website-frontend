@@ -7,7 +7,7 @@ Solidarity.Views = Solidarity.Views || {};
 
     Solidarity.Views.Login = Backbone.View.extend({
 
-        template: JST['app/scripts/templates/login.ejs'],
+        template: JST['app/scripts/templates/authorLogin.ejs'],
 
         tagName: 'div',
 

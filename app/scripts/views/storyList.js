@@ -8,21 +8,31 @@ Solidarity.Views = Solidarity.Views || {};
     Solidarity.Views.StoryList = Backbone.View.extend({
 
         template: JST['app/scripts/templates/storyList.ejs'],
+        el: '#content',
 
-        tagName: 'div',
-
-        id: '',
-
-        className: '',
-
-        events: {},
+        events: {'click a.more': 'more'},
 
         initialize: function () {
-            this.listenTo(this.model, 'change', this.render);
+            var self = this;
+            this.collection = new Solidarity.Collections.Stories();
+            this.listenTo(this.collection, 'reset change add', this.render);
+
+            this.collection.fetch({
+                success: $.proxy(self.render, self)
+            });
         },
 
         render: function () {
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html(this.template(this.collection));
+        },
+
+        more: function(e) {
+            e.preventDefault();
+            console.log('more', this.collection._next);
+            this.collection.fetch({
+                add: true,
+                url: this.collection._next
+            });
         }
 
     });

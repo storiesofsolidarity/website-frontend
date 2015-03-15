@@ -5,20 +5,20 @@ Solidarity.Views = Solidarity.Views || {};
 (function () {
     'use strict';
 
-    Solidarity.Views.UserFollow = Backbone.View.extend({
+    Solidarity.Views.Story = Backbone.View.extend({
 
-        template: JST['app/scripts/templates/userFollow.ejs'],
-
-        tagName: 'div',
-
-        id: '',
-
-        className: '',
-
+        template: JST['app/scripts/templates/story.ejs'],
         events: {},
 
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
+
+            this.model.fetch ({
+                success: function () {
+                    console.log('fetch story', this.model);
+                }
+            });
+            
         },
 
         render: function () {

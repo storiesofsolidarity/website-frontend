@@ -13,8 +13,12 @@ window.Solidarity = {
 
         // initialize routers
         new Solidarity.Routers.Pages({});
-        // new Solidarity.Routers.Stories({});
+        new Solidarity.Routers.Stories({});
 
+        // initialize UI elements
+        // this.searchView = new Solidarity.Views.Search({});
+        // this.filterView = new Solidarity.Views.Filter({});
+        // this.loginView = new Solidarity.Views.Login({});
 
         // start history
         Backbone.history.start();

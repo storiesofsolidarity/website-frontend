@@ -5,9 +5,8 @@ Solidarity.Models = Solidarity.Models || {};
 (function () {
     'use strict';
 
-    Solidarity.Models.User = Solidarity.Models.BaseModel.extend({
-
-        url: '',
+    Solidarity.Models.Author = Solidarity.Models.BaseModel.extend({
+        url: Solidarity.apiRoot + 'author',
         idAttributemodel: 'username',
 
         initialize: function() {

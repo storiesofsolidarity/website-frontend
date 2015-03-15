@@ -15,15 +15,8 @@ Solidarity.Views = Solidarity.Views || {};
             // render first, so sub-views have their elements
             this.render();
 
-            // create sub-views
-            // this.assign(new Solidarity.Views.Intro(), '#intro');
-
             this.introView = new Solidarity.Views.Intro({el: '#intro'});
-            this.mapView = new Solidarity.Views.StoryMap({el: '#map'});
-
-            // this.searchView = new Solidarity.Views.Search({});
-            // this.filterView = new Solidarity.Views.Filter({});
-            // this.loginView = new Solidarity.Views.Login({});
+            // search, filter, login
         },
 
         render: function () {

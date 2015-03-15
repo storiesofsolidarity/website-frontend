@@ -8,16 +8,17 @@ Solidarity.Views = Solidarity.Views || {};
     Solidarity.Views.StoryMap = Backbone.View.extend({
 
         template: JST['app/scripts/templates/storyMap.ejs'],
+        collection: Solidarity.Collections.Stories,
+
         events: {},
 
         initialize: function () {
-            // this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.collection, 'change', this.render);
+            this.collection.fetch ();
         },
 
         render: function () {
-            // this.$el.html(this.template(this.model.toJSON()));
-            this.$el.html(this.template());
-            return this;
+            this.$el.html(this.template(this.collection.toJSON()));
         }
 
     });
