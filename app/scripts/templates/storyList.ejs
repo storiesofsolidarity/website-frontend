@@ -8,9 +8,11 @@
             <% } else { %>
                 <%- story.attributes.content %>
             <% } %>
-            <a href="#read/story/<%= story.id %>">+ read more</a>
+            <span class="readmore">
+                <a href="#read/story/<%= story.id %>">+ read more</a>
+            </span>
         </div>
-        <h3><%= (new Date(story.attributes.updated_at)).toDateString() %>
+        <h3><%= (new Date(story.attributes.updated_at)).toDateString() %><br>
             by <a href="#read/author/<%-story.attributes.author_user.id%>"><%- story.attributes.author_user.first_name %> <%- story.attributes.author_user.last_name %></a>
             </h3>
     </div>

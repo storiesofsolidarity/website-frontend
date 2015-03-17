@@ -7,12 +7,13 @@
 //
 //## Gray and brand colors for use across Bootstrap.
 
-$white:                  #FFF;
+$white:                  #EEE;
 $black:                  #161616;
 
 $gray-base:              #000;
 $gray-darker:            #222;
 $gray-dark:              #282828;
+$gray-slight:            #383633;
 $gray:                   #555;
 $gray-medium:            #666;
 $gray-light:             #888;   
@@ -27,6 +28,7 @@ $brand-danger:          #CC0000;
 $orange:                #F69731;
 $orange-2:              #DE8226;
 $orange-3:              #C46006;
+$orange-4:              #ff9900;
 
 //== Scaffolding
 //
@@ -35,12 +37,11 @@ $orange-3:              #C46006;
 //** Background color for `<body>`.
 $body-bg:               #333;
 //** Global text color on `<body>`.
-$text-color:            $gray-lighter;
+$text-color:            $white;
 
-//** Global textual link color.
-$link-color:            $brand-primary;
-//** Link hover color set via `darken()` function.
-$link-hover-color:      darken($link-color, 0.1);
+//** Global textual link colors.
+$link-color:            $gray-slight;
+$link-hover-color:      $link-color;
 //** Link hover decoration.
 $link-hover-decoration: underline;
 

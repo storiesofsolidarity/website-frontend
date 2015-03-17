@@ -9,6 +9,22 @@ body {
     margin-bottom: $sticky-footer-height;
 }
 
+// fancy two-color underline
+a:hover { 
+    color: $text-color;
+    // cursor: crosshair;
+    text-decoration: none;
+    border-bottom: 2px solid #ff9900;
+    padding-bottom: 2px;
+}
+
+// but not for navbar, footer 
+.navbar {
+    a:hover {
+        border: none;
+    }
+}
+
 .warning#browsehappy {
     margin: 0.2em 0;
     background-color: #FF8800;
@@ -23,7 +39,6 @@ body {
     .navbar-collapse {
         border: 0;
     }
-
 
 
     .navbar-brand {    
@@ -88,7 +103,8 @@ body {
 /* sticky page footer */
 .footer {
     padding-top: 19px;
-    color: $gray-lighter;
+    color: $text-color;
+    a { color: $text-color; }
 
     position: absolute;
     bottom: 0;
