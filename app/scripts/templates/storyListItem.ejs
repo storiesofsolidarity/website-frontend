@@ -1,0 +1,16 @@
+<div class="story">
+    <h2><%= attributes.title %></h2>
+    <div class="body">
+        <% if (attributes.content.length > 160) { %>
+            <%- attributes.content.slice(0,160) %>...
+        <% } else { %>
+            <%- attributes.content %>
+        <% } %>
+        <span class="readmore">
+            <a href="#read/story/<%= id %>">+ read more</a>
+        </span>
+    </div>
+    <h3><%= (new Date(attributes.updated_at)).toDateString() %><br>
+        by <a href="#read/author/<%-attributes.author_user.id%>"><%- attributes.author_user.first_name %> <%- attributes.author_user.last_name %></a>
+        </h3>
+</div>

@@ -8,31 +8,33 @@ Solidarity.Views = Solidarity.Views || {};
     Solidarity.Views.StoryList = Backbone.View.extend({
 
         template: JST['app/scripts/templates/storyList.ejs'],
+        templateItem: JST['app/scripts/templates/storyListItem.ejs'],
         el: '#content',
 
         events: {'click a.more': 'more'},
 
         initialize: function () {
-            var self = this;
-            this.collection = new Solidarity.Collections.Stories();
-            this.listenTo(this.collection, 'reset change add', this.render);
+            this.render();
 
-            this.collection.fetch({
-                success: $.proxy(self.render, self)
-            });
+            this.collection = new Solidarity.Collections.Stories({mode: 'infinite'});
+            this.listenTo(this.collection, 'add', this.addStory);
+            this.collection.getFirstPage();
+            $('.story.more').show();
+        },
+
+        addStory: function(story) {
+            $(this.templateItem(story)).insertBefore('.storyList .story.more');
+            if(!this.collection.hasNextPage()) {
+                $('.story.more').hide();
+            }
         },
 
         render: function () {
-            this.$el.html(this.template(this.collection));
+            this.$el.html(this.template());
         },
 
         more: function(e) {
-            e.preventDefault();
-            console.log('more', this.collection._next);
-            this.collection.fetch({
-                add: true,
-                url: this.collection._next
-            });
+            this.collection.getNextPage();
         }
 
     });

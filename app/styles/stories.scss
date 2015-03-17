@@ -1,3 +1,5 @@
+@import '_variables.scss';
+
 .storyList {
 
     .story { 
@@ -12,7 +14,7 @@
     
         .body { 
             height: 160px;
-            overflow-y: hidden;
+            //overflow-y: hidden;
             span.readmore { display: block; }
         }
         h3 { 
@@ -21,7 +23,12 @@
             color: #666;
             font-weight: normal;
             text-transform: none;
-            font-family: $font-family-sans-serif;
+            font-family: $font-family-base;
+        }
+
+        h2.more {
+            text-align: center;
+            margin: 0;
         }
     }
 }

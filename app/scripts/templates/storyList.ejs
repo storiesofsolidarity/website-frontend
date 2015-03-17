@@ -1,24 +1,6 @@
 <div class="storyList">
-    <% _.each(models, function(story) { %>
-    <div class="story">
-        <h2><%= story.attributes.title %></h2>
-        <div class="body">
-            <% if (story.attributes.content.length > 160) { %>
-                <%- story.attributes.content.slice(0,160) %>...
-            <% } else { %>
-                <%- story.attributes.content %>
-            <% } %>
-            <span class="readmore">
-                <a href="#read/story/<%= story.id %>">+ read more</a>
-            </span>
-        </div>
-        <h3><%= (new Date(story.attributes.updated_at)).toDateString() %><br>
-            by <a href="#read/author/<%-story.attributes.author_user.id%>"><%- story.attributes.author_user.first_name %> <%- story.attributes.author_user.last_name %></a>
-            </h3>
+    
+    <div class="story more" style="display:none;">
+        <h2><a class="more" href="#read/more">+ More</a></h2>
     </div>
-    <% }) %>
 </div>
-
-<% if (_next) { %>
-<a href="#read/more" class="more">More</a>
-<% } %>
