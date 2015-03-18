@@ -18,8 +18,8 @@ a:hover {
     padding-bottom: 2px;
 }
 
-// but not for navbar, footer 
-.navbar {
+// but not for navbar
+.navbar { 
     a:hover {
         border: none;
     }
@@ -39,7 +39,6 @@ a:hover {
     .navbar-collapse {
         border: 0;
     }
-
 
     .navbar-brand {    
         width: 200px;
@@ -91,6 +90,10 @@ a:hover {
     }
 }
 
+nav.navbar + section.main {
+    margin-top: 120px;
+}
+
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
     margin-top: 0;
@@ -98,7 +101,6 @@ a:hover {
     line-height: 40px;
     padding-bottom: 19px;
 }
-
 
 /* sticky page footer */
 .footer {
