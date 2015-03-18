@@ -34,3 +34,15 @@
         }
     }
 }
+
+.storyPost {
+    background-color: $black;
+    padding: 40px;
+
+    .row { margin-bottom: 20px; }
+    textarea, input {
+        vertical-align: top;
+        color: $black;
+    } 
+    input[type="file"] { display: inline-block; }
+}

@@ -10,7 +10,7 @@ Solidarity.Routers = Solidarity.Routers || {};
             'map': 'storyMap',
             'read': 'storyList',
             'read/story/:id': 'storyView',
-            //'share': 'storyPost',
+            'share': 'storyPost',
         },
 
         storyMap: function() {
@@ -25,7 +25,7 @@ Solidarity.Routers = Solidarity.Routers || {};
             });
         },
         storyPost: function() {
-            new Solidarity.Views.StoryPost({});
+            new Solidarity.Views.StoryPost({el: '#content'});
         },
     });
 
