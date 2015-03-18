@@ -48,7 +48,6 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         scrollTo: function(storyId) {
-            console.log('scrollTo '+storyId);
             var storyDiv = $('#story-'+storyId);
             if (storyDiv.length > 0) {
                 $('html, body').scrollTop(storyDiv.offset().top);

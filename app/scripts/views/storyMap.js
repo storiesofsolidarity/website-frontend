@@ -14,7 +14,7 @@ Solidarity.Views = Solidarity.Views || {};
 
         initialize: function () {
             this.listenTo(this.collection, 'change', this.render);
-            this.collection.fetch ();
+            this.collection.fetch();
         },
 
         render: function () {
