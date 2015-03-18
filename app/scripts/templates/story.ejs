@@ -1,3 +1,11 @@
 <div class="story">
-    <% attributes.text %>
+    <h2><% title %></h2>
+
+    <div class="body">
+        <%- content %>
+    </div>
+    <h3><%= (new Date(updated_at)).toDateString() %><br>
+        by <a href="#read/author/<%-author_user.id%>"><%- author_user.first_name %> <%- author_user.last_name %></a>
+        </h3>
+    <a href="#read?story=<%-id%>">&larr; Back</a>
 </div>

@@ -19,8 +19,10 @@ Solidarity.Routers = Solidarity.Routers || {};
         storyList: function() {
             new Solidarity.Views.StoryList({el: '#content'});
         },
-        storyView: function() {
-            new Solidarity.Views.StoryView({el: '#overlay'});
+        storyView: function(id) {
+            new Solidarity.Views.Story({
+                model: new Solidarity.Models.Story({id: id}),
+            });
         },
         storyPost: function() {
             new Solidarity.Views.StoryPost({});

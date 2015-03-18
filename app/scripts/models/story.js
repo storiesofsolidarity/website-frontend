@@ -7,7 +7,7 @@ Solidarity.Models = Solidarity.Models || {};
 
     Solidarity.Models.Story = Solidarity.Models.BaseModel.extend({
 
-        url: Solidarity.apiRoot + 'story',
+        urlRoot: Solidarity.apiRoot+'story',
 
         initialize: function() {
         },

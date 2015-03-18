@@ -8,21 +8,22 @@ Solidarity.Views = Solidarity.Views || {};
     Solidarity.Views.Story = Backbone.View.extend({
 
         template: JST['app/scripts/templates/story.ejs'],
+        el: '#content',
         events: {},
 
         initialize: function () {
-            this.listenTo(this.model, 'change', this.render);
+            var self = this;
+            this.listenTo(this.model, 'add', this.render);
 
-            this.model.fetch ({
-                success: function () {
-                    console.log('fetch story', this.model);
-                }
+            this.model.fetch({
+                success: $.proxy(self.render, self)
             });
-            
         },
 
         render: function () {
-            this.$el.html(this.template(this.model.toJSON()));
+            if(this.model && this.model.attributes) {
+                this.$el.html(this.template(this.model.toJSON()));
+            }
         }
 
     });
