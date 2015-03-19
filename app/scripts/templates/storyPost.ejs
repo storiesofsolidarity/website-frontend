@@ -3,10 +3,6 @@
 
 <form action="<%= apiRoot %>story" method="POST">
     <fieldset>
-        <span>
-            Required Fields are marked by an asterisk (*).<br>
-        </span>
-
         <div class="row">
             <label for="title" class="col-sm-1">Title:</label>
             <input id="title" class="col-xs-12 col-sm-6" name="title" value="" type="text" autocomplete="on" placeholder="">
@@ -14,7 +10,7 @@
 
         <div class="row">
             <label for="content" class="col-sm-1">Story:</label>
-            <textarea id="content" class="col-xs-12 col-sm-10" rows="6" name="content" value="" ></textarea>
+            <textarea id="content" class="col-xs-12 col-sm-10" rows="6" name="content" value="" required="required"></textarea>
         </div>
 
         <div class="row">

@@ -41,6 +41,50 @@
 
 }
 
+.storyMap {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
+    vertical-align: top;
+    overflow: hidden;
+    cursor: -webkit-zoom-in;
+    cursor: -moz-zoom-in;
+    cursor:zoom-in;
+    z-index:0;
+
+    .background {
+        fill: none;
+        pointer-events: all;
+        cursor:default;
+    }
+
+    .feature {
+        fill: #ccc;
+        cursor: pointer;
+    }
+
+    .feature.active {
+        fill: $gray-light;
+        cursor: -webkit-zoom-out;
+        cursor: -moz-zoom-out;
+        cursor:zoom-out;
+    }
+
+    .feature:hover {
+        fill: $gray-lighter;
+    }
+    .feature.active:hover {
+        fill: $gray-light;
+    }
+
+    .mesh {
+        fill: none;
+        stroke: #fff;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+}
+
 .storyPost {
     background-color: $black;
     padding: 40px;

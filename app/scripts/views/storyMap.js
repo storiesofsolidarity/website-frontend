@@ -1,4 +1,4 @@
-/*global Solidarity, Backbone, JST*/
+/*global Solidarity, Backbone, JST, d3, topojson */
 
 Solidarity.Views = Solidarity.Views || {};
 
@@ -13,12 +13,109 @@ Solidarity.Views = Solidarity.Views || {};
         events: {},
 
         initialize: function () {
-            this.listenTo(this.collection, 'change', this.render);
-            this.collection.fetch();
+            // this.listenTo(this.collection, 'change', this.render);
+            // this.collection.fetch();
+            this.render();
+        },
+
+        drawMap: function () {
+            var width = 960,
+                height = 500,
+                active = d3.select(null);
+
+            var projection = d3.geo.albersUsa()
+                .scale(1000)
+                .translate([width / 2, height / 2]);
+
+            var zoom = d3.behavior.zoom()
+                .translate([0, 0])
+                .scale(1)
+                .scaleExtent([1, 8])
+                .on('zoom', zoomed);
+
+            var path = d3.geo.path()
+                .projection(projection);
+
+            this.svg = d3.select('#map').append('svg')
+                .attr('width', width)
+                .attr('height', height)
+                .on('click', stopped, true);
+
+            this.svg.append('rect')
+                .attr('class', 'background')
+                .attr('width', width)
+                .attr('height', height)
+                .on('click', reset);
+
+            this.map = this.svg.append('g');
+            var self = this;
+
+            this.svg
+                .call(zoom) // delete this line to disable free zooming
+                .call(zoom.event);
+
+            d3.json('/scripts/map/us.json', function(error, us) {
+                self.map.selectAll('path')
+                  .data(topojson.feature(us, us.objects.states).features)
+                .enter().append('path')
+                  .attr('d', path)
+                  .attr('class', 'feature')
+                  .on('click', clicked);
+
+                self.map.append('path')
+                  .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+                  .attr('class', 'mesh')
+                  .attr('d', path);
+            });
+
+            function clicked(d) {
+                if (active.node() === this) return reset();
+                active.classed('active', false);
+                active = d3.select(this).classed('active', true);
+
+                var scaleFactor = 0.9;
+                // northeastern states needs to be zoomed out a little
+                if (d.id == "25") { scaleFactor = 0.75; } //MA
+                if (d.id == "36") { scaleFactor = 0.6; } //NY
+                if (d.id == "09") { scaleFactor = 0.5; } //CT
+                if (d.id == "44") { scaleFactor = 0.3; } //RI
+                if (d.id == "11") { scaleFactor = 0.2; } //DC
+
+                var bounds = path.bounds(d),
+                  dx = bounds[1][0] - bounds[0][0],
+                  dy = bounds[1][1] - bounds[0][1],
+                  x = (bounds[0][0] + bounds[1][0]) / 2,
+                  y = (bounds[0][1] + bounds[1][1]) / 2,
+                  scale = scaleFactor / Math.max(dx / width, dy / height),
+                  translate = [width / 2 - scale * x, height / 2 - scale * y];
+
+                self.svg.transition()
+                  .duration(750)
+                  .call(zoom.translate(translate).scale(scale).event);
+            }
+
+            function reset() {
+                active.classed('active', false);
+                active = d3.select(null);
+
+                self.svg.transition()
+                  .duration(750)
+                  .call(zoom.translate([0, 0]).scale(1).event);
+            }
+
+            function zoomed() {
+                self.map.style('stroke-width', 1.5 / d3.event.scale + 'px');
+                self.map.attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
+            }
+
+            function stopped() {
+              if (d3.event.defaultPrevented) d3.event.stopPropagation();
+            }
         },
 
         render: function () {
-            this.$el.html(this.template(this.collection.toJSON()));
+            this.$el.html(this.template());
+            this.drawMap();
         }
 
     });
