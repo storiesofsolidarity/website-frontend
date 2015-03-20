@@ -54,7 +54,7 @@ Solidarity.Views = Solidarity.Views || {};
                 .call(zoom) // delete this line to disable free zooming
                 .call(zoom.event);
 
-            d3.json('/scripts/map/us.json', function(error, us) {
+            d3.json(Solidarity.siteRoot + 'scripts/map/us.json', function(error, us) {
                 self.map.selectAll('path')
                   .data(topojson.feature(us, us.objects.states).features)
                 .enter().append('path')
