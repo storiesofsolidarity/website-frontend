@@ -1,16 +1,16 @@
-<div class="item story" id="story-<%=id%>">
-    <h2><%= title %></h2>
+<div class="item story" id="story-<%=data.id%>">
+    <h2><%= data.title %></h2>
     <div class="body">
-        <% if (content.length > 160) { %>
-            <%- content.slice(0,160) %>...
+        <% if (data.content.length > 160) { %>
+            <%- data.content.slice(0,160) %>...
         <% } else { %>
-            <%- content %>
+            <%- data.content %>
         <% } %>
         <span class="readMore">
-            <a class="readMore" href="#read/story/<%= id %>">+ read more</a>
+            <a class="readMore" href="#read/story/<%= data.id %>">+ read more</a>
         </span>
     </div>
     <h3><%= (new Date(updated_at)).toDateString() %><br>
-        by <a href="#read/author/<%-author_user.id%>"><%- author_user.first_name %> <%- author_user.last_name %></a>
+        by <a href="#read/author/<%-data.author_user.id%>"><%- data.author_user.first_name %> <%- data.author_user.last_name %></a>
         </h3>
 </div>
