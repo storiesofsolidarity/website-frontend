@@ -4,8 +4,12 @@
     <div class="body">
         <%- data.content %>
     </div>
-    <h3><%= (new Date(updated_at)).toDateString() %><br>
-        by <a href="#read/author/<%-data.author_user.id%>"><%- data.author_user.first_name %> <%- data.author_user.last_name %></a>
+    <h3><%= (new Date(data.updated_at)).toDateString() %><br>
+        by <% if (data.author_user) { %>
+            <a href="#read/author/<%-data.author_user.id%>"><%- data.author_user.first_name %> <%- data.author_user.last_name %></a>
+        <% } else { %>
+            Anonymous
+        <% } %>
         </h3>
-    <a href="#read?story=<%-id%>">&larr; Back</a>
+    <a href="#read?story=<%-data.id%>">&larr; Back</a>
 </div>
