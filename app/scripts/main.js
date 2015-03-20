@@ -1,13 +1,12 @@
-/*global Solidarity, $*/
+/*global Solidarity, $, _*/
 
 'use strict';
 
-window.Solidarity = {
+window.Solidarity = _.extend(window.Solidarity, {
     Models: {},
     Collections: {},
     Views: {},
     Routers: {},
-    apiRoot: 'http://localhost:8000/api/',
     init: function () {
         console.log('Stories of Solidarity');
 
@@ -35,7 +34,7 @@ window.Solidarity = {
         var half = hashQuery.split(name + '=')[1];
         return half !== undefined ? decodeURIComponent(half.split('&')[0]) : null;
     },
-};
+});
 
 $(document).ready(function () {
     Solidarity.init();
