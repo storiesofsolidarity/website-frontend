@@ -69,17 +69,17 @@ Solidarity.Views = Solidarity.Views || {};
             });
 
             function clicked(d) {
-                if (active.node() === this) return reset();
+                if (active.node() === this) { return reset(); }
                 active.classed('active', false);
                 active = d3.select(this).classed('active', true);
 
                 var scaleFactor = 0.9;
                 // northeastern states needs to be zoomed out a little
-                if (d.id == "25") { scaleFactor = 0.75; } //MA
-                if (d.id == "36") { scaleFactor = 0.6; } //NY
-                if (d.id == "09") { scaleFactor = 0.5; } //CT
-                if (d.id == "44") { scaleFactor = 0.3; } //RI
-                if (d.id == "11") { scaleFactor = 0.2; } //DC
+                if (d.id === '25') { scaleFactor = 0.75; } //MA
+                if (d.id === '36') { scaleFactor = 0.6; } //NY
+                if (d.id === '09') { scaleFactor = 0.5; } //CT
+                if (d.id === '44') { scaleFactor = 0.3; } //RI
+                if (d.id === '11') { scaleFactor = 0.2; } //DC
 
                 var bounds = path.bounds(d),
                   dx = bounds[1][0] - bounds[0][0],
@@ -109,7 +109,7 @@ Solidarity.Views = Solidarity.Views || {};
             }
 
             function stopped() {
-              if (d3.event.defaultPrevented) d3.event.stopPropagation();
+                if (d3.event.defaultPrevented) { d3.event.stopPropagation(); }
             }
         },
 

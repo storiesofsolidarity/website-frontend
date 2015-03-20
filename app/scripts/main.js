@@ -1,5 +1,6 @@
 /*global Solidarity, $*/
 
+'use strict';
 
 window.Solidarity = {
     Models: {},
@@ -8,7 +9,6 @@ window.Solidarity = {
     Routers: {},
     apiRoot: 'http://localhost:8000/api/',
     init: function () {
-        'use strict';
         console.log('Stories of Solidarity');
 
         // initialize routers
@@ -38,6 +38,5 @@ window.Solidarity = {
 };
 
 $(document).ready(function () {
-    'use strict';
     Solidarity.init();
 });
