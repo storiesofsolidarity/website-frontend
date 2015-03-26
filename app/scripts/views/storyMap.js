@@ -60,7 +60,7 @@ Solidarity.Views = Solidarity.Views || {};
             var self = this;
 
             this.svg
-                .call(zoom) // delete this line to disable free zooming
+                //.call(zoom) // delete this line to disable free zooming
                 .call(zoom.event);
 
             d3.json(Solidarity.siteRoot + 'scripts/map/us.json', function(error, us) {
@@ -131,6 +131,9 @@ Solidarity.Views = Solidarity.Views || {};
             console.log('renderStories');
             var projection = this.projection;
 
+            var opacity = d3.scale.log();
+            opacity.domain([1, 100]).range([0.5, 0]);
+
             this.map.append('g')
                 .attr('class', 'bubble')
               .selectAll('circle')
@@ -142,6 +145,9 @@ Solidarity.Views = Solidarity.Views || {};
                     var coords = projection([d.attributes.lon, d.attributes.lat]);
                     return 'translate(' + coords + ')';
                 })
+                .style('opacity', function(d) {
+                    return opacity(d.attributes.story_count);
+                })
               .append('title')
                 .text(function(d) {
                     return d.attributes.city+','+d.attributes.state;
@@ -149,7 +155,7 @@ Solidarity.Views = Solidarity.Views || {};
               .filter(function(d) {
                 // remove any circles without coords
                 return ((d.attributes.lon !== undefined) && (d.attributes.lat !== undefined));
-              }).remove();
+                }).remove();
         }
 
     });
