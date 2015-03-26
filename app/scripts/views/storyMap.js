@@ -8,14 +8,23 @@ Solidarity.Views = Solidarity.Views || {};
     Solidarity.Views.StoryMap = Backbone.View.extend({
 
         template: JST['app/scripts/templates/storyMap.ejs'],
-        collection: Solidarity.Collections.Stories,
 
         events: {},
 
         initialize: function () {
-            // this.listenTo(this.collection, 'change', this.render);
-            // this.collection.fetch();
+            var self = this;
             this.render();
+
+            this.collection = new Solidarity.Collections.Locations({});
+            this.collection.fetch({
+                success: function() {
+                    // do first render
+                    self.renderStories();
+
+                    // bind for further additions, changes
+                    self.listenTo(self.collection, 'add change', self.renderStories);
+                }
+            });
         },
 
         drawMap: function () {
@@ -23,7 +32,7 @@ Solidarity.Views = Solidarity.Views || {};
                 height = 500,
                 active = d3.select(null);
 
-            var projection = d3.geo.albersUsa()
+            this.projection = albersUsaPr() // US including puerto rico
                 .scale(1000)
                 .translate([width / 2, height / 2]);
 
@@ -34,7 +43,7 @@ Solidarity.Views = Solidarity.Views || {};
                 .on('zoom', zoomed);
 
             var path = d3.geo.path()
-                .projection(projection);
+                .projection(this.projection);
 
             this.svg = d3.select('#map').append('svg')
                 .attr('width', width)
@@ -116,6 +125,31 @@ Solidarity.Views = Solidarity.Views || {};
         render: function () {
             this.$el.html(this.template());
             this.drawMap();
+        },
+
+        renderStories: function() {
+            console.log('renderStories');
+            var projection = this.projection;
+
+            this.map.append('g')
+                .attr('class', 'bubble')
+              .selectAll('circle')
+                .data(this.collection.models)
+              .enter()
+                .append('circle')
+                  .attr('r', function(d) { return 5; })
+                  .attr('transform', function(d) {
+                    var coords = projection([d.attributes.lon, d.attributes.lat]);
+                    return 'translate(' + coords + ')';
+                })
+              .append('title')
+                .text(function(d) {
+                    return d.attributes.city+','+d.attributes.state;
+                })
+              .filter(function(d) {
+                // remove any circles without coords
+                return ((d.attributes.lon !== undefined) && (d.attributes.lat !== undefined));
+              }).remove();
         }
 
     });

@@ -60,14 +60,16 @@
 
     .feature {
         fill: #ccc;
-        cursor: pointer;
+        cursor: -webkit-zoom-in;
+        cursor: -moz-zoom-in;
+        cursor: zoom-in;
     }
 
     .feature.active {
         fill: $gray-light;
         cursor: -webkit-zoom-out;
         cursor: -moz-zoom-out;
-        cursor:zoom-out;
+        cursor: zoom-out;
     }
 
     .feature:hover {
@@ -75,6 +77,14 @@
     }
     .feature.active:hover {
         fill: $gray-light;
+    }
+
+    .bubble {
+        circle {
+            fill: $orange;
+            opacity: 0.8;
+            cursor: pointer
+        }
     }
 
     .mesh {
