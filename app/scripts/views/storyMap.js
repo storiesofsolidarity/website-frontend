@@ -155,7 +155,7 @@ Solidarity.Views = Solidarity.Views || {};
               .filter(function(d) {
                 // remove any circles without coords
                 return ((d.attributes.lon !== undefined) && (d.attributes.lat !== undefined));
-                }).remove();
+              }).remove();
         }
 
     });

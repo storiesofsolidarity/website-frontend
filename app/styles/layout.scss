@@ -25,6 +25,10 @@ a:hover {
     }
 }
 
+.modal-content {
+    a { color: $white; }
+}
+
 .warning#browsehappy {
     margin: 0.2em 0;
     background-color: #FF8800;
