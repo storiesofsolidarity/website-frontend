@@ -11,6 +11,7 @@ window.Solidarity = _.extend(window.Solidarity, {
         console.log('Stories of Solidarity');
 
         // initialize routers
+        new Solidarity.Routers.Auth({});
         new Solidarity.Routers.Pages({});
         new Solidarity.Routers.Stories({});
 

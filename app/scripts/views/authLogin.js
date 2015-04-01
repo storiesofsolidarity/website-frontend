@@ -5,20 +5,20 @@ Solidarity.Views = Solidarity.Views || {};
 (function () {
     'use strict';
 
-    Solidarity.Views.Login = Backbone.View.extend({
+    Solidarity.Views.AuthLogin = Backbone.View.extend({
 
-        template: JST['app/scripts/templates/authorLogin.ejs'],
+        template: JST['app/scripts/templates/authLogin.ejs'],
 
         tagName: 'div',
 
-        id: '',
+        id: '#login',
 
         className: '',
 
         events: {},
 
         initialize: function () {
-            this.listenTo(this.model, 'change', this.render);
+            this.render();
         },
 
         render: function () {
