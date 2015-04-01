@@ -33,4 +33,9 @@ $ grunt serve
 
 ### Deployment
 
-Using GitHub Pages, push the `dist` directory to the gh-pages branch.
+Using GitHub Pages, build and push the resulting `dist` directory to the gh-pages branch.
+
+``bash
+$ grunt build
+$ grunt gh-pages
+``
