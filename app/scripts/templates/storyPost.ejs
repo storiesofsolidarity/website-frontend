@@ -1,12 +1,13 @@
 <div class="storyPost container-fluid">
 <h2>Share Your Story</h2>
 <div class="row">
-    <div class="col-sm-push-9 col-sm-3 text-right">
+    <div class="col-md-4">
+        Post 
         <% if (data.user !== undefined ) { %>
-        Logged in as: <a href="#auth/user"><%= data.user %></a> <br>
-            <span class="btn btn-info"><a href="#auth/logout">Logout</a></span>
+        as <a href="#auth/user"><%= data.user %></a>
+        or <a href="#auth/logout">Logout</a>
         <% } else { %>
-            <span class="btn btn-info"><a href="#auth/login" >Login</a></span>
+        anonymously or <a href="#auth/login" >Login</a>
         <% } %>
     </div>
 </div>
@@ -25,12 +26,17 @@
 
         <div class="row">
             <label for="location" class="col-sm-1">Location:</label>
-            <input id="location" class="col-xs-12 col-sm-6" name="location" value="" type="text" autocomplete="on" placeholder="">
+            <div class="input-group col-xs-12 col-sm-6">
+                <input id="location" class="col-xs-12" name="location" value="" type="text" autocomplete="on" placeholder="">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-sm line-height-1"><i class="glyphicon glyphicon-screenshot"></i></button>
+                </div>
+            </div>
         </div>
 
         <div class="row">
             <label for="photo" class="col-sm-1">Photo:</label>
-            <input type="file" name="photo">
+            <input type="file" class="col-sm-6 filestyle" name="photo" />
         </div>
 
         <div class="row">

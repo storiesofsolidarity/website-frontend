@@ -16,6 +16,12 @@ Solidarity.Views = Solidarity.Views || {};
 
         render: function () {
             this.$el.html(this.template({'apiRoot': Solidarity.apiRoot}));
+            $('.filestyle').filestyle({
+                input: false,
+                buttonText: 'Upload',
+                size: 'sm',
+                iconName: 'glyphicon-cloud-upload',
+            }); // custom file button style
             return this;
         }
 
