@@ -136,7 +136,7 @@ module.exports = function (grunt) {
             options: {
                 sourceMap: true,
                 includePaths: ['app/bower_components']
-              },
+            },
             dist: {
                 files: [{
                     expand: true,
@@ -227,12 +227,17 @@ module.exports = function (grunt) {
                         '*.{ico,txt}',
                         'images/{,*/}*.{webp,gif}',
                         'styles/fonts/{,*/}*.*',
-                        'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*.*',
                         'scripts/map/*.json'
                     ]
                 }, {
+                    cwd: '<%= yeoman.app %>',
                     src: 'node_modules/apache-server-configs/dist/.htaccess',
                     dest: '<%= yeoman.dist %>/.htaccess'
+                }, {
+                    expand: true,
+                    cwd: '<%= yeoman.app %>',
+                    src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*.*',
+                    dest: '<%= yeoman.dist %>'
                 }]
             }
         },
@@ -255,8 +260,7 @@ module.exports = function (grunt) {
                         '<%= yeoman.dist %>/scripts/{,*/}*.js',
                         '<%= yeoman.dist %>/styles/{,*/}*.css',
                         '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-                        '/styles/fonts/{,*/}*.*',
-                        'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*.*'
+                        '<%= yeoman.dist %>/styles/fonts/{,*/}*.*'
                     ]
                 }
             }
