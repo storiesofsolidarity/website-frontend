@@ -12,19 +12,19 @@
     </div>
 </div>
 
-<form action="<%= data.apiRoot %>story" method="POST">
+<form action="<%= data.apiRoot %>story" method="POST" class="form-horizontal">
     <fieldset>
-        <div class="row">
+        <div class="form-group">
             <label for="title" class="col-sm-1">Title:</label>
             <input id="title" class="col-xs-12 col-sm-6" name="title" value="" type="text" autocomplete="on" placeholder="">
         </div>
 
-        <div class="row">
+        <div class="form-group">
             <label for="content" class="col-sm-1">Story:</label>
             <textarea id="content" class="col-xs-12 col-sm-10" rows="6" name="content" value="" required="required"></textarea>
         </div>
 
-        <div class="row">
+        <div class="form-group">
             <label for="location" class="col-sm-1">Location:</label>
             <div class="input-group col-xs-12 col-sm-6">
                 <input id="location" class="col-xs-12" name="location" value="" type="text" autocomplete="on" placeholder="">
@@ -34,12 +34,12 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="form-group">
             <label for="photo" class="col-sm-1">Photo:</label>
             <input type="file" class="col-sm-6 filestyle" name="photo" />
         </div>
 
-        <div class="row">
+        <div class="form-group">
             <input type="submit" class="btn btn-primary" value="Post!" />
         </div>
     </fieldset>
