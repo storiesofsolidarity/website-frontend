@@ -1,9 +1,24 @@
-<form>
-    <label>Username:
-        <input name="username"/>
-    </label>
+<div class="authLogin container-fluid">
+<h2>Log In</h2>
 
-    <label>Password:
-        <input name="password" type="password"/>
-    </label>
+<form class="form-horizontal" id="login" action="<%= data.apiRoot %>auth/login/" method="POST">
+    <div class="form-group">
+        <label for="username" class="col-sm-2 control-label">Username:</label>
+        <input name="username" class="col-sm-4" />
+        <span class="help-block"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="password" class="col-sm-2 control-label">Password:</label>
+        <input name="password" class="col-sm-4" type="password"/>
+        <span class="help-block"></span>
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-primary col-sm-offset-2" type="submit">
+            <span class="glyphicon glyphicon-log-in"></span> Go
+        </button>
+    </div>
 </form>
+
+</div>
