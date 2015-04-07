@@ -97,11 +97,18 @@
 
         <script>
             window.Solidarity = {
-                siteRoot: '',
-                //apiRoot: 'http://sos-data-api.herokuapp.com/api/'
-                apiRoot: 'http://localhost:8000/api/'
+                siteRoot: 'http://www.storiesofsolidarity.org/',
+                apiRoot: 'http://sos-data-api.herokuapp.com/api/'
             };
         </script>
+        <!-- build:dev -->
+        <script>
+            // invalid block type means this won't appear in build
+            console.log("DEV ENVIRONMENT");
+            window.Solidarity.siteRoot = 'http://localhost:9000/';
+            window.Solidarity.apiRoot = 'http://localhost:8000/api/'; 
+        </script>
+        <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/main.js -->
         <script src="scripts/main.js"></script>

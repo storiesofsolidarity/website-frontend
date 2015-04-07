@@ -15,7 +15,7 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         render: function () {
-            this.$el.html(this.template({'apiRoot': Solidarity.apiRoot}));
+            this.$el.html(this.template());
             $('.filestyle').filestyle({
                 input: false,
                 buttonText: 'Upload',

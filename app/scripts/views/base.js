@@ -26,9 +26,8 @@ Solidarity.Views = Solidarity.Views || {};
             'keyup input.has-error': 'clearFieldErrors'
         },
 
-        // include apiRoot in initial render
         render: function () {
-            this.$el.html(this.template({'apiRoot': Solidarity.apiRoot}));
+            this.$el.html(this.template());
             this.$form = $(this.form);
             // save $form jq object
 

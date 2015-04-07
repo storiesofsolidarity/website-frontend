@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-4">
         Post 
-        <% if (data.user !== undefined ) { %>
+        <% if (Solidarity.user !== undefined ) { %>
         as <a href="#auth/user"><%= data.user %></a>
         or <a href="#auth/logout">Logout</a>
         <% } else { %>
@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<form action="<%= data.apiRoot %>story" method="POST" class="form-horizontal">
+<form action="<%= Solidarity.apiRoot %>story" method="POST" class="form-horizontal">
     <fieldset>
         <div class="form-group">
             <label for="title" class="col-sm-1">Title:</label>
