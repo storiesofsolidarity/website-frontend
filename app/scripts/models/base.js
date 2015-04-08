@@ -6,6 +6,19 @@ Solidarity.Models = Solidarity.Models || {};
     'use strict';
 
     Solidarity.Models.BaseModel = Backbone.Model.extend({
+        initialize: function() {
+        },
+
+        defaults: {
+        },
+
+        validate: function(attrs, options) {
+        },
+
+        parse: function(response, options)  {
+            return response;
+        },
+
         url: function () {
             var links = this.get('links'),
             url = links && links.self;

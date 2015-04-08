@@ -6,21 +6,7 @@ Solidarity.Models = Solidarity.Models || {};
     'use strict';
 
     Solidarity.Models.Location = Solidarity.Models.BaseModel.extend({
-
-        urlRoot: Solidarity.apiRoot+'location',
-
-        initialize: function() {
-        },
-
-        defaults: {
-        },
-
-        validate: function(attrs, options) {
-        },
-
-        parse: function(response, options)  {
-            return response;
-        }
+        urlRoot: Solidarity.apiRoot+'location'
     });
 
 })();
