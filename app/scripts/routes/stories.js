@@ -14,15 +14,19 @@ Solidarity.Routers = Solidarity.Routers || {};
             'share': 'storyPost',
         },
 
+        cached: {
+            'map': undefined,
+        },
+
         storyMap: function() {
-            new Solidarity.Views.StoryMap();
+            this.cached.map = this.cached.map || new Solidarity.Views.StoryMap();
+            this.cached.map.getData();
+            this.cached.map.render();
         },
         storyList: function() {
             new Solidarity.Views.StoryList();
         },
         storyListLocation: function(state, city) {
-            console.log('route city',city);
-            console.log('route state', state);
             new Solidarity.Views.StoryListLocation({state: state, city: city});
         },
         storyView: function(id) {

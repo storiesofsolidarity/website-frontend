@@ -12,10 +12,11 @@ Solidarity.Views = Solidarity.Views || {};
         events: {},
 
         initialize: function () {
-            var self = this;
-            this.render();
-
             this.collection = new Solidarity.Collections.Locations({});
+        },
+
+        getData: function() {
+            var self = this;
             this.collection.fetch({
                 success: function() {
                     // do first render
@@ -63,7 +64,7 @@ Solidarity.Views = Solidarity.Views || {};
                 //.call(zoom) // delete this line to disable free zooming
                 .call(zoom.event);
 
-            d3.json(Solidarity.siteRoot + 'scripts/map/us.json', function(error, us) {
+            function drawStates(error, us) {
                 self.map.selectAll('path')
                   .data(topojson.feature(us, us.objects.states).features)
                 .enter().append('path')
@@ -75,7 +76,16 @@ Solidarity.Views = Solidarity.Views || {};
                   .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
                   .attr('class', 'mesh')
                   .attr('d', path);
-            });
+            }
+
+            if (this.us_json === undefined) {
+                d3.json(Solidarity.siteRoot + 'scripts/map/us.json', function(error, us) {
+                    self.us_json = us; //cache for view reload
+                    drawStates(error, self.us_json);
+                });
+            } else {
+                drawStates(null, this.us_json);
+            }
 
             function clicked(d) {
                 if (active.node() === this) { return reset(); }
@@ -128,7 +138,6 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         renderStories: function() {
-            console.log('storyMap.renderStories');
             var projection = this.projection;
 
             var opacity = d3.scale.log();
@@ -157,7 +166,10 @@ Solidarity.Views = Solidarity.Views || {};
                 })
                 .on('mouseover', tip.show)
                 .on('mouseout', tip.hide)
-            ;
+                .on('click', function(d) {
+                    Backbone.history.navigate('/list/'+d.attributes.state+'/'+d.attributes.city,
+                        {trigger: true});
+                });
         }
 
     });
