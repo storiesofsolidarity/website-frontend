@@ -15,13 +15,13 @@ Solidarity.Routers = Solidarity.Routers || {};
         },
 
         cached: {
-            'map': undefined,
+            'storyMap': undefined
         },
 
         storyMap: function() {
-            this.cached.map = this.cached.map || new Solidarity.Views.StoryMap();
-            this.cached.map.getData();
-            this.cached.map.render();
+            this.cached.storyMap = this.cached.storyMap || new Solidarity.Views.StoryMap();
+            this.cached.storyMap.render();
+            this.cached.storyMap.getData();
         },
         storyList: function() {
             new Solidarity.Views.StoryList();

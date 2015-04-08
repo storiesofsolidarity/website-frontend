@@ -64,6 +64,17 @@ Solidarity.Views = Solidarity.Views || {};
                 //.call(zoom) // delete this line to disable free zooming
                 .call(zoom.event);
 
+            if (this.us_json === undefined) {
+                d3.json(Solidarity.siteRoot + 'scripts/map/us.json', function(error, us) {
+                    //console.log('requesting scripts/map/us.json');
+                    self.us_json = us; //cache for view reload
+                    drawStates(error, self.us_json);
+                });
+            } else {
+                //console.log('using cached scripts/map/us.json');
+                drawStates(null, this.us_json);
+            }
+
             function drawStates(error, us) {
                 self.map.selectAll('path')
                   .data(topojson.feature(us, us.objects.states).features)
@@ -76,15 +87,6 @@ Solidarity.Views = Solidarity.Views || {};
                   .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
                   .attr('class', 'mesh')
                   .attr('d', path);
-            }
-
-            if (this.us_json === undefined) {
-                d3.json(Solidarity.siteRoot + 'scripts/map/us.json', function(error, us) {
-                    self.us_json = us; //cache for view reload
-                    drawStates(error, self.us_json);
-                });
-            } else {
-                drawStates(null, this.us_json);
             }
 
             function clicked(d) {
@@ -167,7 +169,7 @@ Solidarity.Views = Solidarity.Views || {};
                 .on('mouseover', tip.show)
                 .on('mouseout', tip.hide)
                 .on('click', function(d) {
-                    Backbone.history.navigate('/list/'+d.attributes.state+'/'+d.attributes.city,
+                    Backbone.history.navigate('/list/'+d.attributes.state.toLowerCase()+'/'+d.attributes.city.toLowerCase(),
                         {trigger: true});
                 });
         }
