@@ -1,15 +1,21 @@
 <div class="storyRead">
-    <h2><% data.title %></h2>
+    <h1><% if (data.title) { %>
+            <%= data.title %><br> by
+        <% } %>
+        <% if (data.author && data.author.anonymous !== true) { %>
+            <a href="#read/author/<%-data.author.user.id%>"><%- data.author.user.first_name %> <%- data.author.user.last_name %></a>
+        <% } else { %>
+            Anonymous
+        <% } %>
+        <% if (data.location && data.location.city && data.location.state) { %>
+            from <%= data.location.city %>, <%= data.location.state %>
+        <% } %>
+    </h1>
+    <h2><%= (new Date(data.updated_at)).toDateString() %></h2>
 
     <div class="body">
         <%- data.content %>
     </div>
-    <h3><%= (new Date(data.updated_at)).toDateString() %><br>
-        by <% if (data.author_user) { %>
-            <a href="#read/author/<%-data.author_user.id%>"><%- data.author_user.first_name %> <%- data.author_user.last_name %></a>
-        <% } else { %>
-            Anonymous
-        <% } %>
-        </h3>
+    
     <a href="#back" onclick="history.go(-1);return false;" >&larr; Back</a>
 </div>

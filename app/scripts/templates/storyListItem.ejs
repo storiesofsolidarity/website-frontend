@@ -11,8 +11,8 @@
         </span>
     </div>
     <h3><%= (new Date(data.updated_at)).toDateString() %><br>
-        by <% if (data.author_user) { %>
-            <a href="#read/author/<%-data.author_user.id%>"><%- data.author_user.first_name %> <%- data.author_user.last_name %></a>
+        by <% if (data.author.user) { %>
+            <a href="#read/author/<%-data.author.user.id%>"><%- data.author.user.first_name %> <%- data.author.user.last_name %></a>
         <% } else { %>
             Anonymous
         <% } %>
