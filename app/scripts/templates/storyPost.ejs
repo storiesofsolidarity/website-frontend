@@ -4,7 +4,7 @@
     <div class="col-md-4">
         Post 
         <% if (Solidarity.user !== undefined ) { %>
-        as <a href="#auth/user"><%= data.user %></a>
+        as <a href="#auth/user"><%= Soldarity.user %></a>
         or <a href="#auth/logout">Logout</a>
         <% } else { %>
         anonymously or <a href="#auth/login?success=share" >Login</a>
