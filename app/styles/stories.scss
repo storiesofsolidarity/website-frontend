@@ -39,6 +39,21 @@
     background: $black;
     padding: 20px 40px;
 
+    h1 {
+        font-family: $font-family-sans-serif;
+        border-top: 1px solid $orange-4;
+        border-bottom: 1px solid $orange-4;
+        padding: 10px 0 10px 0;
+        letter-spacing: 2px;
+        font-size: $font-size-large;
+        color: $orange-4;
+    }
+    h2 { 
+        font-family: $font-family-sans-serif;
+        font-size: $font-size-medium;
+        color: $gray-light;
+    }
+
 }
 
 .storyMap {
