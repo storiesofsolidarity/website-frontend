@@ -10,14 +10,20 @@ Solidarity.Routers = Solidarity.Routers || {};
             'map': 'storyMap',
             'read': 'storyList',
             'read/story/:id': 'storyView',
+            'list/:state/:city': 'storyListLocation',
             'share': 'storyPost',
         },
 
         storyMap: function() {
-            new Solidarity.Views.StoryMap({el: '#content'});
+            new Solidarity.Views.StoryMap();
         },
         storyList: function() {
-            new Solidarity.Views.StoryList({el: '#content'});
+            new Solidarity.Views.StoryList();
+        },
+        storyListLocation: function(state, city) {
+            console.log('route city',city);
+            console.log('route state', state);
+            new Solidarity.Views.StoryListLocation({state: state, city: city});
         },
         storyView: function(id) {
             new Solidarity.Views.Story({
@@ -25,7 +31,7 @@ Solidarity.Routers = Solidarity.Routers || {};
             });
         },
         storyPost: function() {
-            new Solidarity.Views.StoryPost({el: '#content'});
+            new Solidarity.Views.StoryPost();
         },
     });
 

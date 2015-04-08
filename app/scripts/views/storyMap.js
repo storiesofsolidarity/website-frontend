@@ -8,7 +8,7 @@ Solidarity.Views = Solidarity.Views || {};
     Solidarity.Views.StoryMap = Solidarity.Views.BaseView.extend({
 
         template: JST['app/scripts/templates/storyMap.ejs'],
-
+        el: '#content',
         events: {},
 
         initialize: function () {

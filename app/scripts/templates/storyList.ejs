@@ -1,7 +1,14 @@
+<% if(data.filtered) { %>
+<h1>Stories from <%= data.city %>, <%= data.state %></h1>
+<% } %>
 <div class="storyList">
     <!-- story items added here -->
     
     <div class="item more" style="display:none;">
         <h2><a class="loadMore" href="#read">+ More</a></h2>
     </div>
+</div>
+
+<div>
+    <a href="#back" onclick="history.go(-1);return false;" >&larr; Back</a>
 </div>
