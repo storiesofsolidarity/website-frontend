@@ -135,9 +135,9 @@ Solidarity.Views = Solidarity.Views || {};
             opacity.domain([1, 100]).range([0.5, 0]);
 
             var tip = d3.tip().html(function(d) {
-                var text = _.template('<a href="#read/story/"><%= city %>, <%= state %></a>');
-                console.log(d.attributes);
-                return text(d.attributes);
+                var tmpl = '<%= story_count %> stor<%= story_count > 1 ? "ies" : "y"%>'+
+                           ' in <%= city %>, <%= state %>';
+                return _.template(tmpl)(d.attributes);
             });
             this.map.call(tip);
 
