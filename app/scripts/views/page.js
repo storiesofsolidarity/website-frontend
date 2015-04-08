@@ -5,7 +5,7 @@ Solidarity.Views = Solidarity.Views || {};
 (function () {
     'use strict';
 
-    Solidarity.Views.Page = Backbone.View.extend({
+    Solidarity.Views.Page = Solidarity.Views.BaseView.extend({
         /* simple view for a non-interactive page
          * just renders the templateName and that's it
          */

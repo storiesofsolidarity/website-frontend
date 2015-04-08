@@ -5,7 +5,7 @@ Solidarity.Views = Solidarity.Views || {};
 (function () {
     'use strict';
 
-    Solidarity.Views.StoryMap = Backbone.View.extend({
+    Solidarity.Views.StoryMap = Solidarity.Views.BaseView.extend({
 
         template: JST['app/scripts/templates/storyMap.ejs'],
 
