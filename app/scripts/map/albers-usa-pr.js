@@ -1,7 +1,7 @@
 // A modified d3.geo.albersUsa to include Puerto Rico.
 // from https://gist.github.com/mbostock/5629120
 
-function albersUsaPr() {
+d3.geo.albersUsaPr = function() {
   var ε = 1e-6;
 
   var lower48 = d3.geo.albers();

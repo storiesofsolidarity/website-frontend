@@ -32,7 +32,7 @@ Solidarity.Views = Solidarity.Views || {};
                 height = 500,
                 active = d3.select(null);
 
-            this.projection = albersUsaPr() // US including puerto rico
+            this.projection = d3.geo.albersUsaPr() // US including puerto rico
                 .scale(1000)
                 .translate([width / 2, height / 2]);
 
