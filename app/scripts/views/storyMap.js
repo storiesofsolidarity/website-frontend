@@ -128,11 +128,18 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         renderStories: function() {
-            console.log('renderStories');
+            console.log('storyMap.renderStories');
             var projection = this.projection;
 
             var opacity = d3.scale.log();
             opacity.domain([1, 100]).range([0.5, 0]);
+
+            var tip = d3.tip().html(function(d) {
+                var text = _.template('<a href="#read/story/"><%= city %>, <%= state %></a>');
+                console.log(d.attributes);
+                return text(d.attributes);
+            });
+            this.map.call(tip);
 
             this.map.append('g')
                 .attr('class', 'bubble')
@@ -148,14 +155,9 @@ Solidarity.Views = Solidarity.Views || {};
                 .style('opacity', function(d) {
                     return opacity(d.attributes.story_count);
                 })
-              .append('title')
-                .text(function(d) {
-                    return d.attributes.city+','+d.attributes.state;
-                })
-              .filter(function(d) {
-                // remove any circles without coords
-                return ((d.attributes.lon !== undefined) && (d.attributes.lat !== undefined));
-              }).remove();
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide)
+            ;
         }
 
     });

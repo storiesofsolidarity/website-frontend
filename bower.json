@@ -11,7 +11,8 @@
     "backbone.paginator": "~2.0.2",
     "d3": "~3.5.5",
     "topojson": "~1.6.18",
-    "bootstrap-filestyle": "~1.1.2"
+    "bootstrap-filestyle": "~1.1.2",
+    "d3-tip": "~0.6.6"
   },
   "homepage": "http://sos.ucdavis.edu/",
   "authors": [
@@ -26,5 +27,8 @@
     "app/bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "resolutions": {
+    "d3": "~3.5.5"
+  }
 }
