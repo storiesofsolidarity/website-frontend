@@ -9,11 +9,7 @@ Solidarity.Views = Solidarity.Views || {};
 
         template: JST['app/scripts/templates/storyPost.ejs'],
         el: '#content',
-
-        initialize: function () {
-            this.render();
-        },
-
+        
         render: function () {
             this.$el.html(this.template());
             $('.filestyle').filestyle({
