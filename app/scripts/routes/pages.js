@@ -10,7 +10,8 @@ Solidarity.Routers = Solidarity.Routers || {};
             '': 'index',
             'about': 'about',
             'privacy': 'privacy',
-            'copyright': 'copyright'
+            'copyright': 'copyright',
+            'admin': 'adminRedirect'
         },
 
         index: function() {
@@ -24,6 +25,9 @@ Solidarity.Routers = Solidarity.Routers || {};
         },
         copyright: function() {
             new Solidarity.Views.Page('app/scripts/templates/copyright.ejs');
+        },
+        adminRedirect: function() {
+            window.location.href = 'https://stories-of-solidarity.herokuapp.com/admin/';
         }
     });
 
