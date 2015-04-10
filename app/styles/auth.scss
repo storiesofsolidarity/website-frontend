@@ -1,0 +1,9 @@
+@import '_variables.scss';
+
+label.has-error {
+    color: $brand-warning;
+}
+
+span.help-block {
+    display:block;
+}

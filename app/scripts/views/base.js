@@ -50,24 +50,29 @@ Solidarity.Views = Solidarity.Views || {};
                 type: self.$form.attr('method'),
                 url: self.$form.attr('action'),
                 data: self.$form.serializeArray(),
-                success: function(data) {
+                success: function(resp) {
                     $(self.form + ' .alert').remove();
 
-                    if (self.successCallback !== undefined) {
-                        return self.successCallback();
+                    if (self.onSuccess !== undefined) {
+                        console.log('success, returning onSuccess');
+                        return self.onSuccess(resp);
                     } else {
-                        if (window.urlParam('success')) {
-                            Backbone.history.navigate(window.urlParam('success'), {trigger: true});
-                            return true;
-                        }
+                        return true;
                     }
                 },
-                error: function(data) {
+                error: function(resp) {
                     // remove previous alerts
                     $(self.form + ' .alert').remove();
 
                     self.$form.addClass('error');
-                    var errs = data.responseJSON;
+                    var errs = resp.responseJSON;
+                    if (errs === undefined) {
+                        // probaby server 500, show response text to user
+                        // TODO, email link or error tracking
+                        self.$form.append(self.templateError({'non_field_errors': resp.statusText}));
+                        return true;
+                    }
+
                     _.map(errs, function(message, field) {
                         $(self.form + ' label[for="'+field+'"]').addClass('has-error');
                         $(self.form + ' input[name="'+field+'"]').addClass('has-error');
@@ -78,6 +83,15 @@ Solidarity.Views = Solidarity.Views || {};
                     }
                 }
             });
+        },
+
+        redirect: function() {
+            if (window.urlParam('redirect')) {
+                Backbone.history.navigate(window.urlParam('success'), {trigger: true});
+            } else {
+                // no urlParam, go back to home
+                Backbone.history.navigate('', {trigger: true});
+            }
         }
     });
 
