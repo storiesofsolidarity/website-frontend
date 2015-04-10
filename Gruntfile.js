@@ -227,7 +227,8 @@ module.exports = function (grunt) {
                         '*.{ico,txt}',
                         'images/{,*/}*.{webp,gif}',
                         'styles/fonts/{,*/}*.*',
-                        'scripts/map/*.json'
+                        'scripts/map/*.json',
+                        'CNAME'
                     ]
                 }, {
                     cwd: '<%= yeoman.app %>',
