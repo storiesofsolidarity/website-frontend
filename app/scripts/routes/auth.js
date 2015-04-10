@@ -13,6 +13,7 @@ Solidarity.Routers = Solidarity.Routers || {};
             'auth/password/change': 'passwordChange',
             'auth/password/reset': 'passwordReset',
             'auth/password/reset/confirm': 'passwordResetConfirm',
+            'auth/user': 'userDetails',
         },
 
         register: function() {
@@ -32,6 +33,9 @@ Solidarity.Routers = Solidarity.Routers || {};
         },
         passwordResetConfirm: function() {
             new Solidarity.Views.AuthPasswordResetConfirm({el: '#content'});
+        },
+        userDetails: function() {
+            new Solidarity.Views.AuthUserDetails({el: '#content'});
         },
     });
 

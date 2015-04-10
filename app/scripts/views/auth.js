@@ -46,4 +46,10 @@ Solidarity.Views = Solidarity.Views || {};
         templateError: JST['app/scripts/templates/authError.ejs'],
     });
 
+    Solidarity.Views.AuthUserDetails = Solidarity.Views.FormView.extend({
+        form: 'form#userDetails',
+        template: JST['app/scripts/templates/authUserDetails.ejs'],
+        templateError: JST['app/scripts/templates/authError.ejs'],
+    });
+
 })();
