@@ -228,6 +228,7 @@ module.exports = function (grunt) {
                         'images/{,*/}*.{webp,gif}',
                         'styles/fonts/{,*/}*.*',
                         'scripts/map/*.json',
+                        'scripts/splash/*.json',
                         'CNAME'
                     ]
                 }, {

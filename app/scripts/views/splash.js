@@ -25,7 +25,7 @@ Solidarity.Views = Solidarity.Views || {};
         initialize: function () {
             this.render();
             var self = this;
-            $.ajax('/scripts/splashStories.json', {
+            $.ajax('/scripts/splash/featuredStories.json', {
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
@@ -44,7 +44,6 @@ Solidarity.Views = Solidarity.Views || {};
             }
             var id = _.random(0, this.splashStories.length-1);
             this.story = this.splashStories[id];
-            console.log('splash story',this.story.name, this.story);
             this.$el.css('background-image','url('+this.story.image+')');
             var $quote = this.$el.find('.quote');
             $quote.find('h1').text(this.story.quote.en);
