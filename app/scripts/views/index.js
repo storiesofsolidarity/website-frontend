@@ -15,6 +15,7 @@ Solidarity.Views = Solidarity.Views || {};
             // render first, so sub-views have their elements
             this.render();
 
+            this.splashView = new Solidarity.Views.Splash({el: '#splash'});
             this.introView = new Solidarity.Views.Intro({el: '#intro'});
             // search, filter, login
         },
