@@ -234,7 +234,7 @@ module.exports = function (grunt) {
                     src: [
                         '*.{ico,txt}',
                         'images/{,*/}*.{webp,gif,png,jpg}',
-                        'audio/*.{mp3,m4a}',
+                        'audio/*.{xml,mp3,m4a}',
                         'styles/fonts/{,*/}*.*',
                         'scripts/map/*.json',
                         'scripts/splash/*.json',
