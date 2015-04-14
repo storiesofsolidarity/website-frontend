@@ -106,6 +106,11 @@ nav.navbar + section.main {
     padding-bottom: 19px;
 }
 
+.container-fluid section.jumbotron {
+    margin: 0;
+    border-radius: 0;
+}
+
 /* sticky page footer */
 .footer {
     padding-top: 19px;
