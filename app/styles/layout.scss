@@ -73,6 +73,8 @@ a:hover {
             text-align: center;
 
             border-right: 1px solid $white;
+            &:last-child { border-right: 0; }
+
             &> a {
                 color: $black;
                 line-height: 50px;
