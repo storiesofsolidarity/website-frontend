@@ -25,6 +25,7 @@ Solidarity.Views = Solidarity.Views || {};
             'submit': 'submit',
             'keyup input.has-error': 'clearFieldErrors'
         },
+        templateError: JST['app/scripts/templates/formError.ejs'],
 
         render: function () {
             this.$el.html(this.template());
