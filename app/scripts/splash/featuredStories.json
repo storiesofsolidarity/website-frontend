@@ -1,14 +1,4 @@
-[{  "name": "Norma",
-    "image": "images/splash/norma.jpg",
-    "quote": {
-        "en": "I was a single parent for 11 years. It was really hard to leave my two kids and come into work without really having any support from family.",
-        "es": "Yo fui una madre soltera por 11 años. Fue muy difícil dejar a mis dos hijos y ir al trabajo sin tener el  apoyo de mi familia.",
-        "tl": "Sa loob ng labing isang taon, naging akong mag-iisang magulang. Mahirap iwanan ang mga anak ko para magtrabaho habang wala akong suporta sa pamilya.",
-        "zh": "作为一个单身母亲已经11年了。对我来说最困难的莫过于独自抚养我的两个孩子，并且家庭对我的工作而言没有提供任何帮助。"
-    },
-    "align": "left"
-},
-
+[
 {   "name": "Leo",
     "image": "images/splash/leo.jpg",
     "quote": {
