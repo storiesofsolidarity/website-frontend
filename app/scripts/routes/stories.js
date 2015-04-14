@@ -5,7 +5,7 @@ Solidarity.Routers = Solidarity.Routers || {};
 (function () {
     'use strict';
 
-    Solidarity.Routers.Stories = Backbone.Router.extend({
+    Solidarity.Routers.Stories = Solidarity.Routers.Base.extend({
         routes: {
             'map': 'storyMap',
             'read': 'storyList',

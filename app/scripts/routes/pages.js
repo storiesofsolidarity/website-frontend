@@ -5,7 +5,7 @@ Solidarity.Routers = Solidarity.Routers || {};
 (function () {
     'use strict';
 
-    Solidarity.Routers.Pages = Backbone.Router.extend({
+    Solidarity.Routers.Pages = Solidarity.Routers.Base.extend({
         routes: {
             '': 'index',
             'about': 'about',

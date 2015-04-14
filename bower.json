@@ -12,8 +12,7 @@
     "d3": "~3.5.5",
     "topojson": "~1.6.18",
     "bootstrap-filestyle": "~1.1.2",
-    "d3-tip": "~0.6.6",
-    "backbone.analytics": "~1.0.1"
+    "d3-tip": "~0.6.6"
   },
   "homepage": "http://www.storiesofsolidarity.org",
   "authors": [

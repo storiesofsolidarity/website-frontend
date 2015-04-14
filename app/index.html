@@ -12,6 +12,16 @@
         <!-- build:js scripts/vendor/modernizr.js -->
         <script src="bower_components/modernizr/modernizr.js"></script>
         <!-- endbuild -->
+
+        <!-- Google Analytics -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','__gaTracker'));
+            __gaTracker('create','UA-61853826-1');
+        </script>
     </head>
     <body>
         <!--[if lt IE 10]>
@@ -56,28 +66,12 @@
             </div>
         </footer>
 
-        <!-- Google Analytics -->
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-61853826-1');
-        </script>
-
         <!-- build:js scripts/vendor.js -->
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/lodash/dist/lodash.compat.js"></script>
         <script src="bower_components/backbone/backbone.js"></script>
         <script src="bower_components/backbone.paginator/lib/backbone.paginator.js"></script>
-        <script src="bower_components/backbone.analytics/backbone.analytics.js"></script>
         <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
-
-        <script src="bower_components/d3/d3.js"></script>
-        <script src="bower_components/d3-tip/index.js"></script>
-        <script src="bower_components/topojson/topojson.js"></script>
-        <script src="scripts/map/albers-usa-pr.js"></script>
         <!-- endbuild -->
 
         <!-- build:js scripts/plugins.js -->
@@ -93,8 +87,12 @@
         <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script>
         <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
         <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
-
         <script src="bower_components/bootstrap-filestyle/src/bootstrap-filestyle.js"></script>
+
+        <script src="bower_components/d3/d3.js"></script>
+        <script src="bower_components/d3-tip/index.js"></script>
+        <script src="bower_components/topojson/topojson.js"></script>
+        <script src="scripts/map/albers-usa-pr.js"></script>
         <!-- endbuild -->
 
         <script>
@@ -138,6 +136,7 @@
         <script src="scripts/views/splash.js"></script>
         <script src="scripts/views/index.js"></script>
         
+        <script src="scripts/routes/base.js"></script>
         <script src="scripts/routes/auth.js"></script>
         <script src="scripts/routes/pages.js"></script>
         <script src="scripts/routes/stories.js"></script>

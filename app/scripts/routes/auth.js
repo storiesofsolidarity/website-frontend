@@ -5,7 +5,7 @@ Solidarity.Routers = Solidarity.Routers || {};
 (function () {
     'use strict';
 
-    Solidarity.Routers.Auth = Backbone.Router.extend({
+    Solidarity.Routers.Auth = Solidarity.Routers.Base.extend({
         routes: {
             'auth/register': 'register',
             'auth/login': 'login',
