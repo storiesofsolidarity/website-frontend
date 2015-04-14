@@ -5,13 +5,15 @@ Solidarity.Views = Solidarity.Views || {};
 (function () {
     'use strict';
 
-    Solidarity.Views.StoryPost = Solidarity.Views.BaseView.extend({
+    Solidarity.Views.StoryPost = Solidarity.Views.FormView.extend({
 
         template: JST['app/scripts/templates/storyPost.ejs'],
         el: '#content',
+        form: 'form#storyPost',
         
         render: function () {
             this.$el.html(this.template());
+            this.$form = $(this.form);
 
             // init bootstrap form plugins
             $('.filestyle').filestyle({

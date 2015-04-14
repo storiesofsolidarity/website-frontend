@@ -43,6 +43,10 @@ Solidarity.Views = Solidarity.Views || {};
             $(self.form + ' input[name="'+field+'"] + .help-block').html('');
         },
 
+        clearAlerts: function() {
+            $(this.form + ' .alert').remove();
+        },
+
         submit: function(e) {
             var self = this;
             e.preventDefault();
@@ -63,7 +67,7 @@ Solidarity.Views = Solidarity.Views || {};
                 },
                 error: function(resp) {
                     // remove previous alerts
-                    $(self.form + ' .alert').remove();
+                    this.clearAlerts();
 
                     self.$form.addClass('error');
                     var errs = resp.responseJSON;

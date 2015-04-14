@@ -115,6 +115,9 @@
     padding: 40px;
 
     .row { margin-bottom: 20px; }
+
+    span.required { color: $orange; }
+
     textarea, input, .input-group {
         vertical-align: top;
         color: $black;
