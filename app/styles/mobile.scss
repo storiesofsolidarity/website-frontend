@@ -1,5 +1,14 @@
 @import '_variables.scss';
 
+// navbar font size reduce
+@media screen and (min-width: $grid-float-breakpoint) and (max-width: $screen-md) {
+    .navbar.navbar-default {
+        ul.nav.navbar-nav > li {
+            font-size: 40px;
+        }
+    }
+}
+
 /* Responsive: screen-phone */
 @media screen and (max-width: $grid-float-breakpoint) {
     .container {
