@@ -133,8 +133,12 @@ nav.navbar + section.main {
     margin: 30px 0;
 }
 
-.btn.line-height-1 {
+.line-height-1 {
     line-height: 1;
+}
+
+.sans-serif {
+    font-family: $font-family-sans-serif;
 }
 
 form input, form textarea {
