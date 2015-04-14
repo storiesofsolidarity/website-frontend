@@ -12,12 +12,15 @@ Solidarity.Views = Solidarity.Views || {};
         
         render: function () {
             this.$el.html(this.template());
+
+            // init bootstrap form plugins
             $('.filestyle').filestyle({
                 input: false,
                 buttonText: 'Upload',
                 size: 'sm',
                 iconName: 'glyphicon-cloud-upload',
-            }); // custom file button style
+            }); 
+            $('.selectpicker').selectpicker();
             return this;
         }
 

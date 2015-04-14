@@ -119,4 +119,11 @@
         vertical-align: top;
         color: $black;
     }
+
+    .selectpicker {
+        // ugly hack to make it line up with input-group
+        margin-top:-1px;
+        height: 28px;
+        span.filter-option { line-height:1; }
+    }
 }
