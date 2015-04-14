@@ -170,6 +170,7 @@ Solidarity.Views = Solidarity.Views || {};
                 .on('mouseover', tip.show)
                 .on('mouseout', tip.hide)
                 .on('click', function(d) {
+                    tip.hide();
                     Backbone.history.navigate('/list/'+d.attributes.state.toLowerCase()+'/'+d.attributes.city.toLowerCase(),
                         {trigger: true});
                 });
