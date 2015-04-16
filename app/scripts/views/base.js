@@ -67,7 +67,7 @@ Solidarity.Views = Solidarity.Views || {};
                 },
                 error: function(resp) {
                     // remove previous alerts
-                    this.clearAlerts();
+                    self.clearAlerts();
 
                     self.$form.addClass('error');
                     var errs = resp.responseJSON;
