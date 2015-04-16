@@ -1,5 +1,4 @@
 <div class="item story" id="story-<%=data.id%>">
-    <h2><%= data.title %></h2>
     <div class="body">
         <% if (data.content.length > 160) { %>
             <%- data.content.slice(0,160) %>...
