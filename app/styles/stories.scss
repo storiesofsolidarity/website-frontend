@@ -118,6 +118,17 @@
 
     span.required { color: $orange; }
 
+    label {
+        // col-md-1 not actually wide enough, bump up to 1.25
+        @media screen and (min-width: $screen-sm) and (max-width: $screen-md-max) {
+            width: 12.5%;
+        }
+
+        @media screen and (min-width: $screen-lg) {
+            width: 10%;
+        }
+    }
+
     textarea, input, .input-group {
         vertical-align: top;
         color: $black;
