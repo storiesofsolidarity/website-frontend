@@ -10,7 +10,7 @@
             in <%- data.location.city %>, <%- data.location.state %>
         <% } %>
     </h1>
-    <h2><%= (new Date(data.updated_at)).toDateString() %></h2>
+    <h2><%= (new Date(data.created_at)).toDateString() %></h2>
 
     <div class="body">
         <%- data.content %>

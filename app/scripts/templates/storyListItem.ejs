@@ -9,7 +9,7 @@
             <a class="readMore" href="#read/story/<%= data.id %>">+ read more</a>
         </span>
     </div>
-    <h3><%= (new Date(data.updated_at)).toDateString() %><br>
+    <h3><%= (new Date(data.created_at)).toDateString() %> <br>
         by <% if (data.author && data.author.user) { %>
             <a href="#read/author/<%-data.author.user.id%>"><%- data.author.user.first_name %> <%- data.author.user.last_name %></a>
         <% } else { %>
