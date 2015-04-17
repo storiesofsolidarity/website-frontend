@@ -32,6 +32,12 @@ Solidarity.Views = Solidarity.Views || {};
             return this;
         },
 
+        onSuccess: function(resp) {
+            console.log('storyPosted',resp);
+            var newStoryUrl = 'read/story/'+resp.id+'?posted=true';
+            Backbone.history.navigate(newStoryUrl, {trigger: true});
+        },
+
         geolocate: function() {
             if (Modernizr.geolocation) {
                 console.log('geolocate!');
