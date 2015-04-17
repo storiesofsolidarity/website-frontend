@@ -4,13 +4,10 @@
         <% } else { %>
             Anonymous
         <% } %>
-        <% if (data.author && data.author.occupation) { %>
-            <%- data.author.occupation %> 
-            <% if (data.author.employer) { %> at <% } %>
-        <% } %>
-        <% if (data.author && data.author.employer) { %> <%- data.author.employer %> <% } %>
+        <% if (data.author && data.author.occupation) { %>  <%- data.author.occupation %> <% } %>
+        <% if (data.author && data.author.employer) { %> at <%- data.author.employer %> <% } %>
         <% if (data.location && data.location.city && data.location.state) { %>
-            from <%- data.location.city %>, <%- data.location.state %>
+            in <%- data.location.city %>, <%- data.location.state %>
         <% } %>
     </h1>
     <h2><%= (new Date(data.updated_at)).toDateString() %></h2>
