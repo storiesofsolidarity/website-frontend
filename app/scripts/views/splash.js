@@ -25,7 +25,7 @@ Solidarity.Views = Solidarity.Views || {};
         initialize: function () {
             this.render();
             var self = this;
-            $.ajax('/scripts/splash/featuredStories.json', {
+            $.ajax('scripts/splash/featuredStories.json', {
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
