@@ -6,7 +6,7 @@ Solidarity.Models = Solidarity.Models || {};
     'use strict';
 
     Solidarity.Models.Author = Solidarity.Models.BaseModel.extend({
-        url: Solidarity.apiRoot + 'author',
+        url: Solidarity.apiRoot + 'author/',
         idAttributemodel: 'username'
     });
 

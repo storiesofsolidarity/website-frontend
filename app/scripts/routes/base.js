@@ -6,6 +6,10 @@ Solidarity.Routers = Solidarity.Routers || {};
     'use strict';
 
     Solidarity.Routers.Base = Backbone.Router.extend({
+        options: {
+            trailingSlashIsSignificant: true,
+        },
+
         initialize: function() {
             this.bind('route', this.pageView);
         },

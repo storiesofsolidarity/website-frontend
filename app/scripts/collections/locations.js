@@ -7,7 +7,7 @@ Solidarity.Collections = Solidarity.Collections || {};
 
     Solidarity.Collections.Locations = Solidarity.Collections.BaseCollection.extend({
         model: Solidarity.Models.Location,
-        url: Solidarity.apiRoot + 'location',
+        url: Solidarity.apiRoot + 'location/',
     });
 
 })();

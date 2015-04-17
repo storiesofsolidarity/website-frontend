@@ -6,7 +6,7 @@ Solidarity.Models = Solidarity.Models || {};
     'use strict';
 
     Solidarity.Models.Story = Solidarity.Models.BaseModel.extend({
-        urlRoot: Solidarity.apiRoot+'story'
+        urlRoot: Solidarity.apiRoot+'story/'
     });
 
 })();
