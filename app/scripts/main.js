@@ -22,6 +22,11 @@ window.Solidarity = _.extend(window.Solidarity, {
 
         // start history
         Backbone.history.start();
+
+        // set XHR headers even for cross-domain requests
+        $.ajaxSetup({
+            headers: {'X-Requested-With': 'XMLHttpRequest'}
+        });
     }
 });
 

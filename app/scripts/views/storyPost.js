@@ -12,6 +12,11 @@ Solidarity.Views = Solidarity.Views || {};
         form: 'form#storyPost',
         events: {'click button#geolocate': 'geolocate'},
         
+        initialize: function() {
+            _.extend(this.events, Solidarity.Views.FormView.prototype.events);
+            this.render();
+        },
+
         render: function () {
             this.$el.html(this.template());
             this.$form = $(this.form);

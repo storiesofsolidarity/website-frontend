@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<form action="<%= Solidarity.apiRoot %>story" id="storyPost" method="POST" class="form-horizontal">
+<form class="form-horizontal" action="<%= Solidarity.apiRoot %>story/" id="storyPost" method="POST">
     <fieldset>
         <div class="form-group">
             <label for="name" class="col-md-1">Name:</label>
@@ -38,8 +38,8 @@
         <div class="form-group">
             <label for="location" class="col-md-1">Location:</label>
             <div class="input-group col-xs-12 col-md-6">
-                <input id="city" class="col-xs-12" name="city" value="" type="text" placeholder="City">
-                <select id="state" class="selectpicker dropup" name="state" >
+                <input id="city" class="col-xs-12" name="location.city" value="" type="text" placeholder="City">
+                <select id="state" class="selectpicker dropup" name="location.state" >
                     <option value="">- State -</option>
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
@@ -110,7 +110,10 @@
         </div>
 
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Post!" />
+            <label class="col-md-1"></label>
+            <div class="input-group col-xs-12 col-md-6">
+                <button type="submit" class="btn btn-primary">Post!</button>
+            </div>
         </div>
     </fieldset>
 </form>

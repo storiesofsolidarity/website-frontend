@@ -48,9 +48,9 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         submit: function(e) {
-            var self = this;
             e.preventDefault();
-
+            var self = this;
+            
             $.ajax({
                 type: self.$form.attr('method'),
                 url: self.$form.attr('action'),
@@ -59,7 +59,6 @@ Solidarity.Views = Solidarity.Views || {};
                     $(self.form + ' .alert').remove();
 
                     if (self.onSuccess !== undefined) {
-                        console.log('success, returning onSuccess');
                         return self.onSuccess(resp);
                     } else {
                         return true;
@@ -75,6 +74,7 @@ Solidarity.Views = Solidarity.Views || {};
                         // probaby server 500, show response text to user
                         // TODO, email link or error tracking
                         self.$form.append(self.templateError({'non_field_errors': resp.statusText}));
+                        console.log(resp.responseText);
                         return true;
                     }
 
@@ -86,8 +86,11 @@ Solidarity.Views = Solidarity.Views || {};
                     if (errs.non_field_errors !== undefined) {
                         self.$form.append(self.templateError(errs));
                     }
+                    return false;
                 }
             });
+
+            return false;
         },
 
         redirect: function() {
