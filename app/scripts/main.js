@@ -20,8 +20,12 @@ window.Solidarity = _.extend(window.Solidarity, {
         // this.filterView = new Solidarity.Views.Filter({});
         // this.loginView = new Solidarity.Views.Login({});
 
-        // start history
-        Backbone.history.start();
+        // start history, redirect to about page if invalid route
+        if (!Backbone.history.start()) {
+            var msg = '404 for /'+window.location.hash+' redirecting to /#about';
+            console.error(msg);
+            Backbone.history.navigate('about', {trigger: true});
+        }
 
         // set XHR headers even for cross-domain requests
         $.ajaxSetup({
