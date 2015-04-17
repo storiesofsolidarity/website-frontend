@@ -50,7 +50,9 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         addStory: function(story) {
-            $(this.templateItem(story.attributes)).insertBefore('.storyList .item.more');
+            if (story.attributes.content) {
+                $(this.templateItem(story.attributes)).insertBefore('.storyList .item.more');
+            }
             if(!this.collection.hasNextPage()) {
                 $('.item.more').hide();
             }
