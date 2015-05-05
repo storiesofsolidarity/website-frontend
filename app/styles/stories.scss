@@ -129,8 +129,18 @@
         height: 28px;
         span.filter-option { line-height:1; }
     }
+
+    .bootstrap-select.input-group-btn {
+        width: 25%;
+    }
+
+    // remove focus outline
+    .dropdown-menu > li > a:focus {
+        outline: 0 !important;
+        outline-offset: 0 !important;
+    }
     .dropdown-menu > li > a:hover {
-         
+        border-bottom: none;
     }
 }
 
