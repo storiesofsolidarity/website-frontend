@@ -31,6 +31,13 @@ window.Solidarity = _.extend(window.Solidarity, {
         $.ajaxSetup({
             headers: {'X-Requested-With': 'XMLHttpRequest'}
         });
+
+        // remove sms: link functionalty for desktop users
+        $('a[href^="sms:"]').click(function() {
+            // unfortunately can't do Modernizr detection for sms input types
+            // just do it if window width > $grid-float-breakpoint
+            if (window.innerWidth > 768) { return false; }
+        });
     }
 });
 

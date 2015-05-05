@@ -124,9 +124,8 @@ nav.navbar + section.main {
     width: 100%;
     height: $sticky-footer-height;
 
-    .copyright { float: left; }
     ul {
-        float: right;
+        &.right { text-align: right; }
         list-style-type: none;
         li {
             display: inline-block;
