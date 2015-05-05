@@ -19,16 +19,21 @@ $gray-medium:            #666;
 $gray-light:             #888;   
 $gray-lighter:           #ADAFAE;
 
-$brand-primary:         #2A9FD6;
-$brand-success:         #77B300;
-$brand-info:            $gray-medium;
-$brand-warning:         #FF8800;
-$brand-danger:          #CC0000;
-
 $orange:                #F69731;
 $orange-2:              #DE8226;
 $orange-3:              #C46006;
 $orange-4:              #ff9900;
+
+$blue:                  #2A9FD6;
+$red:                   #CC0000;
+$yellow:                #FFDD22;
+
+$brand-primary:         $orange;
+$brand-success:         $blue;
+$brand-info:            $gray-medium;
+$brand-warning:         $yellow;
+$brand-danger:          $red;
+
 
 //== Scaffolding
 //
