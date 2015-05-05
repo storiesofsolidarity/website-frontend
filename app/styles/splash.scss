@@ -1,47 +1,58 @@
 @import '_variables.scss';
 
 #splash {
-    height: 675px;
-    background-repeat: no-repeat;
-    background-position-x: center;
+    .statement {
+        padding: 0px 20px;
+        .inner {
+            @extend %center-vertical;
+            position: absolute;
+            width: calc(100% - 40px);
+        }
 
-    .quote {
-        // center vertically
-        position: relative;
-        top: 50%;
-        -webkit-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
+        // min-height for mobile stacking
+        min-height: 180px;
+        @media (min-width: $screen-sm-min) {
+            // viewport height for desktop vertical split
+            // 100% viewport - height of navbar
+            height: calc(100vh - 180px);
+            position: relative;
+            top: -40px;
+        }
 
-        margin: 0 20px;
-        padding: 20px 40px;
-        background: rgba(0, 0, 0, 0.6);
+        // bottom border for mobile
+        border-bottom: 1px solid black;
+        &:last-child { border-bottom: none; }
+        @media (min-width: $screen-sm-min) {
+            // right border for desktop
+            border-bottom: none;
+            border-right: 1px solid black;
+            &:last-child { border-right: none; }
+        }
 
         h1 {
             font-family: $font-family-sans-serif;
-            font-size: $font-size-h4;
-            @media (min-width: $screen-md-min) {
-                font-size: $font-size-h3;
+            font-size: $font-size-h5;
+            float: left;
+
+            @media (min-width: $screen-sm-min) {
+                font-size: $font-size-h5;
             }
+
             line-height: 1.0;
             margin: 0;
-        }
 
-        &.right {
-            // make-md-column-push mixin
-            @media (min-width: $screen-md-min) {
-                left: 62.5%;
-            }
         }
 
         button {
-            float: right;
-            position: relative;
-            top: -10px;
-            @media (min-width: $screen-md-min) {
-                top: 40px;
+            position: absolute;
+            right: 20px;
+            bottom: 10px; 
+
+            @media (min-width: $screen-sm-min) {
+                bottom: 0;
+                left: calc(25% + 20px);
+                right: auto;
             }
-            right: 50px;
 
             height: 50px;
             font-family: "bignoodle";

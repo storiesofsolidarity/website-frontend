@@ -55,4 +55,11 @@ window.urlParam = function(name) {
 
 $(document).ready(function () {
     Solidarity.init();
+
+    if (window.location.hash) {
+        // starting off the splash page,
+        // show nav & footer
+        $('nav.navbar-default').removeClass('hidden');
+        $('footer.footer').removeClass('hidden');
+    }
 });
