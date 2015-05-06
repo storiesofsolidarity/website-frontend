@@ -33,14 +33,14 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         onSuccess: function(resp) {
-            console.log('storyPosted',resp);
+            Solidarity.log('storyPosted',resp);
             var newStoryUrl = 'read/story/'+resp.id+'?posted=true';
             Backbone.history.navigate(newStoryUrl, {trigger: true});
         },
 
         geolocate: function() {
             if (Modernizr.geolocation) {
-                console.log('geolocate!');
+                Solidarity.log('geolocate!');
                 navigator.geolocation.getCurrentPosition(this.locationToCityState, this.geoError.bind(this));
             } else {
                 return this.geoError({code: 0, message: 'Your browser does not support geolocation.'});

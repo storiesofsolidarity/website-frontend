@@ -38,6 +38,10 @@ window.Solidarity = _.extend(window.Solidarity, {
             // just do it if window width > $grid-float-breakpoint
             if (window.innerWidth > 768) { return false; }
         });
+    },
+
+    log: function(msg) {
+        if (Solidarity.DEBUG) { console.log(msg); }
     }
 });
 
@@ -57,6 +61,7 @@ $(document).ready(function () {
     Solidarity.init();
 
     if (window.location.hash) {
+        Solidarity.log('starting at'+window.location.hash);
         // starting off the splash page,
         // show nav & footer
         $('nav.navbar-default').removeClass('hidden');
