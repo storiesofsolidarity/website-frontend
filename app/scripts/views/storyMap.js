@@ -14,8 +14,8 @@ Solidarity.Views = Solidarity.Views || {};
         initialize: function () {
             this.collection = new Solidarity.Collections.Locations({});
         },
-
-        getData: function() {
+        
+        onShow: function() {
             var self = this;
             this.collection.fetch({
                 success: function() {
@@ -138,6 +138,7 @@ Solidarity.Views = Solidarity.Views || {};
         render: function () {
             this.$el.html(this.template());
             this.drawMap();
+            return this;
         },
 
         renderStories: function() {

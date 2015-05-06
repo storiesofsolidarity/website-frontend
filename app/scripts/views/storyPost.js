@@ -14,11 +14,16 @@ Solidarity.Views = Solidarity.Views || {};
         
         initialize: function() {
             _.extend(this.events, Solidarity.Views.FormView.prototype.events);
-            this.render();
         },
 
         render: function () {
+            Solidarity.log('storyPost.render');
             this.$el.html(this.template());
+            this.$form = $(this.form);
+            return this;
+        },
+
+        onShow: function() {
             this.$form = $(this.form);
 
             // init bootstrap form plugins
@@ -29,7 +34,7 @@ Solidarity.Views = Solidarity.Views || {};
                 iconName: 'glyphicon-cloud-upload',
             }); 
             $('.selectpicker').selectpicker();
-            return this;
+            console.log('selectpicker active');            
         },
 
         onSuccess: function(resp) {

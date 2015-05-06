@@ -17,23 +17,21 @@ Solidarity.Routers = Solidarity.Routers || {};
         cached: {},
 
         storyMap: function() {
-            this.cached.storyMap = this.cached.storyMap || new Solidarity.Views.StoryMap();
-            this.cached.storyMap.render();
-            this.cached.storyMap.getData();
+            Solidarity.mainContent.show(new Solidarity.Views.StoryMap());
         },
         storyList: function() {
-            this.mainContent.show(new Solidarity.Views.StoryList());
+            Solidarity.mainContent.show(new Solidarity.Views.StoryList());
         },
         storyListLocation: function(state, city) {
-            this.mainContent.show(new Solidarity.Views.StoryListLocation({state: state, city: city}));
+            Solidarity.mainContent.show(new Solidarity.Views.StoryListLocation({state: state, city: city}));
         },
         storyView: function(id) {
-            this.mainContent.show(new Solidarity.Views.Story({
+            Solidarity.mainContent.show(new Solidarity.Views.Story({
                 model: new Solidarity.Models.Story({id: id}),
             }));
         },
         storyPost: function() {
-            this.mainContent.show(new Solidarity.Views.StoryPost());
+            Solidarity.mainContent.show(new Solidarity.Views.StoryPost());
         },
     });
 

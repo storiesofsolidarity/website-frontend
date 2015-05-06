@@ -17,25 +17,25 @@ Solidarity.Routers = Solidarity.Routers || {};
         },
 
         register: function() {
-            this.mainContent.show(new Solidarity.Views.AuthRegister({el: '#content'}));
+            Solidarity.mainContent.show(new Solidarity.Views.AuthRegister({el: '#content'}));
         },
         login: function() {
-            this.mainContent.show(new Solidarity.Views.AuthLogin({el: '#content'}));
+            Solidarity.mainContent.show(new Solidarity.Views.AuthLogin({el: '#content'}));
         },
         logout: function() {
-            this.mainContent.show(new Solidarity.Views.AuthLogout({el: '#content'}));
+            Solidarity.mainContent.show(new Solidarity.Views.AuthLogout({el: '#content'}));
         },
         passwordChange: function() {
-            this.mainContent.show(new Solidarity.Views.AuthPasswordChange({el: '#content'}));
+            Solidarity.mainContent.show(new Solidarity.Views.AuthPasswordChange({el: '#content'}));
         },
         passwordReset: function() {
-            this.mainContent.show(new Solidarity.Views.AuthPasswordReset({el: '#content'}));
+            Solidarity.mainContent.show(new Solidarity.Views.AuthPasswordReset({el: '#content'}));
         },
         passwordResetConfirm: function() {
-            this.mainContent.show(new Solidarity.Views.AuthPasswordResetConfirm({el: '#content'}));
+            Solidarity.mainContent.show(new Solidarity.Views.AuthPasswordResetConfirm({el: '#content'}));
         },
         userDetails: function() {
-            this.mainContent.show(new Solidarity.Views.AuthUserDetails({el: '#content'}));
+            Solidarity.mainContent.show(new Solidarity.Views.AuthUserDetails({el: '#content'}));
         },
     });
 

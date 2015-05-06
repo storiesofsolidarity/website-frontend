@@ -12,7 +12,6 @@ Solidarity.Routers = Solidarity.Routers || {};
 
         initialize: function() {
             this.bind('route', this.pageView);
-            this.mainContent = new Solidarity.Views.RegionManager();
         },
         pageView : function(){  
             var url = Backbone.history.getFragment();
