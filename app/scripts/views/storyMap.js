@@ -17,6 +17,7 @@ Solidarity.Views = Solidarity.Views || {};
         
         onShow: function() {
             var self = this;
+            this.drawMap();
             this.collection.fetch({
                 success: function() {
                     // do first render
@@ -133,12 +134,6 @@ Solidarity.Views = Solidarity.Views || {};
             function stopped() {
                 if (d3.event.defaultPrevented) { d3.event.stopPropagation(); }
             }
-        },
-
-        render: function () {
-            this.$el.html(this.template());
-            this.drawMap();
-            return this;
         },
 
         renderStories: function() {
