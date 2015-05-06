@@ -11,17 +11,9 @@ Solidarity.Views = Solidarity.Views || {};
         el: '#content',
         events: {},
 
-        initialize: function () {
-            // render first, so sub-views have their elements
-            this.render();
-
-            this.splashView = new Solidarity.Views.Splash({el: '#splash'});
-            this.introView = new Solidarity.Views.Intro({el: '#intro'});
-            // search, filter, login
-        },
-
         render: function () {
             this.$el.html(this.template());
+            return this;
         }
 
     });

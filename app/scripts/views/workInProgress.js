@@ -5,25 +5,23 @@ Solidarity.Views = Solidarity.Views || {};
 (function () {
     'use strict';
 
-    Solidarity.Views.Intro = Solidarity.Views.BaseView.extend({
+    Solidarity.Views.WorkInProgress = Solidarity.Views.BaseView.extend({
 
-        template: JST['app/scripts/templates/intro.ejs'],
-        events: {},
+        template: JST['app/scripts/templates/workInProgress.ejs'],
+        events: {'hidden.bs.modal': 'setCookie'},
 
-        initialize: function () {
-            this.render();
-            
+        setCookie: function () {
             // show intro modal only on first load
+            $.cookie('hideModal', 'true');
+        },
+
+        onShow: function() {
             if($.cookie('hideModal') === 'true') {
                 $('#introModal').modal('hide');
             } else {
                 $('#introModal').modal('show');
             }
-
-            $('#introModal').on('hidden.bs.modal', function () {
-                $.cookie('hideModal', 'true');
-            });
-        },
+        }
 
     });
 
