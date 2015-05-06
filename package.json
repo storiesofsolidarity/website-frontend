@@ -1,7 +1,6 @@
 {
   "name": "solidarity",
   "version": "0.0.0",
-  "dependencies": {},
   "devDependencies": {
     "apache-server-configs": "^2.8.0",
     "connect-livereload": "^0.4.0",
@@ -29,5 +28,12 @@
   },
   "engines": {
     "node": ">=0.10.0"
-  }
+  },
+  "description": "Stories of Solidarity - a social media platform that encourages workers in the low-wage, precarious workforce to build new forms of solidarity.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/storiesofsolidarity/website-frontend.git"
+  },
+  "author": "Josh Levinger <josh@spacedog.xyz>",
+  "homepage": "https://www.storiesofsolidarity.org/"
 }
