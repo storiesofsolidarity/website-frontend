@@ -33,8 +33,7 @@ Solidarity.Views = Solidarity.Views || {};
                 size: 'sm',
                 iconName: 'glyphicon-cloud-upload',
             }); 
-            $('.selectpicker').selectpicker();
-            console.log('selectpicker active');            
+            $('.selectpicker').selectpicker();          
         },
 
         onSuccess: function(resp) {
