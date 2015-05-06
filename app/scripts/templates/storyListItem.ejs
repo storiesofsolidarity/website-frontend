@@ -11,7 +11,8 @@
     </div>
     <h3><%= (new Date(data.created_at)).toDateString() %> <br>
         by <% if (data.author && data.author.user) { %>
-            <a href="#read/author/<%-data.author.user.id%>"><%- data.author.user.first_name %> <%- data.author.user.last_name %></a>
+            <!-- <a href="#read/author/<%-data.author.user.id%>"><%- data.author.user.first_name %> <%- data.author.user.last_name %></a> -->
+            <%- data.author.user.first_name %> <%- data.author.user.last_name %>
         <% } else { %>
             Anonymous
         <% } %>
