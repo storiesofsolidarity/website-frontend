@@ -15,16 +15,17 @@ Solidarity.Routers = Solidarity.Routers || {};
         },
 
         index: function() {
-            new Solidarity.Views.Index({});
+            console.log(this);
+            this.mainContent.display(new Solidarity.Views.Index({}));
         },
         about: function() {
-            new Solidarity.Views.Page('app/scripts/templates/about.ejs');
+            this.mainContent.display(new Solidarity.Views.Page('app/scripts/templates/about.ejs'));
         },
         privacy: function() {
-            new Solidarity.Views.Page('app/scripts/templates/privacy.ejs');
+            this.mainContent.display(new Solidarity.Views.Page('app/scripts/templates/privacy.ejs'));
         },
         copyright: function() {
-            new Solidarity.Views.Page('app/scripts/templates/copyright.ejs');
+            this.mainContent.display(new Solidarity.Views.Page('app/scripts/templates/copyright.ejs'));
         },
         adminRedirect: function() {
             window.location.href = 'https://stories-of-solidarity.herokuapp.com/admin/';

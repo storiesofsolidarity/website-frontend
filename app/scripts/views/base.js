@@ -5,6 +5,34 @@ Solidarity.Views = Solidarity.Views || {};
 (function () {
     'use strict';
 
+    // RegionManager from https://lostechies.com/derickbailey/2011/12/12/composite-js-apps-regions-and-region-managers/
+    Solidarity.Views.RegionManager = function (Backbone, $) {
+        var currentView;
+        var el = '#content';
+        var region = {};
+     
+        var closeView = function (view) {
+            if (view && view.close) {
+                view.close();
+            }
+        };
+     
+        var openView = function (view) {
+            view.render();
+            if (view.onShow) {
+                view.onShow();
+            }
+        };
+     
+        region.show = function (view) {
+            closeView(currentView);
+            currentView = view;
+            openView(currentView);
+        };
+     
+        return region;
+    };
+
     Solidarity.Views.BaseView = Backbone.View.extend({
         assign: function (view, selector) {
             view.setElement(this.$(selector)).render();
@@ -74,8 +102,10 @@ Solidarity.Views = Solidarity.Views || {};
                         // probaby server 500, show response text to user
                         // TODO, email link or error tracking
                         self.$form.append(self.templateError({'non_field_errors': resp.statusText}));
-                        console.log(resp.responseText);
+                        Solidarity.log(resp.responseText);
                         return true;
+                    } else {
+                        Solidarity.log(errs);                 
                     }
 
                     _.map(errs, function(message, field) {

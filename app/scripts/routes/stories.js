@@ -14,9 +14,7 @@ Solidarity.Routers = Solidarity.Routers || {};
             'share': 'storyPost',
         },
 
-        cached: {
-            'storyMap': undefined
-        },
+        cached: {},
 
         storyMap: function() {
             this.cached.storyMap = this.cached.storyMap || new Solidarity.Views.StoryMap();
@@ -24,18 +22,18 @@ Solidarity.Routers = Solidarity.Routers || {};
             this.cached.storyMap.getData();
         },
         storyList: function() {
-            new Solidarity.Views.StoryList();
+            this.mainContent.show(new Solidarity.Views.StoryList());
         },
         storyListLocation: function(state, city) {
-            new Solidarity.Views.StoryListLocation({state: state, city: city});
+            this.mainContent.show(new Solidarity.Views.StoryListLocation({state: state, city: city}));
         },
         storyView: function(id) {
-            new Solidarity.Views.Story({
+            this.mainContent.show(new Solidarity.Views.Story({
                 model: new Solidarity.Models.Story({id: id}),
-            });
+            }));
         },
         storyPost: function() {
-            new Solidarity.Views.StoryPost();
+            this.mainContent.show(new Solidarity.Views.StoryPost());
         },
     });
 

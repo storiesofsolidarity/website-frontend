@@ -17,25 +17,25 @@ Solidarity.Routers = Solidarity.Routers || {};
         },
 
         register: function() {
-            new Solidarity.Views.AuthRegister({el: '#content'});
+            this.mainContent.show(new Solidarity.Views.AuthRegister({el: '#content'}));
         },
         login: function() {
-            new Solidarity.Views.AuthLogin({el: '#content'});
+            this.mainContent.show(new Solidarity.Views.AuthLogin({el: '#content'}));
         },
         logout: function() {
-            new Solidarity.Views.AuthLogout({el: '#content'});
+            this.mainContent.show(new Solidarity.Views.AuthLogout({el: '#content'}));
         },
         passwordChange: function() {
-            new Solidarity.Views.AuthPasswordChange({el: '#content'});
+            this.mainContent.show(new Solidarity.Views.AuthPasswordChange({el: '#content'}));
         },
         passwordReset: function() {
-            new Solidarity.Views.AuthPasswordReset({el: '#content'});
+            this.mainContent.show(new Solidarity.Views.AuthPasswordReset({el: '#content'}));
         },
         passwordResetConfirm: function() {
-            new Solidarity.Views.AuthPasswordResetConfirm({el: '#content'});
+            this.mainContent.show(new Solidarity.Views.AuthPasswordResetConfirm({el: '#content'}));
         },
         userDetails: function() {
-            new Solidarity.Views.AuthUserDetails({el: '#content'});
+            this.mainContent.show(new Solidarity.Views.AuthUserDetails({el: '#content'}));
         },
     });
 
