@@ -11,7 +11,7 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         initialize: function () {
-            this.render();
+            Solidarity.log('initalize '+this.cid);
         },
 
         render: function () {
@@ -38,10 +38,13 @@ Solidarity.Views = Solidarity.Views || {};
 
         render: function () {
             this.$el.html(this.template());
-            this.$form = $(this.form);
-            // save $form jq object
 
             return this;
+        },
+
+        onShow: function() {
+            // save $form jq object
+            this.$form = $(this.form);  
         },
 
         clearFieldErrors: function(e) {
@@ -59,6 +62,8 @@ Solidarity.Views = Solidarity.Views || {};
         submit: function(e) {
             e.preventDefault();
             var self = this;
+            Solidarity.log('submit '+ self.$form[0].id);
+            Solidarity.log(self.$form.serializeArray());
             
             $.ajax({
                 type: self.$form.attr('method'),
