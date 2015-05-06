@@ -8,6 +8,7 @@ Solidarity.Routers = Solidarity.Routers || {};
     Solidarity.Routers.Pages = Solidarity.Routers.Base.extend({
         routes: {
             '': 'index',
+            'splash': 'splash',
             'about': 'about',
             'privacy': 'privacy',
             'copyright': 'copyright',
@@ -15,7 +16,15 @@ Solidarity.Routers = Solidarity.Routers || {};
         },
 
         index: function() {
-            this.mainContent.show(new Solidarity.Views.Index({}));
+            // on fresh view, go to splash
+            if (Solidarity.mainContent.freshView()) {
+                Backbone.history.navigate('splash', {trigger: true});
+            } else {
+                Solidarity.mainContent.show(new Solidarity.Views.Index({}));
+            }
+        },
+        splash: function() {
+            Solidarity.mainContent.show(new Solidarity.Views.Splash({}));
         },
         about: function() {
             Solidarity.mainContent.show(new Solidarity.Views.Page('app/scripts/templates/about.ejs'));

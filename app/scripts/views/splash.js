@@ -8,14 +8,9 @@ Solidarity.Views = Solidarity.Views || {};
     Solidarity.Views.Splash = Solidarity.Views.BaseView.extend({
 
         template: JST['app/scripts/templates/splash.ejs'],
-        el: '#splash',
+        el: '#content',
         events: {'click button.enter': 'enter'},
         languages: ['en', 'es', 'tl', 'zh'], // defined in display order
-
-        initialize: function () {
-            this.render();
-            var self = this;
-        },
 
         enter: function() {
             // show header and footer
@@ -24,7 +19,7 @@ Solidarity.Views = Solidarity.Views || {};
 
             // set current language from button text
             Solidarity.language = this.languages[this.currentLanguageID];
-            Backbone.history.navigate('#map', {trigger: true});
+            Backbone.history.navigate('#share', {trigger: true});
         }
 
     });

@@ -61,7 +61,7 @@ window.urlParam = function(name) {
 $(document).ready(function () {
     Solidarity.init();
 
-    if (window.location.hash) {
+    if (window.location.hash && window.location.hash !== '#splash') {
         Solidarity.log('starting at'+window.location.hash);
         // starting off the splash page,
         // show nav & footer
