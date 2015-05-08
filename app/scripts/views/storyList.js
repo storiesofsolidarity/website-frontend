@@ -85,6 +85,7 @@ Solidarity.Views = Solidarity.Views || {};
 
         render: function () {
             this.$el.html(this.template({'filtered': true, 'city': this.options.city, 'state': this.options.state}));
+            return this;
         },
     });
 
