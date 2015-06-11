@@ -115,12 +115,11 @@ nav.navbar + section.main {
 
 /* sticky page footer */
 .footer {
-    padding-top: 19px;
     color: $text-color;
     a { color: $text-color; }
 
     position: absolute;
-    bottom: 0;
+    bottom: -1*$sticky-footer-height/2;
     width: 100%;
     height: $sticky-footer-height;
 
