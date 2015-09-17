@@ -11,7 +11,6 @@ Solidarity.RegionManager = (function (Backbone, $) {
     var region = {};
 
     var closeView = function (view) {
-        if (view && view.cid) { Solidarity.log('closeView '+view.cid); }
         if (view && view.close) {
             view.close();
         }
@@ -19,7 +18,6 @@ Solidarity.RegionManager = (function (Backbone, $) {
  
     var openView = function (view) {
         freshView = false;
-        if (view && view.cid) { Solidarity.log('openView '+view.cid); }
         var content = view.render();
         if (content && content.$el) {
             content.$el.appendTo(el);

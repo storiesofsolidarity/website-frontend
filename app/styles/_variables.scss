@@ -7,23 +7,20 @@
 //
 //## Gray and brand colors for use across Bootstrap.
 
-$white:                  #EEE;
-$black:                  #161616;
+$white:                 #FFF;
+$black:                 #000;
 
-$gray-base:              #000;
-$gray-darker:            #222;
-$gray-dark:              #282828;
-$gray-slight:            #383633;
-$gray:                   #555;
-$gray-medium:            #666;
-$gray-light:             #888;   
-$gray-lighter:           #ADAFAE;
+$gray-base:             #3F3F3F;
+$gray-darker:           #222;
+$gray-dark:             #F90;
+$gray-slight:           #383633;
+$gray:                  #555;
+$gray-medium:           #666;
+$gray-light:            #888;   
+$gray-lighter:          #ADAFAE;
 
-$orange:                #F69731;
-$orange-2:              #DE8226;
-$orange-3:              #C46006;
-$orange-4:              #ff9900;
-
+$orange:                #FD9627;
+$orange-dark:			#C46006;
 $blue:                  #2A9FD6;
 $red:                   #CC0000;
 $yellow:                #FFDD22;
@@ -40,7 +37,7 @@ $brand-danger:          $red;
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-$body-bg:               #333;
+$body-bg:               $gray-base;
 //** Global text color on `<body>`.
 $text-color:            $white;
 
@@ -362,7 +359,7 @@ $container-lg:                 $container-large-desktop;
 //##
 
 // Basics of a navbar
-$navbar-height:                    100px;
+$navbar-height:                    47px;
 $navbar-margin-bottom:             $line-height-computed;
 $navbar-border-radius:             $border-radius-base;
 $navbar-padding-horizontal:        floor(($grid-gutter-width / 2));
@@ -377,19 +374,19 @@ $navbar-default-border:            $white;
 $navbar-default-link-color:                $text-color;
 $navbar-default-link-hover-color:          $white;
 $navbar-default-link-hover-bg:             transparent;
-$navbar-default-link-active-color:         #fff;
+$navbar-default-link-active-color:         $white;
 $navbar-default-link-active-bg:            transparent;
 $navbar-default-link-disabled-color:       $gray-light;
 $navbar-default-link-disabled-bg:          transparent;
 
 // Navbar brand label
-$navbar-default-brand-color:               #3a3a3a;
-$navbar-default-brand-hover-color:         #fff;
+$navbar-default-brand-color:               $white;
+$navbar-default-brand-hover-color:         $black;
 $navbar-default-brand-hover-bg:            transparent;
 
 // Navbar toggle
 $navbar-default-toggle-hover-bg:           $gray-dark;
-$navbar-default-toggle-icon-bar-bg:        #ccc;
+$navbar-default-toggle-icon-bar-bg:        $gray-dark;
 $navbar-default-toggle-border-color:       $gray-dark;
 
 
@@ -401,7 +398,7 @@ $navbar-inverse-border:                     darken($navbar-inverse-bg, 10%);
 
 // Inverted navbar links
 $navbar-inverse-link-color:                 $gray-light;
-$navbar-inverse-link-hover-color:           #fff;
+$navbar-inverse-link-hover-color:           $white;
 $navbar-inverse-link-hover-bg:              transparent;
 $navbar-inverse-link-active-color:          $navbar-inverse-link-hover-color;
 $navbar-inverse-link-active-bg:             transparent;

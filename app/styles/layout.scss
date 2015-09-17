@@ -36,70 +36,6 @@ a:hover {
     padding: 0.2em 0;
 }
 
-.navbar.navbar-default {
-    border: 0;
-    font-family: $headings-font-family;
-
-    .navbar-collapse {
-        border: 0;
-    }
-
-    .navbar-brand {    
-        width: 200px;
-        height: 100px;
-        border-right: 1px solid $white;
-        background: #333;
-        padding-top: 10px;
-
-        a {
-            display: inline-block;
-            background-image: url('../images/logo.png');
-            background-size: 160px;
-            background-repeat: no-repeat;
-            text-indent: -999px;
-            width: 160px;
-            height: 86px;
-        }
-    }
-
-    ul.nav.navbar-nav {
-        width: calc(100% - 200px);
-
-        &> li {
-            width: 33%;
-            font-size: 50px;
-            
-            height: 100px;
-            text-align: center;
-
-            border-right: 1px solid $white;
-            &:last-child { border-right: 0; }
-
-            &> a {
-                color: $black;
-                line-height: 50px;
-                padding-top: 35px;
-                padding-bottom: 25px;
-            }
-
-            &:nth-of-type(1) { background-color: $orange; }
-            &:nth-of-type(2) { background-color: $orange-2; }
-            &:nth-of-type(3) { background-color: $orange-3; }
-
-            &:hover {
-                background-color: $gray-medium;
-                a { color: $white; }
-                -webkit-transition: border 0.2s ease-in;
-                -webkit-transition: background-color 0.2s ease-in;
-            }
-        }
-    }
-}
-
-nav.navbar + section.main {
-    margin-top: 120px;
-}
-
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
     margin-top: 0;
@@ -136,14 +72,6 @@ nav.navbar + section.main {
 
 .container-narrow > hr {
     margin: 30px 0;
-}
-
-.line-height-1 {
-    line-height: 1;
-}
-
-.sans-serif {
-    font-family: $font-family-sans-serif;
 }
 
 form input, form textarea {
