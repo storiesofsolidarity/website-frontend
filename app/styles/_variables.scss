@@ -19,8 +19,9 @@ $gray-medium:           #666;
 $gray-light:            #888;   
 $gray-lighter:          #ADAFAE;
 
-$orange:                #FD9627;
+$orange:                #F90;
 $orange-dark:			#C46006;
+$orange-light:			#FDAA4C;
 $blue:                  #2A9FD6;
 $red:                   #CC0000;
 $yellow:                #FFDD22;
@@ -359,7 +360,7 @@ $container-lg:                 $container-large-desktop;
 //##
 
 // Basics of a navbar
-$navbar-height:                    47px;
+$navbar-height:                    45px;
 $navbar-margin-bottom:             $line-height-computed;
 $navbar-border-radius:             $border-radius-base;
 $navbar-padding-horizontal:        floor(($grid-gutter-width / 2));
