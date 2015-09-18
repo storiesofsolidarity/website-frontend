@@ -45,6 +45,13 @@
         font-family: $font-family-sans-serif;
         text-transform: uppercase;
         letter-spacing: 1px;
+
+        &:focus {
+            border-color: inherit;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            outline: none;
+        }
     }
     .glyphicon {
         position: absolute;
@@ -109,6 +116,13 @@
 
             font-family: $font-family-sans-serif;
             text-transform: uppercase;
+
+            &:focus {
+                border-color: inherit;
+                -webkit-box-shadow: none;
+                box-shadow: none;
+                outline: none;
+            }
 
         }
     }

@@ -39,6 +39,13 @@ window.Solidarity = _.extend(window.Solidarity, {
             // just do it if window width > $grid-float-breakpoint
             if (window.innerWidth > 768) { return false; }
         });
+
+        // collapse navbar on button click
+        $('.navbar-collapse li.button a').on('click', function() {
+            if( $('.navbar-collapse').hasClass('in') ) {
+                $('.navbar-collapse').collapse('hide');   
+            }
+        });
     },
 
     log: function(msg) {
