@@ -8,6 +8,7 @@ Solidarity.Routers = Solidarity.Routers || {};
     Solidarity.Routers.Pages = Solidarity.Routers.Base.extend({
         routes: {
             '': 'index',
+            'learn': 'learn',
             'splash': 'splash',
             'about': 'about',
             'privacy': 'privacy',
@@ -25,6 +26,9 @@ Solidarity.Routers = Solidarity.Routers || {};
         },
         splash: function() {
             Solidarity.mainContent.show(new Solidarity.Views.Splash({}));
+        },
+        learn: function() {
+            Solidarity.mainContent.show(new Solidarity.Views.Page('app/scripts/templates/learn.ejs'), '#learn');
         },
         about: function() {
             Solidarity.mainContent.show(new Solidarity.Views.Page('app/scripts/templates/about.ejs'));
