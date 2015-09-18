@@ -3,6 +3,7 @@
 .navbar.navbar-default {
     border: 0;
     font-family: $headings-font-family;
+    box-shadow: 0 1px 10px #333;
 
     .navbar-collapse {
         border: 0;
@@ -127,7 +128,7 @@
 }
 
 nav.navbar + section.main {
-    margin-top: 120px;
+    margin-top: 100px;
 }
 
 ul.nav {
@@ -177,4 +178,27 @@ ul.nav {
     transform: perspective(500px) rotateY( 75deg );
   }
 
+}
+
+
+/* fixed page footer */
+.footer {
+    background-color: #030303;
+    color: $text-color;
+    a { color: $text-color; }
+    text-transform: uppercase;
+    box-shadow: 0 -1px 10px #333;
+
+    padding: 7px 12px;
+
+    ul {
+        margin-bottom: 0;
+        &.right { text-align: right; }
+        list-style-type: none;
+        li {
+            display: inline-block;
+            &:after{ content: "|"; margin-left: 8px; }
+            &:last-child:after { content: ""; }
+        }
+    }
 }

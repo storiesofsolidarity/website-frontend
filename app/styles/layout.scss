@@ -9,7 +9,7 @@ body {
     margin-bottom: $sticky-footer-height;
 }
 
-// fancy two-color underline
+// thick underline
 a:hover { 
     color: $text-color;
     // cursor: crosshair;
@@ -36,38 +36,9 @@ a:hover {
     padding: 0.2em 0;
 }
 
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-    padding-bottom: 19px;
-}
-
 .container-fluid section.jumbotron {
     margin: 0;
     border-radius: 0;
-}
-
-/* sticky page footer */
-.footer {
-    color: $text-color;
-    a { color: $text-color; }
-
-    position: absolute;
-    bottom: -1*$sticky-footer-height/2;
-    width: 100%;
-    height: $sticky-footer-height;
-
-    ul {
-        &.right { text-align: right; }
-        list-style-type: none;
-        li {
-            display: inline-block;
-            &:after{ content: "|"; margin-left: 8px; }
-            &:last-child:after { content: ""; }
-        }
-    }
 }
 
 .container-narrow > hr {
