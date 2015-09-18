@@ -17,18 +17,22 @@ Solidarity.Routers = Solidarity.Routers || {};
         cached: {},
 
         storyMap: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.StoryMap());
+            Solidarity.mainContent.show(new Solidarity.Views.StoryMap(), '#map');
         },
         storyList: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.StoryList());
+            Solidarity.mainContent.show(new Solidarity.Views.StoryList(), '#read');
         },
         storyListLocation: function(state, city) {
-            Solidarity.mainContent.show(new Solidarity.Views.StoryListLocation({state: state, city: city}));
+            Solidarity.mainContent.show(
+                new Solidarity.Views.StoryListLocation(
+                    {state: state, city: city}
+                ), '#read');
         },
         storyView: function(id) {
-            Solidarity.mainContent.show(new Solidarity.Views.Story({
-                model: new Solidarity.Models.Story({id: id}),
-            }));
+            Solidarity.mainContent.show(
+                new Solidarity.Views.Story({
+                    model: new Solidarity.Models.Story({id: id}),
+                }), '#read');
         },
         storyPost: function() {
             Solidarity.mainContent.show(new Solidarity.Views.StoryPost());

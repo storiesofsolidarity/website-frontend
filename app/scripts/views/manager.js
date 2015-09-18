@@ -8,6 +8,7 @@ Solidarity.RegionManager = (function (Backbone, $) {
                           // used for #splash redirect
     var currentView;
     var el = '#mainRegion';
+    var navbar = 'ul.navbar-nav';
     var region = {};
 
     var closeView = function (view) {
@@ -29,10 +30,16 @@ Solidarity.RegionManager = (function (Backbone, $) {
         }
     };
  
-    region.show = function (view) {
+    region.show = function (view, button) {
         closeView(currentView);
         currentView = view;
         openView(currentView);
+
+        if (button !== undefined) {
+            $(navbar + ' li.button.active').removeClass('active');
+            $(navbar + ' li.button a[href='+button+']')
+                .parent('li.button').addClass('active');
+        }
     };
     region.currentView = function() {
         return currentView;
