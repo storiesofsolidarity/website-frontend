@@ -19,7 +19,7 @@ Solidarity.Views = Solidarity.Views || {};
 
             // set current language from button text
             Solidarity.language = this.languages[this.currentLanguageID];
-            Backbone.history.navigate('#share', {trigger: true});
+            Backbone.history.navigate('#map', {trigger: true});
         }
 
     });

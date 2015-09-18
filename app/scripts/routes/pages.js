@@ -21,7 +21,8 @@ Solidarity.Routers = Solidarity.Routers || {};
             if (Solidarity.mainContent.freshView()) {
                 Backbone.history.navigate('splash', {trigger: true});
             } else {
-                Solidarity.mainContent.show(new Solidarity.Views.Index({}));
+                // show the map
+                Backbone.history.navigate('map', {trigger: true});
             }
         },
         splash: function() {
