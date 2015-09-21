@@ -30,6 +30,7 @@ Now compile and serve the site locally. This will watch for changes as you make 
 $ grunt serve
 ```
 
+To add new icons to the custom font, put the SVG file in `/app/images/icons` and re-run `fontcustom compile` from the repository root.
 
 ### Deployment
 
