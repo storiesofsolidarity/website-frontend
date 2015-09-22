@@ -17,6 +17,7 @@ window.Solidarity = _.extend(window.Solidarity, {
         new Solidarity.Routers.Stories({});
 
         // initialize UI elements
+        this.shareBar = new Solidarity.Views.ShareBar({});
         // this.searchView = new Solidarity.Views.Search({});
         // this.filterView = new Solidarity.Views.Filter({});
         // this.loginView = new Solidarity.Views.Login({});
@@ -40,7 +41,7 @@ window.Solidarity = _.extend(window.Solidarity, {
             if (window.innerWidth > 768) { return false; }
         });
 
-        // collapse navbar on button click
+        // collapse navbar on button click, if mobile
         $('.navbar-collapse li.button a').on('click', function() {
             if( $('.navbar-collapse').hasClass('in') ) {
                 $('.navbar-collapse').collapse('hide');   

@@ -25,10 +25,6 @@ a:hover {
     }
 }
 
-.modal-content {
-    a { color: $white; }
-}
-
 .warning#browsehappy {
     margin: 0.2em 0;
     background-color: #FF8800;
@@ -36,15 +32,12 @@ a:hover {
     padding: 0.2em 0;
 }
 
-.container-fluid section.jumbotron {
-    margin: 0;
-    border-radius: 0;
+section.main {
+    height: 100%;
 }
 
-.container-narrow > hr {
-    margin: 30px 0;
-}
-
-form input, form textarea {
-    color: $black;
+.content.overlay {
+    &:after {
+        content: " ";
+    }
 }

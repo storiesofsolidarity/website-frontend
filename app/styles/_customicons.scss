@@ -25,6 +25,8 @@
 [data-icon]:before,
 .icon-article:before,
 .icon-camera:before,
+.icon-check:before,
+.icon-close:before,
 .icon-eye:before,
 .icon-lightbulb:before,
 .icon-locate:before,
@@ -48,6 +50,8 @@
 
 .icon-article:before { content: "\f100"; }
 .icon-camera:before { content: "\f101"; }
+.icon-check:before { content: "\f10a"; }
+.icon-close:before { content: "\f10b"; }
 .icon-eye:before { content: "\f108"; }
 .icon-lightbulb:before { content: "\f102"; }
 .icon-locate:before { content: "\f109"; }
@@ -58,6 +62,8 @@
 
 $font-customicons-article: "\f100";
 $font-customicons-camera: "\f101";
+$font-customicons-check: "\f10a";
+$font-customicons-close: "\f10b";
 $font-customicons-eye: "\f108";
 $font-customicons-lightbulb: "\f102";
 $font-customicons-locate: "\f109";

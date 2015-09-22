@@ -5,34 +5,45 @@ Solidarity.Views = Solidarity.Views || {};
 (function () {
     'use strict';
 
-    Solidarity.Views.StoryPost = Solidarity.Views.FormView.extend({
+    Solidarity.Views.ShareBar = Solidarity.Views.FormView.extend({
 
         template: JST['app/scripts/templates/storyPost.ejs'],
-        el: '#content',
+        el: '#shareBar',
         form: 'form#storyPost',
-        events: {'click button#geolocate': 'geolocate'},
+        events: {
+            'focusin textarea[name="share"]': 'show',
+            'click button#geolocate': 'geolocate',
+            'click button#cancel': 'hide',
+        },
         
         initialize: function() {
             _.extend(this.events, Solidarity.Views.FormView.prototype.events);
+
+            Solidarity.log('init shareBar');
         },
 
-        render: function () {
-            Solidarity.log('storyPost.render');
-            this.$el.html(this.template());
+        render: function() {
+            Solidarity.log('shareBar.render');
+            this.$el.hide().html(this.template()).slideDown();
             this.$form = $(this.form);
             return this;
+        },
+
+        show: function() {
+            Solidarity.log('shareBar.show');
+            this.render();
+            this.onShow();
+        },
+
+        hide: function() {
+            // close but do not delete content
+            this.$el.slideUp();
         },
 
         onShow: function() {
             this.$form = $(this.form);
 
             // init bootstrap form plugins
-            $('.filestyle').filestyle({
-                input: false,
-                buttonText: 'Upload',
-                size: 'sm',
-                iconName: 'glyphicon-cloud-upload',
-            }); 
             $('.selectpicker').selectpicker();          
         },
 

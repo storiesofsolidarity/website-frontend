@@ -107,14 +107,15 @@
         width: calc(100% - 600px);
         padding: 10px 20px 10px 38px;
 
-        .icon {
+        .icon.icon-write {
             float: left;
             font-size: 30px;
         }
         textarea {
-            width: calc(100% - 50px);
-            height: 30px;
-
+            &.closed {
+                width: calc(100% - 50px);
+                height: 30px;
+            }
             resize: none;
             border: none;
 
@@ -139,6 +140,7 @@
                 box-shadow: none;
                 outline: none;
             }
+
 
         }
     }

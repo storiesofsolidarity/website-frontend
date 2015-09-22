@@ -59,6 +59,7 @@
 .storyMap {
     display: inline-block;
     width: 100%;
+    height: 100%;
     margin-bottom: 10px;
     vertical-align: top;
     overflow: hidden;
@@ -111,27 +112,117 @@
 }
 
 .storyPost {
-    background-color: $black;
-    padding: 40px;
+    float: left;
+    width: calc(100% - 50px);
 
-    .row { margin-bottom: 20px; }
+    margin: 0 10px;
+    background-color: transparent;
+    padding: 0px;
+    font-family: $font-family-sans-serif;
 
-    span.required { color: $orange; }
+    .box.white {
+        background-color: $white;
+        width: 100%;
+    }
 
-    textarea, input, .input-group {
-        vertical-align: top;
+    .btn {
+        background-color: $white;
+        border-radius: 0;
+        border: none;
         color: $black;
+    }
+
+    .form-group {
+        width: 100%;
+        padding: 0 10px;
+        border-bottom: 1px solid #CCC;
+        &.break {
+            background-color: $orange;
+            border: none;
+            height: auto;
+        }
+
+        &.first, &.last {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+    }
+    .row {
+        margin: 0px;
+        height: 30px;
+    }
+
+    textarea, input[type="text"], .input-group.row {
+        width: 100%;
+        height: 25px;
+        border: none;
+        margin: 0;
+        padding: 0 10px;
+
+        font-size: 14px;
+        line-height: 14px;
+        font-weight: lighter;
+        color: $gray-base;
+
+        &::-webkit-input-placeholder { color: $gray-base; }
+        &:-moz-placeholder { /* Firefox 18- */ color: $gray-base; }
+        &::-moz-placeholder {  /* Firefox 19+ */ color: $gray-base;  }
+        &:-ms-input-placeholder { color: $gray-base; }
+        &::placeholder { color: $gray-base; }
+    }
+
+    input[type="text"], .input-group.row {
+        position: relative;
+        top: -10px;
+    }
+
+    textarea#content.open {
+        width: 100%;
+        height: 150px;
+        padding: 10px;
+        margin: 0;
+    }
+
+    h4 { 
+        font-family: $font-family-sans-serif;
+        color: $gray-base;
+        text-align: left;
+        font-size: 14px;
+        font-weight: lighter;
+        margin: 0;
+    }
+
+    .input-group#location {
+        width: 100%;
+
+        .btn#geolocate {
+            width: 50px;
+            height: 30px;
+            float: left;
+            margin-left: -5px;
+            padding: 0;
+            font-size: 16px;
+            border-right: 1px solid #CCC;
+        }
+
+         input#city {
+            max-width: calc(100% - 50px - 175px - 1px);
+            height: 30px;
+            border-right: 1px solid #CCC;
+        }
+         
+        input#state, div.bootstrap-select {
+            float: right;
+            width: 175px;
+        }
     }
 
     .selectpicker {
         // ugly hack to make it line up with input-group
-        margin-top:-1px;
+
         height: 28px;
         span.filter-option { line-height:1; }
-    }
-
-    .bootstrap-select.input-group-btn {
-        width: 25%;
+        text-transform: uppercase;
     }
 
     // remove focus outline
@@ -141,6 +232,66 @@
     }
     .dropdown-menu > li > a:hover {
         border-bottom: none;
+    }
+
+    .input-group.left {
+        text-align: left;
+        float: left;
+    }
+    .input-group.right {
+        text-align: right;
+        float: right;
+    }
+
+    .form-group.buttons {
+        padding: 0;
+        .btn {
+            box-shadow: 0 1px 10px #333;
+        }
+
+        // nest file input inside span
+        // from http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/
+        .btn-file {
+            position: relative;
+            overflow: hidden;
+
+            height: 36px;
+            & span.icon {
+                font-size: 25px;
+                position: relative;
+                top: -3px;
+            }
+        }
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+
+        button[type="submit"] {
+            background-color: $orange;
+            color: $white;
+            border-radius: 0;
+            border: none;
+
+            margin-left: 10px;
+        }
+    }
+
+    .break.push-down {
+        margin-top: 5px;
+        margin-bottom: 0px;
+        box-shadow: 0 1px 10px #333;
     }
 }
 

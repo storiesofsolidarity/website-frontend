@@ -11,7 +11,6 @@ Solidarity.Routers = Solidarity.Routers || {};
             'read': 'storyList',
             'read/story/:id': 'storyView',
             'list/:state/:city': 'storyListLocation',
-            'share': 'storyPost',
         },
 
         cached: {},
@@ -33,9 +32,6 @@ Solidarity.Routers = Solidarity.Routers || {};
                 new Solidarity.Views.Story({
                     model: new Solidarity.Models.Story({id: id}),
                 }), '#read');
-        },
-        storyPost: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.StoryPost());
         },
     });
 
