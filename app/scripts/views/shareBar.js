@@ -32,12 +32,14 @@ Solidarity.Views = Solidarity.Views || {};
         show: function() {
             Solidarity.log('shareBar.show');
             this.render();
+            Solidarity.mainContent.showOverlay();
             this.onShow();
         },
 
         hide: function() {
             // close but do not delete content
             this.$el.slideUp();
+            Solidarity.mainContent.hideOverlay();
         },
 
         onShow: function() {
