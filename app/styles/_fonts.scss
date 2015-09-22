@@ -12,3 +12,14 @@
 @import url("//fonts.googleapis.com/css?family=Inconsolata:400,700");
 
 @import '_customicons.scss';
+
+// fine-tune icon positions
+.icon-article:before {
+	position: relative;
+	top: 2px;
+}
+
+.icon-map:before {
+	position: relative;
+	top: -1px;
+}

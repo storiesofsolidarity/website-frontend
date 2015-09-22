@@ -39,6 +39,8 @@ Solidarity.RegionManager = (function (Backbone, $) {
             $(navbar + ' li.button.active').removeClass('active');
             $(navbar + ' li.button a[href='+button+']')
                 .parent('li.button').addClass('active');
+        } else {
+            $(navbar + ' li.button.active').removeClass('active');
         }
     };
     region.currentView = function() {
