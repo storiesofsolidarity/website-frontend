@@ -6,10 +6,11 @@ A static site to pull stories from the [stories-of-solidarity-api](https://githu
 
 ### Technologies
 
-* Grunt
-* Backbone.js
-* Bootstrap
-* D3
+* [Grunt](http://gruntjs.com)
+* [Backbone.js](http://backbonejs.org)
+* [Bootstrap](http://getbootstrap.com)
+* [D3](http://d3js.org)
+* [Fontcustom](http://fontcustom.com)
 
 ### Development
 
