@@ -1,11 +1,11 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <!--
-2015-9-21: Created with FontForge (http://fontforge.org)
+2015-9-22: Created with FontForge (http://fontforge.org)
 -->
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
 <metadata>
-Created by FontForge 20150701 at Mon Sep 21 20:55:11 2015
+Created by FontForge 20150701 at Tue Sep 22 14:57:22 2015
  By Josh Levinger
 Copyright (c) 2015, Josh Levinger
 </metadata>
@@ -22,7 +22,7 @@ Copyright (c) 2015, Josh Levinger
     bbox="0 -64 512 448.252"
     underline-thickness="25.6"
     underline-position="-51.2"
-    unicode-range="U+0020-F109"
+    unicode-range="U+0020-F10B"
   />
     <missing-glyph />
     <glyph glyph-name="space" unicode=" " horiz-adv-x="200" 
@@ -45,10 +45,14 @@ d="M354 388c81 -81 81 -212 0 -293l-147 -147l-146 145c-81 81 -81 213 0 294s212 82
 d="M510 389l-189 -188l-38 37l189 189zM245 201l19 18l38 -38l-19 -21h-38v41zM321 125l57 57v-246h-378v357h153v153h225v-38l-169 -170v-113h112zM0 334l112 112v-112h-112z" />
     <glyph glyph-name="uniF101" unicode="&#xf101;" 
 d="M171 405h341v-341h-512v341h43v43h128v-43zM469 341v43h-85v-43h85zM245 119c59 0 106 48 106 107s-47 107 -106 107s-107 -48 -107 -107s48 -107 107 -107z" />
+    <glyph glyph-name="uniF10B" unicode="&#xf10b;" horiz-adv-x="500" 
+d="M122 446l-103 -98l377 -397l104 98zM498 347l-100 101l-398 -398l101 -101z" />
     <glyph glyph-name="uniF100" unicode="&#xf100;" 
 d="M512 448v-337c0 -31 -27 -60 -56 -60h-383c-47 0 -73 25 -73 85v247h71v65h441v0zM71 347h-35v-211c0 -31 8 -45 17 -45c11 0 18 14 18 45v211v0zM476 412h-369v-276c0 -21 -4 -36 -10 -48h359c12 0 20 14 20 23v301v0zM249 285h-85v12h85v-12zM249 246h-85v12h85v-12z
 M249 208h-85v12h85v-12zM249 171h-85v12h85v-12zM249 133h-85v12h85v-12zM177 359h222v-23h-222v23zM282 297h143v-135h-143v135z" />
     <glyph glyph-name="uniF104" unicode="&#xf104;" horiz-adv-x="228" 
 d="M35 278v12h97h96v-98v-98h-96h-97v12v11h85h84v75v75h-84h-85v11zM70 248l9 6l32 -30l32 -30l-32 -33l-32 -32l-8 8l-8 8l18 18l19 18h-50h-50v11v11h50h50l-19 19l-19 19z" />
+    <glyph glyph-name="uniF10A" unicode="&#xf10a;" horiz-adv-x="484" 
+d="M74 240l-74 -112l234 -154l250 397l-114 72l-177 -282z" />
   </font>
 </defs></svg>

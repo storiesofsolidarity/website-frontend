@@ -1,7 +1,7 @@
 {
   "checksum": {
-    "previous": "4c954a56cdb7ec638ca5401df2b25247e9cc2f8321196f44262d0cda5af8a75b",
-    "current": "4c954a56cdb7ec638ca5401df2b25247e9cc2f8321196f44262d0cda5af8a75b"
+    "previous": "fd9418897e57102e984a869d38e1d68a6f7ef3ded2b8fd299f1e2c1a005b6201",
+    "current": "fd9418897e57102e984a869d38e1d68a6f7ef3ded2b8fd299f1e2c1a005b6201"
   },
   "fonts": [
     "app/styles/fonts/customicons/customicons.ttf",
@@ -17,6 +17,14 @@
     "camera": {
       "codepoint": 61697,
       "source": "app/images/icons/camera.svg"
+    },
+    "check": {
+      "codepoint": 61706,
+      "source": "app/images/icons/check.svg"
+    },
+    "close": {
+      "codepoint": 61707,
+      "source": "app/images/icons/close.svg"
     },
     "eye": {
       "codepoint": 61704,

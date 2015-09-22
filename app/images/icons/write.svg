@@ -1,65 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generator: Adobe Illustrator 16.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="22.376px" height="22.456px" viewBox="0 0 22.376 22.456" enable-background="new 0 0 22.376 22.456" xml:space="preserve">
 
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   version="1.1"
-   x="0px"
-   y="0px"
-   width="22.376px"
-   height="22.456px"
-   viewBox="0 0 22.376 22.456"
-   enable-background="new 0 0 22.376 22.456"
-   xml:space="preserve"
-   id="svg2"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="new icons_share.svg"><metadata
-     id="metadata31"><rdf:RDF><cc:Work
-         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
-     id="defs29" /><sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="722"
-     inkscape:window-height="480"
-     id="namedview27"
-     showgrid="false"
-     inkscape:zoom="10.509441"
-     inkscape:cx="11.188"
-     inkscape:cy="11.228"
-     inkscape:window-x="140"
-     inkscape:window-y="21"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="svg2" /><g
-     id="black"
-     display="none"><polygon
-       display="inline"
-       points="234.88,30.021 -183.581,30.271 -183.581,-6.506 234.88,-6.756  "
-       id="polygon5" /></g><g
-     id="view_map"
-     style="fill:#000000" /><g
-     id="live_feed"
-     style="fill:#000000" /><g
-     id="learn_more"
-     style="fill:#000000" /><g
-     id="share_your_story"
-     style="fill:#000000"><g
-       id="share_your_story_icon"
-       style="fill:#000000"><g
-         id="g12"
-         style="fill:#000000"><rect
+<g id="share_your_story" style="fill:#000000">
+  <g d="share_your_story_icon" style="fill:#000000">
+    <g id="g12" style="fill:#000000">
+      <rect
            x="16.232"
            y="0.023"
            transform="matrix(-0.707 -0.7072 0.7072 -0.707 25.5478 22.3506)"
@@ -67,26 +13,23 @@
            width="2.344"
            height="11.72"
            id="rect14"
-           style="fill:#000000" /><polygon
+           style="fill:#000000" />
+      <polygon
            fill="#FFFFFF"
            points="10.74,10.854 10.74,12.611 12.432,12.611 13.26,11.732 11.586,10.051    "
            id="polygon16"
-           style="fill:#000000" /><polygon
+           style="fill:#000000" />
+      <polygon
            fill="#FFFFFF"
            points="14.088,14.178 9.174,14.178 9.174,9.197 16.558,1.739 16.558,0.082 6.713,0.082 6.713,6.794      0,6.794 0,22.456 16.558,22.456 16.558,11.684    "
            id="polygon18"
-           style="fill:#000000" /><polygon
+           style="fill:#000000" />
+      <polygon
            fill="#FFFFFF"
            points="0,5.004 4.923,5.004 4.923,0.082    "
            id="polygon20"
-           style="fill:#000000" /></g></g></g><g
-     id="check"
-     style="fill:#000000" /><g
-     id="camera"
-     style="fill:#000000" /><g
-     id="zoom_bar"
-     style="fill:#000000" /><g
-     id="filters"
-     style="fill:#000000" /><g
-     id="x_close"
-     style="fill:#000000" /></svg>
+           style="fill:#000000" />
+     </g>
+   </g>
+ </g>
+</svg>
