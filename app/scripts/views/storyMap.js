@@ -1,4 +1,4 @@
-/*global Solidarity, Backbone, JST, d3, topojson */
+/*global Solidarity, Backbone, JST, d3, topojson, jenks */
 
 Solidarity.Views = Solidarity.Views || {};
 
@@ -12,19 +12,23 @@ Solidarity.Views = Solidarity.Views || {};
         events: {},
 
         initialize: function () {
-            this.collection = new Solidarity.Collections.Locations({});
+            this.states = new Solidarity.Collections.States({});
+            this.counties = new Solidarity.Collections.Counties({});
+            this.locations = new Solidarity.Collections.Locations({});
+
+            this.colorList = ['#E4E4E4','#F3EB99','#FAC85F','#F9A946','#EC913D'];
         },
         
         onShow: function() {
             var self = this;
             this.drawMap();
-            this.collection.fetch({
+            this.states.fetch({
                 success: function() {
                     // do first render
-                    self.renderStories();
+                    self.renderStates();
 
                     // bind for further additions, changes
-                    self.listenTo(self.collection, 'add change', self.renderStories);
+                    // self.listenTo(self.locations, 'add change', self.renderStories);
                 }
             });
         },
@@ -136,6 +140,52 @@ Solidarity.Views = Solidarity.Views || {};
             }
         },
 
+        colorScale: function(list, key) {
+            // compute colors using jenks natural breaks
+            var data = _.pluck(list, key).sort();
+            var breaks = jenks(data, 5);
+            breaks[4] = breaks[4] + 1;
+            var colorScale = d3.scale.quantile()
+                .domain(breaks.slice(1))
+                .range(this.colorList);
+            return colorScale;
+        },
+
+        renderStates: function() {
+            // extract model attributes from the backbone collection
+            var state_stories = this.states.models.map(function(s) { return s.attributes; });
+            var state_geoms = this.map.selectAll('path').data();
+            // join manually, might zip be faster?
+            var states_joined = _.map(state_geoms, function(state, index) {
+                if (state.properties) {
+                    var s = _.findWhere(state_stories, {name: state.properties.name});
+                    if (s) { state.properties.story_count = s.story_count; }
+                }
+                return state;
+            });
+            
+            var colorFunction = this.colorScale(state_stories, 'story_count');
+
+            var tip = d3.tip().html(function(d) {
+                if (d.properties && d.properties.story_count) {
+                    var tmpl = '<%= story_count %> stor<%= story_count > 1 ? "ies" : "y"%>'+
+                               ' in <%= name %>';
+                    return _.template(tmpl)(d.properties);
+                }
+            });
+            this.map.call(tip);
+
+            this.map.selectAll('path')
+              .data(states_joined)
+              .style('fill', function(d) {
+                    if (d.properties === undefined) { return 'none'; }
+                    return colorFunction(d.properties.story_count || 0);
+            })
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide);
+        },
+
+        // old stories as dots functionality
         renderStories: function() {
             var projection = this.projection;
 
@@ -152,7 +202,7 @@ Solidarity.Views = Solidarity.Views || {};
             this.map.append('g')
                 .attr('class', 'bubble')
               .selectAll('circle')
-                .data(this.collection.models)
+                .data(this.locations.models)
               .enter()
                 .append('circle')
                   .attr('r', function(d) { return 5; })
