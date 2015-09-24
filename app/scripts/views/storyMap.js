@@ -1,4 +1,4 @@
-/*global Solidarity, Backbone, JST, d3, topojson, jenks */
+/*global Solidarity, Backbone, JST, d3, queue, topojson, jenks */
 
 Solidarity.Views = Solidarity.Views || {};
 
@@ -36,7 +36,8 @@ Solidarity.Views = Solidarity.Views || {};
         drawMap: function () {
             var width = 960,
                 height = 500,
-                active = d3.select(null);
+                activeState = d3.select(null),
+                activeCounty = d3.select(null);
 
             this.projection = d3.geo.albersUsaPr() // US including puerto rico
                 .scale(1000)
@@ -61,7 +62,7 @@ Solidarity.Views = Solidarity.Views || {};
                 .attr('class', 'background')
                 .attr('width', width)
                 .attr('height', height)
-                .on('click', reset);
+                .on('click', resetZoom);
 
             this.map = this.svg.append('g');
             var self = this;
@@ -72,33 +73,42 @@ Solidarity.Views = Solidarity.Views || {};
 
             if (this.us_json === undefined) {
                 d3.json(Solidarity.siteRoot + 'scripts/map/us.json', function(error, us) {
-                    //console.log('requesting scripts/map/us.json');
+                    Solidarity.log('requesting scripts/map/us.json');
                     self.us_json = us; //cache for view reload
                     drawStates(error, self.us_json);
                 });
             } else {
-                //console.log('using cached scripts/map/us.json');
+                Solidarity.log('using cached scripts/map/us.json');
                 drawStates(null, this.us_json);
             }
 
-            function drawStates(error, us) {
-                self.map.selectAll('path')
-                  .data(topojson.feature(us, us.objects.states).features)
+            function drawStates(error, data) {
+                if (error) { Solidarity.error('error in drawStates', error); return false; }
+
+                var us = self.map.append('g')
+                  .attr('class', 'country')
+                  .attr('id', 'US');
+
+                us.selectAll('path')
+                  .data(topojson.feature(data, data.objects.states).features)
                 .enter().append('path')
                   .attr('d', path)
                   .attr('class', 'feature')
-                  .on('click', clicked);
+                  .on('click', clickState);
 
-                self.map.append('path')
-                  .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+                us.append('path')
+                  .datum(topojson.mesh(data, data.objects.states, function(a, b) { return a !== b; }))
                   .attr('class', 'mesh')
                   .attr('d', path);
             }
 
-            function clicked(d) {
-                if (active.node() === this) { return reset(); }
-                active.classed('active', false);
-                active = d3.select(this).classed('active', true);
+            function clickState(d) {
+                if (activeState.node() === this) { return resetZoom(); }
+                activeState.classed('active', false);
+                activeState = d3.select(this).classed('active', true);
+
+                // clear existing states
+                d3.selectAll('g.state').remove();
 
                 var scaleFactor = 0.9;
                 // northeastern states needs to be zoomed out a little
@@ -116,14 +126,54 @@ Solidarity.Views = Solidarity.Views || {};
                   scale = scaleFactor / Math.max(dx / width, dy / height),
                   translate = [width / 2 - scale * x, height / 2 - scale * y];
 
+                // load state-specific topojson, with county boundaries
+                queue()
+                    .defer(d3.json, Solidarity.siteRoot + 'scripts/map/states/'+d.properties.name+'.topo.json')
+                    .await(drawCounties);
+
                 self.svg.transition()
                   .duration(750)
                   .call(zoom.translate(translate).scale(scale).event);
             }
 
-            function reset() {
-                active.classed('active', false);
-                active = d3.select(null);
+            function drawCounties(error, data) {
+                Solidarity.log('drawCounties', data);
+                if (error) { Solidarity.error('error in drawCounties', error); return false; }
+
+                for(var geomKey in data.objects) { break; }
+                var stateName = geomKey.split('.')[0];
+
+                var state = self.map.append('g')
+                  .attr('class', 'state')
+                  .attr('id', stateName);
+
+                state.append('path')
+                  .attr('class','counties')
+                  .data(topojson.feature(data, data.objects[geomKey]).features)
+                .enter().append('path')
+                  .attr('d', path)
+                  .attr('class', 'feature')
+                  .on('click', clickCounty);
+
+                state.append('path')
+                  .datum(topojson.mesh(data, data.objects[geomKey], function(a, b) { return a !== b; }))
+                  .attr('class', 'mesh')
+                  .attr('d', path);
+            }
+
+            function clickCounty(d) {
+                Solidarity.log('clickCounty', d);
+
+            }
+
+            function resetZoom() {
+                activeState.classed('active', false);
+                activeState = d3.select(null);
+
+                activeCounty.classed('active', false);
+                activeCounty = d3.select(null);
+
+                d3.selectAll('g.state').remove();
 
                 self.svg.transition()
                   .duration(750)
@@ -183,6 +233,11 @@ Solidarity.Views = Solidarity.Views || {};
             })
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide);
+        },
+
+        renderCounties: function(stateName) {
+            console.log('renderCounties: '+stateName);
+
         },
 
         // old stories as dots functionality
