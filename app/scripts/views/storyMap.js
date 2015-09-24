@@ -83,7 +83,7 @@ Solidarity.Views = Solidarity.Views || {};
             }
 
             function drawStates(error, data) {
-                if (error) { Solidarity.error('error in drawStates', error); return false; }
+                if (error) { Solidarity.error(error, 'error in drawStates'); return false; }
 
                 var us = self.map.append('g')
                   .attr('class', 'country')
@@ -138,7 +138,7 @@ Solidarity.Views = Solidarity.Views || {};
 
             function drawCounties(error, data) {
                 Solidarity.log('drawCounties', data);
-                if (error) { Solidarity.error('error in drawCounties', error); return false; }
+                if (error) { Solidarity.error(error, 'error in drawCounties'); return false; }
 
                 for(var geomKey in data.objects) { break; }
                 var stateName = geomKey.split('.')[0];

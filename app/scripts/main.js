@@ -1,4 +1,4 @@
-/*global Solidarity, $, _*/
+/*global Solidarity, $, _, Raven */
 
 'use strict';
 
@@ -51,6 +51,12 @@ window.Solidarity = _.extend(window.Solidarity, {
 
     log: function(msg) {
         if (Solidarity.DEBUG) { console.log(msg); }
+    },
+    error: function(exception, msg) {
+        if (Solidarity.DEBUG) { console.error(msg); console.error(exception);}
+        else { 
+            Raven.captureException(exception);
+        }
     }
 });
 
@@ -68,6 +74,9 @@ window.urlParam = function(name) {
 
 $(document).ready(function () {
     Solidarity.init();
+    if (!Solidarity.DEBUG) {
+        Raven.config('https://415051242ec344cbabbe0f419b0561c9@app.getsentry.com/53317').install();
+    }
 
     if (window.location.hash && window.location.hash !== '#splash') {
         Solidarity.log('starting at'+window.location.hash);
