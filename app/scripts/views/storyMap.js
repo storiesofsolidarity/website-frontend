@@ -15,8 +15,8 @@ Solidarity.Views = Solidarity.Views || {};
             this.states = new Solidarity.Collections.States({});
             this.counties = new Solidarity.Collections.Counties({});
             this.locations = new Solidarity.Collections.Locations({});
-
-            this.colorList = ['#E4E4E4','#F3EB99','#FAC85F','#F9A946','#EC913D'];
+            this.colorUnselected = '#E4E4E4';
+            this.colorList = [this.colorUnselected,'#F3EB99','#FAC85F','#F9A946','#EC913D'];
         },
         
         onShow: function() {
@@ -107,7 +107,7 @@ Solidarity.Views = Solidarity.Views || {};
                 activeState.classed('active', false);
                 activeState = d3.select(this).classed('active', true);
 
-                // clear existing states
+                // clear existing state counties
                 d3.selectAll('g.state').remove();
 
                 var scaleFactor = 0.9;
@@ -127,6 +127,7 @@ Solidarity.Views = Solidarity.Views || {};
                   translate = [width / 2 - scale * x, height / 2 - scale * y];
 
                 // load state-specific topojson, with county boundaries
+                var fn = d.properties.name.replace(' ','_');
                 queue()
                     .defer(d3.json, Solidarity.dataRoot + 'geography/states/'+fn+'.topo.json')
                     .await(drawCounties);
@@ -147,7 +148,7 @@ Solidarity.Views = Solidarity.Views || {};
                   .attr('class', 'state')
                   .attr('id', stateName);
 
-                state.append('path')
+                var counties = state.selectAll('path')
                   .attr('class','counties')
                   .data(topojson.feature(data, data.objects[geomKey]).features)
                 .enter().append('path')
@@ -155,15 +156,19 @@ Solidarity.Views = Solidarity.Views || {};
                   .attr('class', 'feature')
                   .on('click', clickCounty);
 
+                // merge county boundaries for mesh
                 state.append('path')
                   .datum(topojson.mesh(data, data.objects[geomKey], function(a, b) { return a !== b; }))
                   .attr('class', 'mesh')
                   .attr('d', path);
+
+                self.renderCounties(stateName);
+            }
+
             }
 
             function clickCounty(d) {
                 Solidarity.log('clickCounty', d);
-
             }
 
             function resetZoom() {
@@ -178,6 +183,8 @@ Solidarity.Views = Solidarity.Views || {};
                 self.svg.transition()
                   .duration(750)
                   .call(zoom.translate([0, 0]).scale(1).event);
+
+                self.renderStates();
             }
 
             function zoomed() {
@@ -204,7 +211,7 @@ Solidarity.Views = Solidarity.Views || {};
         renderStates: function() {
             // extract model attributes from the backbone collection
             var state_stories = this.states.models.map(function(s) { return s.attributes; });
-            var state_geoms = this.map.selectAll('path').data();
+            var state_geoms = this.map.selectAll('g.country path').data();
             // join manually, might zip be faster?
             var states_joined = _.map(state_geoms, function(state, index) {
                 if (state.properties) {
@@ -225,10 +232,10 @@ Solidarity.Views = Solidarity.Views || {};
             });
             this.map.call(tip);
 
-            this.map.selectAll('path')
+            this.map.selectAll('g.country path')
               .data(states_joined)
               .style('fill', function(d) {
-                    if (d.properties === undefined) { return 'none'; }
+                    if (d.properties === undefined) { return this.colorUnselected; }
                     return colorFunction(d.properties.story_count || 0);
             })
             .on('mouseover', tip.show)
@@ -236,11 +243,36 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         renderCounties: function(stateName) {
-            console.log('renderCounties: '+stateName);
+            Solidarity.log('renderCounties: '+stateName);
 
+            // unset all state background colors
+            d3.selectAll('g.country path.feature')
+                .style('fill', this.colorUnselected);
+            // make active state transparent, so higher resolution county geoms show through
+            d3.select('g.country path.active')
+                .style('fill', 'transparent');
+
+            // extract model attributes from the backbone collection
+            var county_stories = this.counties.models.map(function(s) { return s.attributes; });
+            var county_geoms = d3.selectAll('g.state path').data();
+            // join manually, might zip be faster?
+            var counties_joined = _.map(county_geoms, function(county, index) {
+                if (county.properties) {
+                    var s = _.findWhere(county_stories, {name: county.properties.name});
+                    if (s) { county.properties.story_count = s.story_count; }
+                }
+                return county;
+            });
+
+            var colorFunction = this.colorScale(county_stories, 'story_count');
+            this.map.selectAll('g.state path')
+              .data(counties_joined)
+              .style('fill', function(d) {
+                    if (d.properties === undefined) { return this.colorUnselected; }
+                    return colorFunction(d.properties.story_count || 0);
+            });
         },
 
-        // old stories as dots functionality
         renderStories: function() {
             var projection = this.projection;
 
