@@ -9,8 +9,25 @@ Solidarity.Views = Solidarity.Views || {};
 
         template: JST['app/templates/splash.html'],
         el: '#content',
-        events: {'click button.enter': 'enter'},
-        languages: ['en', 'es', 'tl', 'zh'], // defined in display order
+        events: {
+            'click button.enter': 'enter',
+            'mouseover button.lang': 'language',
+        },
+        languages: ['zh', 'en', 'es', 'tl'], // defined in display order
+
+        initialize: function() {
+            // start rotate timer
+        },
+
+        rotate: function() {
+
+        },
+
+        language: function(event) {
+            var lang = $(event.target).data('lang');
+            $('ul.statement li').hide();
+            $('ul.statement li#'+lang).show();
+        },
 
         enter: function() {
             // show header and footer
