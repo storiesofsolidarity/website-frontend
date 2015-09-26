@@ -72,13 +72,13 @@ Solidarity.Views = Solidarity.Views || {};
                 .call(zoom.event);
 
             if (this.us_json === undefined) {
-                d3.json(Solidarity.siteRoot + 'scripts/map/us.json', function(error, us) {
-                    Solidarity.log('requesting scripts/map/us.json');
+                d3.json(Solidarity.dataRoot + 'geography/us.json', function(error, us) {
+                    Solidarity.log('requesting us.json');
                     self.us_json = us; //cache for view reload
                     drawStates(error, self.us_json);
                 });
             } else {
-                Solidarity.log('using cached scripts/map/us.json');
+                Solidarity.log('using cached us.json');
                 drawStates(null, this.us_json);
             }
 
@@ -128,7 +128,7 @@ Solidarity.Views = Solidarity.Views || {};
 
                 // load state-specific topojson, with county boundaries
                 queue()
-                    .defer(d3.json, Solidarity.siteRoot + 'scripts/map/states/'+d.properties.name+'.topo.json')
+                    .defer(d3.json, Solidarity.dataRoot + 'geography/states/'+fn+'.topo.json')
                     .await(drawCounties);
 
                 self.svg.transition()

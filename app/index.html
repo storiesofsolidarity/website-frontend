@@ -131,7 +131,8 @@
         <script>
             window.Solidarity = {
                 siteRoot: 'http://www.storiesofsolidarity.org/',
-                apiRoot: 'https://stories-of-solidarity.herokuapp.com/api/'
+                apiRoot: 'https://stories-of-solidarity.herokuapp.com/api/',
+                dataRoot: 'http://storiesofsolidarity.github.io/us-data/'
             };
         </script>
         <!-- build:dev -->
@@ -139,7 +140,8 @@
             // invalid block type means this won't appear in build
             console.log("DEV ENVIRONMENT");
             window.Solidarity.siteRoot = 'http://localhost:9000/';
-            window.Solidarity.apiRoot = 'http://localhost:8000/api/'; 
+            window.Solidarity.apiRoot = 'http://localhost:8000/api/';
+            window.Solidarity.dataRoot = 'http://storiesofsolidarity.github.io/us-data/';
             window.Solidarity.DEBUG = true;
         </script>
         <!-- endbuild -->
