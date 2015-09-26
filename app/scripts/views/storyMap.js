@@ -132,6 +132,10 @@ Solidarity.Views = Solidarity.Views || {};
                     .defer(d3.json, Solidarity.dataRoot + 'geography/states/'+fn+'.topo.json')
                     .await(drawCounties);
 
+                queue()
+                    .defer(d3.json, Solidarity.dataRoot + 'geography/states/'+fn+'.places.json')
+                    .await(drawPlaces);
+
                 self.svg.transition()
                   .duration(750)
                   .call(zoom.translate(translate).scale(scale).event);
@@ -164,6 +168,29 @@ Solidarity.Views = Solidarity.Views || {};
 
                 self.renderCounties(stateName);
             }
+
+            function drawPlaces(error, data) {
+                Solidarity.log('drawPlaces', data);
+                if (error) { Solidarity.error(error, 'error in drawPlaces'); return false; }
+
+                var state = d3.selectAll('g.state');
+                var places = state.selectAll('text')
+                  .data(data.features)
+                  .enter()
+                    .append('svg:text')
+                    .text(function(d){
+                      return d.id;
+                    })
+                    .attr('x', function(d){
+                      return path.centroid(d.geometry)[0];
+                    })
+                    .attr('y', function(d){
+                      return  path.centroid(d.geometry)[1];
+                    })
+                    .attr('text-anchor', 'middle')
+                    .attr('font-size','1px');
+                    // needs to be really small, because it will only be visible on zoom
+
 
             }
 
