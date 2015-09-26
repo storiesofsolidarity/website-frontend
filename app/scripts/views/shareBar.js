@@ -7,7 +7,7 @@ Solidarity.Views = Solidarity.Views || {};
 
     Solidarity.Views.ShareBar = Solidarity.Views.FormView.extend({
 
-        template: JST['app/scripts/templates/storyPost.ejs'],
+        template: JST['app/templates/storyPost.html'],
         el: '#shareBar',
         form: 'form#storyPost',
         events: {

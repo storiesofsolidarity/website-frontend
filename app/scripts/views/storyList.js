@@ -7,9 +7,9 @@ Solidarity.Views = Solidarity.Views || {};
 
     Solidarity.Views.StoryList = Solidarity.Views.BaseView.extend({
 
-        template: JST['app/scripts/templates/storyList.ejs'],
-        templateItem: JST['app/scripts/templates/storyListItem.ejs'],
-        templateNoResults: JST['app/scripts/templates/storyListNoResults.ejs'],
+        template: JST['app/templates/storyList.html'],
+        templateItem: JST['app/templates/storyListItem.html'],
+        templateNoResults: JST['app/templates/storyListNoResults.html'],
         el: '#content',
 
         events: {'click a.loadMore': 'loadMore'},

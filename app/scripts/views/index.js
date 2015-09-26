@@ -7,7 +7,7 @@ Solidarity.Views = Solidarity.Views || {};
 
     Solidarity.Views.Index = Solidarity.Views.BaseView.extend({
 
-        template: JST['app/scripts/templates/index.ejs'],
+        template: JST['app/templates/index.html'],
         el: '#content',
         events: {},
 

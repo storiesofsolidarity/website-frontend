@@ -7,7 +7,7 @@ Solidarity.Views = Solidarity.Views || {};
 
     Solidarity.Views.Splash = Solidarity.Views.BaseView.extend({
 
-        template: JST['app/scripts/templates/splash.ejs'],
+        template: JST['app/templates/splash.html'],
         el: '#content',
         events: {'click button.enter': 'enter'},
         languages: ['en', 'es', 'tl', 'zh'], // defined in display order

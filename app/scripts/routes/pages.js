@@ -29,16 +29,16 @@ Solidarity.Routers = Solidarity.Routers || {};
             Solidarity.mainContent.show(new Solidarity.Views.Splash({}));
         },
         learn: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.Page('app/scripts/templates/learn.ejs'), '#learn');
+            Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/learn.html'), '#learn');
         },
         about: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.Page('app/scripts/templates/about.ejs'));
+            Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/about.html'));
         },
         privacy: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.Page('app/scripts/templates/privacy.ejs'));
+            Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/privacy.html'));
         },
         copyright: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.Page('app/scripts/templates/copyright.ejs'));
+            Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/copyright.html'));
         },
         adminRedirect: function() {
             window.location.href = 'https://stories-of-solidarity.herokuapp.com/admin/';
