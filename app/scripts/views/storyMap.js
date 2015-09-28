@@ -71,15 +71,15 @@ Solidarity.Views = Solidarity.Views || {};
                 //.call(zoom) // delete this line to disable free zooming
                 .call(zoom.event);
 
-            if (this.us_json === undefined) {
-                d3.json(Solidarity.dataRoot + 'geography/us.json', function(error, us) {
-                    Solidarity.log('requesting us.json');
-                    self.us_json = us; //cache for view reload
-                    drawStates(error, self.us_json);
+            if (this.us_states === undefined) {
+                d3.json(Solidarity.dataRoot + 'geography/states.topo.json', function(error, us) {
+                    Solidarity.log('requesting states.json');
+                    self.us_states = us; //cache for view reload
+                    drawStates(error, self.us_states);
                 });
             } else {
-                Solidarity.log('using cached us.json');
-                drawStates(null, this.us_json);
+                Solidarity.log('using cached states.topo.json');
+                drawStates(null, this.us_states);
             }
 
             function drawStates(error, data) {
@@ -129,11 +129,11 @@ Solidarity.Views = Solidarity.Views || {};
                 // load state-specific topojson, with county boundaries
                 var fn = d.properties.name.replace(' ','_');
                 queue()
-                    .defer(d3.json, Solidarity.dataRoot + 'geography/states/'+fn+'.topo.json')
+                    .defer(d3.json, Solidarity.dataRoot + 'geography/counties/'+fn+'.topo.json')
                     .await(drawCounties);
 
                 queue()
-                    .defer(d3.json, Solidarity.dataRoot + 'geography/states/'+fn+'.places.json')
+                    .defer(d3.json, Solidarity.dataRoot + 'geography/places/'+fn+'.geo.json')
                     .await(drawPlaces);
 
                 self.svg.transition()
