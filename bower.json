@@ -13,7 +13,8 @@
     "topojson": "~1.6.18",
     "bootstrap-filestyle": "~1.1.2",
     "d3-tip": "~0.6.6",
-    "bootstrap-select": "~1.6.4"
+    "bootstrap-select": "~1.6.4",
+    "jquery-bgswitcher": "git@github.com:rewish/jquery-bgswitcher.git#~0.4.3"
   },
   "homepage": "http://www.storiesofsolidarity.org",
   "authors": [
