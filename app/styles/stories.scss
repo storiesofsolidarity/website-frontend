@@ -81,8 +81,14 @@
         cursor: zoom-in;
     }
 
+    .feature.terminal {
+        cursor: -webkit-pointer;
+        cursor: -moz-pointer;
+        cursor: pointer;
+    }
+
     .feature.active {
-        fill: $gray-light;
+        fill: #ccc;
         cursor: -webkit-zoom-out;
         cursor: -moz-zoom-out;
         cursor: zoom-out;
@@ -92,7 +98,7 @@
         fill: $gray-lighter;
     }
     .feature.active:hover {
-        fill: $gray-light;
+        fill: #ccc;
     }
 
     .bubble {
@@ -109,6 +115,7 @@
         stroke-linecap: round;
         stroke-linejoin: round;
     }
+
 }
 
 .storyPost {

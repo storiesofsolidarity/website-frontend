@@ -10,13 +10,18 @@ Solidarity.Views = Solidarity.Views || {};
         template: JST['app/templates/storyMap.html'],
         el: '#content',
         events: {},
+        dataCache: {
+            us: undefined,
+            counties: {},
+            zips: {}
+        },
 
         initialize: function () {
             this.states = new Solidarity.Collections.States({});
             this.counties = new Solidarity.Collections.Counties({});
             this.locations = new Solidarity.Collections.Locations({});
-            this.colorUnselected = '#E4E4E4';
-            this.colorList = [this.colorUnselected,'#F3EB99','#FAC85F','#F9A946','#EC913D'];
+            this.colorUnselected = '#CCCCCC';
+            this.colorList = ['#E4E4E4','#F3EB99','#FAC85F','#F9A946','#EC913D'];
         },
         
         onShow: function() {
@@ -26,9 +31,6 @@ Solidarity.Views = Solidarity.Views || {};
                 success: function() {
                     // do first render
                     self.renderStates();
-
-                    // bind for further additions, changes
-                    // self.listenTo(self.locations, 'add change', self.renderStories);
                 }
             });
         },
@@ -68,18 +70,18 @@ Solidarity.Views = Solidarity.Views || {};
             var self = this;
 
             this.svg
-                //.call(zoom) // delete this line to disable free zooming
+                .call(zoom) // allow free zooming, but only when scale > 1
                 .call(zoom.event);
 
             if (this.us_states === undefined) {
                 d3.json(Solidarity.dataRoot + 'geography/states.topo.json', function(error, us) {
                     Solidarity.log('requesting states.json');
-                    self.us_states = us; //cache for view reload
-                    drawStates(error, self.us_states);
+                    self.dataCache.us = us; //cache for view reload
+                    drawStates(error, self.dataCache.us);
                 });
             } else {
                 Solidarity.log('using cached states.topo.json');
-                drawStates(null, this.us_states);
+                drawStates(null, this.dataCache.us);
             }
 
             function drawStates(error, data) {
@@ -89,21 +91,53 @@ Solidarity.Views = Solidarity.Views || {};
                   .attr('class', 'country')
                   .attr('id', 'US');
 
+                //merge all states for background
+                us.append('path')
+                  .datum(topojson.merge(data, data.objects.states.geometries))
+                  .attr('class', 'background')
+                  .attr('d', path);
+
+                // add individual states as paths
                 us.selectAll('path')
+                  .attr('class', 'states')
                   .data(topojson.feature(data, data.objects.states).features)
                 .enter().append('path')
                   .attr('d', path)
                   .attr('class', 'feature')
                   .on('click', clickState);
 
+                // mesh borders
                 us.append('path')
                   .datum(topojson.mesh(data, data.objects.states, function(a, b) { return a !== b; }))
                   .attr('class', 'mesh')
                   .attr('d', path);
             }
 
+            function zoomToBounds(d, scaleFactor) {
+                if (scaleFactor === undefined) {
+                    scaleFactor = 0.9;
+                }
+
+                var bounds = path.bounds(d),
+                  dx = bounds[1][0] - bounds[0][0],
+                  dy = bounds[1][1] - bounds[0][1],
+                  x = (bounds[0][0] + bounds[1][0]) / 2,
+                  y = (bounds[0][1] + bounds[1][1]) / 2,
+                  scale = scaleFactor / Math.max(dx / width, dy / height),
+                  translate = [width / 2 - scale * x, height / 2 - scale * y];
+
+                self.svg.transition()
+                  .duration(750)
+                  .call(zoom.translate(translate).scale(scale).event);
+            }
+
             function clickState(d) {
+                Solidarity.log('clickState', d.properties.name);
+
+                // zoom back out if double clicked
                 if (activeState.node() === this) { return resetZoom(); }
+
+                activeState.style('fill', this.colorUnselected);
                 activeState.classed('active', false);
                 activeState = d3.select(this).classed('active', true);
 
@@ -118,13 +152,7 @@ Solidarity.Views = Solidarity.Views || {};
                 if (d.id === '44') { scaleFactor = 0.3; } //RI
                 if (d.id === '11') { scaleFactor = 0.2; } //DC
 
-                var bounds = path.bounds(d),
-                  dx = bounds[1][0] - bounds[0][0],
-                  dy = bounds[1][1] - bounds[0][1],
-                  x = (bounds[0][0] + bounds[1][0]) / 2,
-                  y = (bounds[0][1] + bounds[1][1]) / 2,
-                  scale = scaleFactor / Math.max(dx / width, dy / height),
-                  translate = [width / 2 - scale * x, height / 2 - scale * y];
+                zoomToBounds(d, scaleFactor);
 
                 // load state-specific topojson, with county boundaries
                 var fn = d.properties.name.replace(' ','_');
@@ -133,12 +161,8 @@ Solidarity.Views = Solidarity.Views || {};
                     .await(drawCounties);
 
                 queue()
-                    .defer(d3.json, Solidarity.dataRoot + 'geography/places/'+fn+'.geo.json')
-                    .await(drawPlaces);
-
-                self.svg.transition()
-                  .duration(750)
-                  .call(zoom.translate(translate).scale(scale).event);
+                    .defer(d3.json, Solidarity.dataRoot + 'geography/zcta/'+fn+'.topo.json')
+                    .await(loadZips);
             }
 
             function drawCounties(error, data) {
@@ -154,51 +178,75 @@ Solidarity.Views = Solidarity.Views || {};
 
                 var counties = state.selectAll('path')
                   .attr('class','counties')
+                  .style('fill', self.colorUnselected)
                   .data(topojson.feature(data, data.objects[geomKey]).features)
                 .enter().append('path')
                   .attr('d', path)
-                  .attr('class', 'feature')
+                  .attr('class', 'feature county')
                   .on('click', clickCounty);
 
                 // merge county boundaries for mesh
                 state.append('path')
-                  .datum(topojson.mesh(data, data.objects[geomKey], function(a, b) { return a !== b; }))
+                  .datum(topojson.mesh(data, data.objects[geomKey]))
                   .attr('class', 'mesh')
+                  .style('border', 'white')
                   .attr('d', path);
 
                 self.renderCounties(stateName);
             }
 
-            function drawPlaces(error, data) {
-                Solidarity.log('drawPlaces', data);
-                if (error) { Solidarity.error(error, 'error in drawPlaces'); return false; }
+            function loadZips(error, data) {
+                Solidarity.log('loadZips', data);
+                if (error) { Solidarity.error(error, 'error in loadZips'); return false; }
 
-                var state = d3.selectAll('g.state');
-                var places = state.selectAll('text')
-                  .data(data.features)
-                  .enter()
-                    .append('svg:text')
-                    .text(function(d){
-                      return d.id;
-                    })
-                    .attr('x', function(d){
-                      return path.centroid(d.geometry)[0];
-                    })
-                    .attr('y', function(d){
-                      return  path.centroid(d.geometry)[1];
-                    })
-                    .attr('text-anchor', 'middle')
-                    .attr('font-size','1px');
-                    // needs to be really small, because it will only be visible on zoom
+                for(var geomKey in data.objects) { break; }
+                Solidarity.log('loaded',geomKey);
+                self.dataCache.zips[geomKey] = data;
+                // save to dataCache
+            }
 
+            function drawZips(d) {
+                // draw zips for selected state
+                // assumes topojson is present in dataCache
 
+                var state = d3.selectAll('.state');
+                var geomKey = state[0][0].id + '.geo'; // ugly hack to get id from svg element
+                console.log(geomKey);
+                console.log(self.dataCache);
+                var data = self.dataCache.zips[geomKey];
+                console.log('drawZips', data);
+                console.log('state', state);
+
+                var counties = state.selectAll('path')
+                  .attr('class','zipcodes')
+                  .style('fill', self.colorUnselected)
+                  .data(topojson.feature(data, data.objects[geomKey]).features)
+                .enter().append('path')
+                  .attr('d', path)
+                  .attr('class', 'feature terminal')
+                  .on('click', clickZip);
+
+                state.append('path')
+                  .datum(topojson.mesh(data, data.objects[geomKey])) // don't provide mesh function here
+                  .attr('class', 'mesh')
+                  .attr('d', path);
             }
 
             function clickCounty(d) {
-                Solidarity.log('clickCounty', d);
+                Solidarity.log('clickCounty', d.properties.name);
+                d3.selectAll(d).style('fill', 'transparent');
+                zoomToBounds(d);
+                drawZips(d);
+            }
+
+            function clickZip(d) {
+                Solidarity.log('clickZip', d.id);
+                // make us country background transparent
+                d3.selectAll('g.country path.states').style('fill', 'transparent');
             }
 
             function resetZoom() {
+                activeState.style('fill', this.colorUnselected);
                 activeState.classed('active', false);
                 activeState = d3.select(null);
 
@@ -215,8 +263,10 @@ Solidarity.Views = Solidarity.Views || {};
             }
 
             function zoomed() {
-                self.map.style('stroke-width', 1.5 / d3.event.scale + 'px');
-                self.map.attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
+                if (d3.event.scale > 1) {
+                    self.map.style('stroke-width', 1.5 / d3.event.scale + 'px');
+                    self.map.attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
+                }
             }
 
             function stopped() {
@@ -238,7 +288,7 @@ Solidarity.Views = Solidarity.Views || {};
         renderStates: function() {
             // extract model attributes from the backbone collection
             var state_stories = this.states.models.map(function(s) { return s.attributes; });
-            var state_geoms = this.map.selectAll('g.country path').data();
+            var state_geoms = this.map.selectAll('g.country path.states').data();
             // join manually, might zip be faster?
             var states_joined = _.map(state_geoms, function(state, index) {
                 if (state.properties) {
@@ -259,7 +309,7 @@ Solidarity.Views = Solidarity.Views || {};
             });
             this.map.call(tip);
 
-            this.map.selectAll('g.country path')
+            this.map.selectAll('g.country path.states')
               .data(states_joined)
               .style('fill', function(d) {
                     if (d.properties === undefined) { return this.colorUnselected; }
@@ -273,9 +323,9 @@ Solidarity.Views = Solidarity.Views || {};
             Solidarity.log('renderCounties: '+stateName);
 
             // unset all state background colors
-            d3.selectAll('g.country path.feature')
+            d3.selectAll('g.country path.states')
                 .style('fill', this.colorUnselected);
-            // make active state transparent, so higher resolution county geoms show through
+            // make active state transparent, so higher resolution geometry appears
             d3.select('g.country path.active')
                 .style('fill', 'transparent');
 
