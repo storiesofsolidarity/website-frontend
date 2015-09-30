@@ -277,12 +277,32 @@ module.exports = function (grunt) {
                 }
             }
         },
-        'gh-pages': {
+        buildcontrol: {
             options: {
-                base: 'dist'
+              dir: 'dist',
+              commit: true,
+              push: true,
+              message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
             },
-            src: ['**']
-        },
+            redesign: {
+              options: {
+                remote: 'git@github.com:storiesofsolidarity/website-redesign.git',
+                branch: 'gh-pages'
+              }
+            },
+            live: {
+              options: {
+                remote: 'git@github.com:storiesofsolidarity/website-frontend.git',
+                branch: 'gh-pages',
+              }
+            },
+            local: {
+              options: {
+                remote: '../',
+                branch: 'build'
+              }
+            }
+        }
     });
 
     grunt.registerTask('createDefaultTemplate', function () {
@@ -357,6 +377,8 @@ module.exports = function (grunt) {
         'rev',
         'usemin'
     ]);
+
+    grunt.loadNpmTasks('grunt-build-control');
 
     grunt.registerTask('default', [
         'jshint',
