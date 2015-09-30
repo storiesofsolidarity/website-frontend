@@ -39,5 +39,5 @@ Using GitHub Pages, build and push the resulting `dist` directory to the gh-page
 
 ``bash
 $ grunt build
-$ grunt gh-pages --gh-pages-message 'commit message'
+$ grunt buildcontrol:live
 ``

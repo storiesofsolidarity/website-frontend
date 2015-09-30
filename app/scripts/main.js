@@ -49,8 +49,8 @@ window.Solidarity = _.extend(window.Solidarity, {
         });
     },
 
-    log: function(msg) {
-        if (Solidarity.DEBUG) { console.log(msg); }
+    log: function(msg, object) {
+        if (Solidarity.DEBUG) { if (object) { console.log(msg, object); } else { console.log(msg); } }
     },
     error: function(exception, msg) {
         if (Solidarity.DEBUG) { console.error(msg); console.error(exception);}
