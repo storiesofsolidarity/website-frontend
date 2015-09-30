@@ -20,7 +20,8 @@ Solidarity.Views = Solidarity.Views || {};
             this.states = new Solidarity.Collections.States({});
             this.counties = new Solidarity.Collections.Counties({});
             this.locations = new Solidarity.Collections.Locations({});
-            this.colorUnselected = '#CCCCCC';
+            this.colorBackground = '#3F3F3F';
+            this.colorUnselected = '#E4E4E4';
             this.colorList = ['#E4E4E4','#F3EB99','#FAC85F','#F9A946','#EC913D'];
         },
         
@@ -28,9 +29,9 @@ Solidarity.Views = Solidarity.Views || {};
             var self = this;
             this.drawMap();
             this.states.fetch({
-                success: function() {
+                success: function(data) {
                     // do first render
-                    self.renderStates();
+                    self.renderStoryCollection(data, 'g.country path.feature', undefined, 1000);
                 }
             });
         },
@@ -75,42 +76,13 @@ Solidarity.Views = Solidarity.Views || {};
 
             if (this.us_states === undefined) {
                 d3.json(Solidarity.dataRoot + 'geography/states.topo.json', function(error, us) {
-                    Solidarity.log('requesting states.json');
+                    Solidarity.log('requesting states.topo.json');
                     self.dataCache.us = us; //cache for view reload
                     drawStates(error, self.dataCache.us);
                 });
             } else {
                 Solidarity.log('using cached states.topo.json');
                 drawStates(null, this.dataCache.us);
-            }
-
-            function drawStates(error, data) {
-                if (error) { Solidarity.error(error, 'error in drawStates'); return false; }
-
-                var us = self.map.append('g')
-                  .attr('class', 'country')
-                  .attr('id', 'US');
-
-                //merge all states for background
-                us.append('path')
-                  .datum(topojson.merge(data, data.objects.states.geometries))
-                  .attr('class', 'background')
-                  .attr('d', path);
-
-                // add individual states as paths
-                us.selectAll('path')
-                  .attr('class', 'states')
-                  .data(topojson.feature(data, data.objects.states).features)
-                .enter().append('path')
-                  .attr('d', path)
-                  .attr('class', 'feature')
-                  .on('click', clickState);
-
-                // mesh borders
-                us.append('path')
-                  .datum(topojson.mesh(data, data.objects.states, function(a, b) { return a !== b; }))
-                  .attr('class', 'mesh')
-                  .attr('d', path);
             }
 
             function zoomToBounds(d, scaleFactor) {
@@ -131,14 +103,53 @@ Solidarity.Views = Solidarity.Views || {};
                   .call(zoom.translate(translate).scale(scale).event);
             }
 
+            function resetZoom() {
+                // reset active features to normal colors
+                activeState
+                  .style('fill', this.colorUnselected)
+                  .classed('feature', true)
+                  .classed('background', false)
+                  .classed('active', false);
+                activeState = d3.select(null);
+
+                activeCounty
+                  .classed('feature', true)
+                  .classed('background', false)
+                  .classed('active', false);
+                activeCounty = d3.select(null);
+
+                // remove state group entirely
+                d3.selectAll('g.state').remove();
+
+                self.svg.transition()
+                  .duration(750)
+                  .call(zoom.translate([0, 0]).scale(1).event);
+
+                self.renderStoryCollection(self.states, 'g.country path.state', undefined, 1000);
+            }
+
+            function zoomed() {
+                if (d3.event.scale > 1) {
+                    self.map.style('stroke-width', 1.5 / d3.event.scale + 'px');
+                    self.map.attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
+                }
+            }
+
+            function stopped() {
+                if (d3.event.defaultPrevented) { d3.event.stopPropagation(); }
+            }
+
             function clickState(d) {
                 Solidarity.log('clickState', d.properties.name);
 
                 // zoom back out if double clicked
                 if (activeState.node() === this) { return resetZoom(); }
 
-                activeState.style('fill', this.colorUnselected);
-                activeState.classed('active', false);
+                activeState
+                  .style('fill', this.colorUnselected)
+                  .classed('feature', true)
+                  .classed('background', false)
+                  .classed('active', false);
                 activeState = d3.select(this).classed('active', true);
 
                 // clear existing state counties
@@ -163,6 +174,54 @@ Solidarity.Views = Solidarity.Views || {};
                 queue()
                     .defer(d3.json, Solidarity.dataRoot + 'geography/zcta/'+fn+'.topo.json')
                     .await(loadZips);
+
+                // show stories for state
+            }
+
+            function clickCounty(d) {
+                Solidarity.log('clickCounty', d.properties.name);
+                d3.selectAll(d).style('fill', 'transparent');
+                zoomToBounds(d);
+                drawZips(d);
+
+                // show stories for county
+            }
+
+            function clickZip(d) {
+                Solidarity.log('clickZip', d.id);
+                // make us country background transparent
+                d3.selectAll('g.country path.background').style('fill', 'transparent');
+
+                // show stories for zip
+            }
+
+            function drawStates(error, data) {
+                if (error) { Solidarity.error(error, 'error in drawStates'); return false; }
+
+                var us = self.map.append('g')
+                  .attr('class', 'country')
+                  .attr('id', 'US');
+
+                //merge all states for background
+                us.append('path')
+                  .datum(topojson.merge(data, data.objects.states.geometries))
+                  .attr('class', 'background')
+                  .attr('d', path);
+
+                // add individual states as paths
+                us.selectAll('path')
+                  .attr('class', 'states')
+                  .data(topojson.feature(data, data.objects.states).features)
+                .enter().append('path')
+                  .attr('d', path)
+                  .attr('class', 'feature state')
+                  .on('click', clickState);
+
+                // mesh borders
+                us.append('path')
+                  .datum(topojson.mesh(data, data.objects.states, function(a, b) { return a !== b; }))
+                  .attr('class', 'border')
+                  .attr('d', path);
             }
 
             function drawCounties(error, data) {
@@ -188,11 +247,15 @@ Solidarity.Views = Solidarity.Views || {};
                 // merge county boundaries for mesh
                 state.append('path')
                   .datum(topojson.mesh(data, data.objects[geomKey]))
-                  .attr('class', 'mesh')
+                  .attr('class', 'border')
                   .style('border', 'white')
                   .attr('d', path);
 
-                self.renderCounties(stateName);
+                // TEMP render dummy counties collection
+                var dummyCollection = {models: []};
+                self.renderStoryCollection(dummyCollection,
+                    'g.state path.county',
+                    'g.country path.state', 100);
             }
 
             function loadZips(error, data) {
@@ -207,15 +270,12 @@ Solidarity.Views = Solidarity.Views || {};
 
             function drawZips(d) {
                 // draw zips for selected state
-                // assumes topojson is present in dataCache
+                // assumes topojson already present in dataCache
 
-                var state = d3.selectAll('.state');
-                var geomKey = state[0][0].id + '.geo'; // ugly hack to get id from svg element
-                console.log(geomKey);
-                console.log(self.dataCache);
+                var state = d3.selectAll('g.state');
+                var stateName = state[0][0].id; // ugly hack to get id from svg element
+                var geomKey = stateName + '.geo';
                 var data = self.dataCache.zips[geomKey];
-                console.log('drawZips', data);
-                console.log('state', state);
 
                 var counties = state.selectAll('path')
                   .attr('class','zipcodes')
@@ -223,60 +283,25 @@ Solidarity.Views = Solidarity.Views || {};
                   .data(topojson.feature(data, data.objects[geomKey]).features)
                 .enter().append('path')
                   .attr('d', path)
-                  .attr('class', 'feature terminal')
+                  .attr('class', 'feature zipcode')
                   .on('click', clickZip);
 
                 state.append('path')
                   .datum(topojson.mesh(data, data.objects[geomKey])) // don't provide mesh function here
-                  .attr('class', 'mesh')
+                  .attr('class', 'border')
                   .attr('d', path);
-            }
 
-            function clickCounty(d) {
-                Solidarity.log('clickCounty', d.properties.name);
-                d3.selectAll(d).style('fill', 'transparent');
-                zoomToBounds(d);
-                drawZips(d);
-            }
-
-            function clickZip(d) {
-                Solidarity.log('clickZip', d.id);
-                // make us country background transparent
-                d3.selectAll('g.country path.states').style('fill', 'transparent');
-            }
-
-            function resetZoom() {
-                activeState.style('fill', this.colorUnselected);
-                activeState.classed('active', false);
-                activeState = d3.select(null);
-
-                activeCounty.classed('active', false);
-                activeCounty = d3.select(null);
-
-                d3.selectAll('g.state').remove();
-
-                self.svg.transition()
-                  .duration(750)
-                  .call(zoom.translate([0, 0]).scale(1).event);
-
-                self.renderStates();
-            }
-
-            function zoomed() {
-                if (d3.event.scale > 1) {
-                    self.map.style('stroke-width', 1.5 / d3.event.scale + 'px');
-                    self.map.attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
-                }
-            }
-
-            function stopped() {
-                if (d3.event.defaultPrevented) { d3.event.stopPropagation(); }
+                // TEMP render dummy zipcodes collection
+                var dummyCollection = {models: []};
+                self.renderStoryCollection(dummyCollection,
+                    'g.state path.zipcode',
+                    'g.state path.county', 10);
             }
         },
 
         colorScale: function(list, key) {
             // compute colors using jenks natural breaks
-            var data = _.pluck(list, key).sort();
+            var data = _.pluck(_.reject(list, _.isUndefined), key).sort();
             var breaks = jenks(data, 5);
             breaks[4] = breaks[4] + 1;
             var colorScale = d3.scale.quantile()
@@ -285,106 +310,66 @@ Solidarity.Views = Solidarity.Views || {};
             return colorScale;
         },
 
-        renderStates: function() {
+        renderStoryCollection: function(collection, geomSelector, geomUnselector, randomScale) {
             // extract model attributes from the backbone collection
-            var state_stories = this.states.models.map(function(s) { return s.attributes; });
-            var state_geoms = this.map.selectAll('g.country path.states').data();
-            // join manually, might zip be faster?
-            var states_joined = _.map(state_geoms, function(state, index) {
-                if (state.properties) {
-                    var s = _.findWhere(state_stories, {name: state.properties.name});
-                    if (s) { state.properties.story_count = s.story_count; }
-                }
-                return state;
-            });
-            
-            var colorFunction = this.colorScale(state_stories, 'story_count');
+            var stories = collection.models.map(function(s) { return s.attributes; });
+            var geoms = this.map.selectAll(geomSelector).data();
 
+            // join manually, might zip be faster?
+            var geoms_joined = _.map(geoms, function(g, index) {
+                if (g.properties) {
+                    var s = _.findWhere(stories, {name: g.properties.name});
+                    if (s) { g.properties.story_count = s.story_count; }
+
+                    // TEMP randomize state story counts
+                    g.properties.story_count = Math.floor(Math.random(1)*randomScale);
+                }
+                return g;
+            });
+
+            var story_properties = _.pluck(geoms_joined, 'properties');
+            var colorFunction = this.colorScale(story_properties, 'story_count');
+
+            this.map.selectAll(geomSelector)
+              .data(geoms_joined)
+              .style('fill', function(d) {
+                    if (d.properties === undefined) { return this.colorUnselected; }
+                    return colorFunction(d.properties.story_count || 0);
+            });
+
+            d3.selectAll('path.background')
+              .attr('fill', null); //reset background features
+
+            if (geomUnselector) {
+                // unselect
+                d3.selectAll(geomUnselector)
+                  .style('fill', this.colorUnselected);
+                 // hide active geoms, so higher resolution coastline appears
+                d3.selectAll('path.active')
+                  .attr('class', 'background');
+            }
+
+            // TEMP display tooltip
             var tip = d3.tip().html(function(d) {
                 if (d.properties && d.properties.story_count) {
                     var tmpl = '<%= story_count %> stor<%= story_count > 1 ? "ies" : "y"%>'+
                                ' in <%= name %>';
+                    if (d.properties.name === undefined && d.id) {
+                        d.properties.name = d.id;
+                    }
                     return _.template(tmpl)(d.properties);
                 }
             });
-            this.map.call(tip);
-
-            this.map.selectAll('g.country path.states')
-              .data(states_joined)
-              .style('fill', function(d) {
-                    if (d.properties === undefined) { return this.colorUnselected; }
-                    return colorFunction(d.properties.story_count || 0);
-            })
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide);
-        },
-
-        renderCounties: function(stateName) {
-            Solidarity.log('renderCounties: '+stateName);
-
-            // unset all state background colors
-            d3.selectAll('g.country path.states')
-                .style('fill', this.colorUnselected);
-            // make active state transparent, so higher resolution geometry appears
-            d3.select('g.country path.active')
-                .style('fill', 'transparent');
-
-            // extract model attributes from the backbone collection
-            var county_stories = this.counties.models.map(function(s) { return s.attributes; });
-            var county_geoms = d3.selectAll('g.state path').data();
-            // join manually, might zip be faster?
-            var counties_joined = _.map(county_geoms, function(county, index) {
-                if (county.properties) {
-                    var s = _.findWhere(county_stories, {name: county.properties.name});
-                    if (s) { county.properties.story_count = s.story_count; }
-                }
-                return county;
-            });
-
-            var colorFunction = this.colorScale(county_stories, 'story_count');
-            this.map.selectAll('g.state path')
-              .data(counties_joined)
-              .style('fill', function(d) {
-                    if (d.properties === undefined) { return this.colorUnselected; }
-                    return colorFunction(d.properties.story_count || 0);
-            });
-        },
-
-        renderStories: function() {
-            var projection = this.projection;
-
-            var opacity = d3.scale.log();
-            opacity.domain([1, 100]).range([0.5, 0]);
-
-            var tip = d3.tip().html(function(d) {
-                var tmpl = '<%= story_count %> stor<%= story_count > 1 ? "ies" : "y"%>'+
-                           ' in <%= city %>, <%= state %>';
-                return _.template(tmpl)(d.attributes);
+            tip.style('color', '#666');
+            tip.offset(function() {
+                // place tooltip inside element
+                return [this.getBBox().height / 2, 0];
             });
             this.map.call(tip);
-
-            this.map.append('g')
-                .attr('class', 'bubble')
-              .selectAll('circle')
-                .data(this.locations.models)
-              .enter()
-                .append('circle')
-                  .attr('r', function(d) { return 5; })
-                  .attr('transform', function(d) {
-                    var coords = projection([d.attributes.lon, d.attributes.lat]);
-                    return 'translate(' + coords + ')';
-                })
-                .style('opacity', function(d) {
-                    return opacity(d.attributes.story_count);
-                })
-                .on('mouseover', tip.show)
-                .on('mouseout', tip.hide)
-                .on('click', function(d) {
-                    tip.hide();
-                    Backbone.history.navigate('/list/'+d.attributes.state.toLowerCase()+'/'+d.attributes.city.toLowerCase(),
-                        {trigger: true});
-                });
-        }
+            this.map.selectAll(geomSelector)
+              .on('mouseover', tip.show)
+              .on('mouseout', tip.hide);
+        },
 
     });
 

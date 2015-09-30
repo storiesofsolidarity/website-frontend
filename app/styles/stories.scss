@@ -68,20 +68,29 @@
     cursor:zoom-in;
     z-index:0;
 
-    .background {
+    rect.background {
         fill: none;
         pointer-events: all;
         cursor:default;
     }
 
+    path.background {
+        fill: #3F3F3F;
+        cursor: normal;
+    }
+
+    text {
+        color: #666;
+    }
+
     .feature {
-        fill: #ccc;
+        fill: #E4E4E4;
         cursor: -webkit-zoom-in;
         cursor: -moz-zoom-in;
         cursor: zoom-in;
     }
 
-    .feature.terminal {
+    .feature.zipcode {
         cursor: -webkit-pointer;
         cursor: -moz-pointer;
         cursor: pointer;
@@ -101,15 +110,7 @@
         fill: #ccc;
     }
 
-    .bubble {
-        circle {
-            fill: $orange;
-            opacity: 0.8;
-            cursor: pointer
-        }
-    }
-
-    .mesh {
+    .border {
         fill: none;
         stroke: #fff;
         stroke-linecap: round;
