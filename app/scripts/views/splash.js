@@ -25,9 +25,9 @@ Solidarity.Views = Solidarity.Views || {};
             
             // set up background image switcher
             $('.splash').bgswitcher({
-                images: ['/images/splash/temp-1.jpg',
-                         '/images/splash/temp-2.jpg',
-                         '/images/splash/temp-3.jpg'],
+                images: [Solidarity.siteRoot+'images/splash/temp-1.jpg',
+                         Solidarity.siteRoot+'images/splash/temp-2.jpg',
+                         Solidarity.siteRoot+'images/splash/temp-3.jpg'],
                 interval: 10*1000,
                 effect: 'fade',
             }).bgswitcher('start');
