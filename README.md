@@ -20,15 +20,16 @@ We use [Bower](http://bower.io/) as our front-end package manager.
 $ npm install bower -g
 ```
 
-We use [Grunt](http://gruntjs.com/) as our task runner. Get the CLI (command line interface) and install it globally.
+We use [Grunt](http://gruntjs.com/) as our task runner. Get the CLI (command line interface) and install it globally, and any other devDependencies locally.
 
 ```bash
 $ npm install grunt-cli -g
+$ npm install
 ```
 
 Now compile and serve the site locally. This will watch for changes as you make them and reload them in the browser window.
 ```bash
-$ grunt serve
+$ grunt serve --watch
 ```
 
 To add new icons to the custom font, put the SVG file in `/app/images/icons` and re-run `fontcustom compile` from the repository root.
