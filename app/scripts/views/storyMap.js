@@ -52,6 +52,13 @@ Solidarity.Views = Solidarity.Views || {};
                 .scaleExtent([1, 8])
                 .on('zoom', zoomed);
 
+            var slider = d3.selectAll('#zoom input')
+                .attr('value', zoom.scaleExtent()[0])
+                .attr('min', zoom.scaleExtent()[0])
+                .attr('max', zoom.scaleExtent()[1])
+                .attr('step', (zoom.scaleExtent()[1] - zoom.scaleExtent()[0]) / 4)
+                .on('input', slided);
+
             var path = d3.geo.path()
                 .projection(this.projection);
 
@@ -133,6 +140,11 @@ Solidarity.Views = Solidarity.Views || {};
                     self.map.style('stroke-width', 1.5 / d3.event.scale + 'px');
                     self.map.attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
                 }
+            }
+
+            function slided(){
+                zoom.scale(d3.select(this).property('value'))
+                  .event(self.svg);
             }
 
             function stopped() {

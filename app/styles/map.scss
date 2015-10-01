@@ -1,0 +1,185 @@
+@import '_variables.scss';
+
+.storyMap {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 10px;
+    vertical-align: top;
+    overflow: hidden;
+    cursor: -webkit-zoom-in;
+    cursor: -moz-zoom-in;
+    cursor:zoom-in;
+    z-index:0;
+
+    #map {
+        rect.background {
+          fill: none;
+          pointer-events: all;
+          cursor:default;
+        }
+
+        path.background {
+          fill: #3F3F3F;
+          cursor: normal;
+        }
+
+        text {
+          color: #666;
+        }
+
+        .feature {
+          fill: #E4E4E4;
+          cursor: -webkit-zoom-in;
+          cursor: -moz-zoom-in;
+          cursor: zoom-in;
+        }
+
+        .feature.zipcode {
+          cursor: -webkit-pointer;
+          cursor: -moz-pointer;
+          cursor: pointer;
+        }
+
+        .feature.active {
+          fill: #ccc;
+          cursor: -webkit-zoom-out;
+          cursor: -moz-zoom-out;
+          cursor: zoom-out;
+        }
+
+        .feature:hover {
+          fill: $gray-lighter;
+        }
+        .feature.active:hover {
+          fill: #ccc;
+        }
+
+        .border {
+          fill: none;
+          stroke: #fff;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+    }
+
+    #zoom {
+        width: 60px;
+        height: 140px;
+        position: absolute;
+        left: 0;
+        top: 155px;
+        z-index: 10;
+        cursor: default;
+        background: #222;
+        box-shadow: 0 1px 10px #222;
+
+        .btn.zoom {
+          width: 20px;
+          height: 20px;
+          padding: 0;
+          margin-left: 20px;
+          border-radius: 0;
+          background-color: #19938E;
+          color: $white;
+          font-weight: bold;
+          font-size: 20px;
+          line-height: 1;
+          &.in { margin-top: 12px;}
+          &.out { margin-top: -10px; }
+        }
+    
+        // styles via the very helpful range.css
+        // http://danielstern.ca/range.css/
+        input[type=range] {
+          -webkit-appearance: none;
+          width: 60px;
+          position: relative;
+          top: 36px;
+          left: 0px;
+          margin-bottom: 75px;
+          transform:rotate(-90deg);
+          cursor: ns-resize;
+        }
+        input[type=range]:focus {
+          outline: none;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+          width: 100%;
+          height: 2px;
+          cursor: ns-resize;
+          box-shadow: 0;
+          background: rgba(35, 148, 143, 0.78);
+          border-radius: 0px;
+          border: 0px solid #010101;
+        }
+        input[type=range]::-webkit-slider-thumb {
+          box-shadow: none;
+          border: 0px solid #23948f;
+          height: 20px;
+          width: 4px;
+          border-radius: 0px;
+          background: #23948f;
+          cursor: ns-resize;
+          -webkit-appearance: none;
+          margin-top: -9px;
+        }
+        input[type=range]:focus::-webkit-slider-runnable-track {
+          background: rgba(41, 173, 167, 0.78);
+        }
+        input[type=range]::-moz-range-track {
+          width: 100%;
+          height: 2px;
+          cursor: pointer;
+          box-shadow: none;
+          background: rgba(35, 148, 143, 0.78);
+          border-radius: 0px;
+          border: 0px solid #010101;
+        }
+        input[type=range]::-moz-range-thumb {
+          box-shadow: none;
+          border: 0px solid #23948f;
+          height: 20px;
+          width: 4px;
+          border-radius: 0px;
+          background: #23948f;
+          cursor: pointer;
+        }
+        input[type=range]::-ms-track {
+          width: 100%;
+          height: 2px;
+          cursor: pointer;
+          background: transparent;
+          border-color: transparent;
+          color: transparent;
+        }
+        input[type=range]::-ms-fill-lower {
+          background: rgba(29, 123, 119, 0.78);
+          border: 0px solid #010101;
+          border-radius: 0px;
+          box-shadow: none;
+        }
+        input[type=range]::-ms-fill-upper {
+          background: rgba(35, 148, 143, 0.78);
+          border: 0px solid #010101;
+          border-radius: 0px;
+          box-shadow: none;
+        }
+        input[type=range]::-ms-thumb {
+          box-shadow: none;
+          border: 0px solid #23948f;
+          height: 30px;
+          width: 4px;
+          border-radius: 0px;
+          background: #23948f;
+          cursor: pointer;
+        }
+        input[type=range]:focus::-ms-fill-lower {
+          background: rgba(35, 148, 143, 0.78);
+        }
+        input[type=range]:focus::-ms-fill-upper {
+          background: rgba(41, 173, 167, 0.78);
+        }
+    }
+}
+
