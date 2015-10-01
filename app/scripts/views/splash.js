@@ -20,17 +20,33 @@ Solidarity.Views = Solidarity.Views || {};
         render: function () {
             this.$el.html(this.template());
 
-            // start timers bound to view
-            this.rotateLanguageTimer = setInterval(this.rotateLanguage.bind(this), 2.5*1000);
-            
-            // set up background image switcher
-            $('.splash').bgswitcher({
+            // rebind rotation function bound to backbone view
+            var self = this;
+
+            // animate entrance
+            $.when(
+              $('ul.statement').animate({'top': 0}, 1000).promise(),
+              $('ul.languages li').eq(0).delay( 500).animate({'top': '5px', 'opacity': 1}, 1000).promise(),
+              $('ul.languages li').eq(1).delay(1000).animate({'top': '5px', 'opacity': 1}, 1000).promise(),
+              $('ul.languages li').eq(2).delay(1500).animate({'top': '5px', 'opacity': 1}, 1000).promise(),
+              $('ul.languages li').eq(3).delay(2000).animate({'top': '5px', 'opacity': 1}, 1000).promise()
+            ).done( function(){
+              Solidarity.log('Splash load complete.');
+
+              // start language rotation, bound to backbone view
+              self.rotateLanguageTimer = setInterval(self.rotateLanguage.bind(self), 2.5*1000);
+
+              // set up background image switcher
+              $('.splash').bgswitcher({
                 images: [Solidarity.siteRoot+'images/splash/temp-1.jpg',
                          Solidarity.siteRoot+'images/splash/temp-2.jpg',
                          Solidarity.siteRoot+'images/splash/temp-3.jpg'],
                 interval: 10*1000,
                 effect: 'fade',
-            }).bgswitcher('start');
+               });
+            });
+            
+
 
             return this;
         },
@@ -47,8 +63,8 @@ Solidarity.Views = Solidarity.Views || {};
         changeLanguage: function(btn) {
             var lang = btn.data('lang');
             $('ul.languages .btn.active').removeClass('active');
-            $('ul.statement li').hide();
-            $('ul.statement li#'+lang).show();
+            $('ul.statement li').fadeOut(500);
+            $('ul.statement li#'+lang).fadeIn(500);
             btn.addClass('active');
         },
 
