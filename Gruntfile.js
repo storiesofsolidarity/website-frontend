@@ -2,16 +2,10 @@
 var LIVERELOAD_PORT = 35729;
 var SERVER_PORT = 9000;
 var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
+var serveStatic = require('serve-static');
 var mountFolder = function (connect, dir) {
-    return connect.static(require('path').resolve(dir));
+    return serveStatic(require('path').resolve(dir));
 };
-
-// # Globbing
-// for performance reasons we're only matching one level down:
-// 'test/spec/{,*/}*.js'
-// use this if you want to match all subfolders:
-// 'test/spec/**/*.js'
-// templateFramework: 'lodash'
 
 module.exports = function (grunt) {
     // show elapsed time at the end
@@ -46,7 +40,6 @@ module.exports = function (grunt) {
                     '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
                     '<%= yeoman.app %>/scripts/templates/*.{ejs,mustache,hbs}',
-                    'test/spec/**/*.js'
                 ]
             },
             jst: {
@@ -54,10 +47,6 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/scripts/templates/*.ejs'
                 ],
                 tasks: ['jst']
-            },
-            test: {
-                files: ['<%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js'],
-                tasks: ['test:true']
             }
         },
         connect: {
@@ -70,19 +59,6 @@ module.exports = function (grunt) {
                 options: {
                     middleware: function (connect) {
                         return [
-                            lrSnippet,
-                            mountFolder(connect, '.tmp'),
-                            mountFolder(connect, yeomanConfig.app)
-                        ];
-                    }
-                }
-            },
-            test: {
-                options: {
-                    port: 9001,
-                    middleware: function (connect) {
-                        return [
-                            mountFolder(connect, 'test'),
                             lrSnippet,
                             mountFolder(connect, '.tmp'),
                             mountFolder(connect, yeomanConfig.app)
@@ -104,9 +80,6 @@ module.exports = function (grunt) {
             server: {
                 path: 'http://localhost:<%= connect.options.port %>'
             },
-            test: {
-                path: 'http://localhost:<%= connect.test.options.port %>'
-            }
         },
         clean: {
             dist: ['.tmp', '<%= yeoman.dist %>/*'],
@@ -121,16 +94,7 @@ module.exports = function (grunt) {
                 'Gruntfile.js',
                 '<%= yeoman.app %>/scripts/{,*/}*.js',
                 '!<%= yeoman.app %>/scripts/vendor/*',
-                'test/spec/{,*/}*.js'
             ]
-        },
-        mocha: {
-            all: {
-                options: {
-                    run: true,
-                    urls: ['http://localhost:<%= connect.test.options.port %>/index.html']
-                }
-            }
         },
         sass: {
             options: {
@@ -241,10 +205,6 @@ module.exports = function (grunt) {
                         'CNAME'
                     ]
                 }, {
-                    cwd: '<%= yeoman.app %>',
-                    src: 'node_modules/apache-server-configs/dist/.htaccess',
-                    dest: '<%= yeoman.dist %>/.htaccess'
-                }, {
                     expand: true,
                     cwd: '<%= yeoman.app %>',
                     src: ['bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*.*',
@@ -299,18 +259,6 @@ module.exports = function (grunt) {
             return grunt.task.run(['build', 'open:server', 'connect:dist:keepalive']);
         }
 
-        if (target === 'test') {
-            return grunt.task.run([
-                'clean:server',
-                'createDefaultTemplate',
-                'jst',
-                'sass:server',
-                'connect:test',
-                'open:test',
-                'watch'
-            ]);
-        }
-
         grunt.task.run([
             'clean:server',
             'createDefaultTemplate',
@@ -320,26 +268,6 @@ module.exports = function (grunt) {
             'open:server',
             'watch'
         ]);
-    });
-
-    grunt.registerTask('test', function (isConnected) {
-        isConnected = Boolean(isConnected);
-        var testTasks = [
-                'clean:server',
-                'createDefaultTemplate',
-                'jst',
-                'sass',
-                'connect:test',
-                'mocha',
-            ];
-
-        if(!isConnected) {
-            return grunt.task.run(testTasks);
-        } else {
-            // already connected so not going to connect again, remove the connect:test task
-            testTasks.splice(testTasks.indexOf('connect:test'), 1);
-            return grunt.task.run(testTasks);
-        }
     });
 
     grunt.registerTask('build', [
@@ -360,7 +288,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', [
         'jshint',
-        'test',
         'build'
     ]);
 };
