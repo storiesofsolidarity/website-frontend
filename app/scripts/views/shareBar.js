@@ -77,19 +77,19 @@ Solidarity.Views = Solidarity.Views || {};
 
         locationToCityState: function(position) {
             var self = this;
-
-            $.ajax('http://nominatim.openstreetmap.org/reverse?format=json', {
+            $.ajax('https://search.mapzen.com/v1/reverse', {
                 type: 'GET',
                 data: {
-                    lat: position.coords.latitude,
-                    lon: position.coords.longitude
+                    'point.lat': position.coords.latitude,
+                    'point.lon': position.coords.longitude,
+                    'layers': 'address',
+                    'size': 1,
+                    'api_key': Solidarity.mapzenKey
                 },
                 success: function(data) {
-                    $('input#city').val(data.address.city);
-                    var stateVal = $('select#state option')
-                        .filter(function(i, e) { return $(e).text() === data.address.state; } )
-                        .val(); //lookup state val from name
-                    $('#state.selectpicker').selectpicker('val', stateVal);
+                    var match = data.features[0];
+                    $('input#city').val(match.properties.locality.toUpperCase());
+                    $('#state.selectpicker').selectpicker('val', match.properties.region_a);
                     $('button#geolocate').attr('disabled','disabled');
                 },
                 error: function(resp, status, err) {
