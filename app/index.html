@@ -52,9 +52,9 @@
                 <div class="collapse navbar-collapse" id="navbar-collapsed">
                     <ul class="nav navbar-nav">
                         <li class="share fixed">
-                            <div id="shareBar">
+                            <div id="shareBar" class="closed">
                                 <span class="icon icon-write"></span>
-                                <textarea class="closed" name="share" placeholder="Share Your Story"></textarea>
+                                <textarea name="content" placeholder="SHARE YOUR STORY"></textarea>
                             </div>
                         </li>
                         <li class="button"><a href="#map">
@@ -132,7 +132,7 @@
             console.log("DEV ENVIRONMENT");
             window.Solidarity.siteRoot = 'http://localhost:9000/';
             window.Solidarity.apiRoot = 'http://localhost:8000/api/';
-            window.Solidarity.dataRoot = 'http://localhost:5000/';
+            window.Solidarity.dataRoot = 'http://localhost:3000/';
             window.Solidarity.DEBUG = true;
         </script>
         <!-- endbuild -->

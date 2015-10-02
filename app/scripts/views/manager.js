@@ -50,12 +50,15 @@ Solidarity.RegionManager = (function (Backbone, $) {
     region.freshView = function() {
         return freshView;
     };
-    region.showOverlay = function() {
+    region.showOverlay = function(delayActivate) {
         var overlay = $('<div id="overlay"></div>');
         $('body').append(overlay);
+        if (delayActivate !== undefined) {
+            $('#overlay').addClass('active');
+        }
     };
     region.hideOverlay = function() {
-        $('body > #overlay').remove();
+        $('body > #overlay').removeClass('active')//.delay(500).remove();
     };
 
     return region;

@@ -11,34 +11,54 @@ Solidarity.Views = Solidarity.Views || {};
         el: '#shareBar',
         form: 'form#storyPost',
         events: {
-            'focusin textarea[name="share"]': 'show',
+            'click textarea[name="content"]': 'show',
+            'keyup textarea[name="content"].closed': 'show',
             'click button#geolocate': 'geolocate',
             'click button#cancel': 'hide',
         },
+        beenRendered: false,
+        isOpen: false,
         
         initialize: function() {
             _.extend(this.events, Solidarity.Views.FormView.prototype.events);
-
-            Solidarity.log('init shareBar');
         },
 
         render: function() {
             Solidarity.log('shareBar.render');
-            this.$el.hide().html(this.template()).slideDown();
+            this.$el.hide().html(this.template()).slideDown(1000);
             this.$form = $(this.form);
+            this.beenRendered = true;
             return this;
         },
 
         show: function() {
             Solidarity.log('shareBar.show');
-            this.render();
-            Solidarity.mainContent.showOverlay();
-            this.onShow();
+            if (!this.isOpen) {
+                Solidarity.mainContent.showOverlay(true);
+                // delay activate until open animation starts
+                $('#overlay').delay(500).addClass('active');
+
+                if (!this.beenRendered) {
+                    this.render();
+                } else {
+                    this.$el.animate({'height': '100%'}, 500);
+                    $('textarea', this.$el).delay(500).removeClass('closed').addClass('open');
+                }
+                this.$el.removeClass('closed');
+                this.isOpen = true;
+                this.onShow();
+            } else {
+            }
         },
 
-        hide: function() {
-            // close but do not delete content
-            this.$el.slideUp();
+        hide: function(event) {
+            event.preventDefault(); // stop form submit
+
+            // hide without replacing content
+            this.$el.animate({'height': '30px'}, 500).delay(500).addClass('closed');
+            $('textarea', this.$el).removeClass('open').addClass('closed');
+            this.isOpen = false;
+            
             Solidarity.mainContent.hideOverlay();
         },
 

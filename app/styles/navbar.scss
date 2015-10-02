@@ -111,16 +111,21 @@
             float: left;
             font-size: 30px;
         }
-        textarea {
-            &.closed {
+
+        #shareBar.closed {
+            overflow-y: hidden;
+            &> textarea {
                 width: calc(100% - 50px);
                 height: 30px;
+                padding: 7px 20px;
             }
+        }
+
+        textarea {
             resize: none;
             border: none;
 
             margin: 0 10px;
-            padding: 7px 20px;
             font-size: 16px;
             line-height: 16px;
 
@@ -132,7 +137,6 @@
             &::placeholder { color: $gray-darker; }
 
             font-family: $font-family-sans-serif;
-            text-transform: uppercase;
 
             &:focus {
                 border-color: inherit;

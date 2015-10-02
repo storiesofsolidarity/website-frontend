@@ -97,7 +97,7 @@
     }
 
     textarea, input[type="text"], .input-group.row {
-        width: 100%;
+        width: 100% !important;
         height: 25px;
         border: none;
         margin: 0;
@@ -120,11 +120,16 @@
         top: -10px;
     }
 
-    textarea#content.open {
+    textarea#content {
         width: 100%;
-        height: 150px;
         padding: 10px;
         margin: 0;
+        &.open {
+            height: 150px;
+        }
+        &.closed {
+            padding: 5px 10px;
+        }
     }
 
     h4 { 
