@@ -1,5 +1,22 @@
 @import '_variables.scss';
 
+// try to handle webkit animation flicker
+// per http://stackoverflow.com/a/15280035/264790
+//and http://stackoverflow.com/a/15759785/264790
+/*
+#content {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    &> div {
+        -webkit-perspective: 1000;
+        perspective: 1000;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        -webkit-transform-style: preserve-3d;
+    }
+}
+*/
+
 .splash {
     // fill entire window
     position: absolute;
