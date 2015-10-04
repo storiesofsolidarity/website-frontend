@@ -11,7 +11,7 @@
             in <%- data.location.city %>, <%- data.location.state %>
         <% } %>
     </h1>
-    <h2><%= (new Date(data.created_at)).toDateString() %></h2>
+    <h2><%= moment(data.created_at).format('M/D/YYYY - h:mma') %></h2>
 
     <div class="body">
         <%- data.content %>
