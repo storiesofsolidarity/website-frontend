@@ -49,15 +49,18 @@ Solidarity.Views = Solidarity.Views || {};
             var zoom = d3.behavior.zoom()
                 .translate([0, 0])
                 .scale(1)
-                .scaleExtent([1, 8])
-                .on('zoom', zoomed);
+                .scaleExtent([1, 256])
+                .on('zoom', zoomEvent);
+
+            // map zoom extent goes from 1-256
+            // input from 1-8 (log2 scale)
 
             var slider = d3.selectAll('#zoom input')
                 .attr('value', zoom.scaleExtent()[0])
-                .attr('min', zoom.scaleExtent()[0])
-                .attr('max', zoom.scaleExtent()[1])
-                .attr('step', (zoom.scaleExtent()[1] - zoom.scaleExtent()[0]) / 4)
-                .on('input', slided);
+                .on('input', zoomInput);
+
+            d3.selectAll('#zoom .btn')
+                .on('click', zoomClick);
 
             var path = d3.geo.path()
                 .projection(this.projection);
@@ -72,7 +75,7 @@ Solidarity.Views = Solidarity.Views || {};
                 .attr('class', 'background')
                 .attr('width', width)
                 .attr('height', height)
-                .on('click', resetZoom);
+                .on('click', zoomReset);
 
             this.map = this.svg.append('g');
             var self = this;
@@ -110,7 +113,7 @@ Solidarity.Views = Solidarity.Views || {};
                   .call(zoom.translate(translate).scale(scale).event);
             }
 
-            function resetZoom() {
+            function zoomReset() {
                 // reset active features to normal colors
                 activeState
                   .style('fill', this.colorUnselected)
@@ -135,16 +138,45 @@ Solidarity.Views = Solidarity.Views || {};
                 self.renderStoryCollection(self.states, 'g.country path.state', undefined, 1000);
             }
 
-            function zoomed() {
+            function zoomClick() {
+                // zoom buttons have value 2^(val+incr)
+                // use Math.log2 to get new scale
+                var incr = 1;
+                if (d3.select(this).classed('out')) {
+                  incr = -1;
+                }
+
+                var scale = zoom.scale();
+                var extent = zoom.scaleExtent();
+                var min = extent[0];
+                var max = extent[1];
+                
+                var rescale = zoom.scale() + incr;
+                if (rescale > max) { rescale = max; }
+                if (rescale < min) { rescale = min; }
+
+                var t = zoom.translate();
+                var c = [width / 2, height / 2];
+                // zoom in to viewport center
+                zoom
+                  .translate(
+                    [c[0] + (t[0] - c[0]) / scale * rescale, 
+                     c[1] + (t[1] - c[1]) / scale * rescale]) 
+                  .scale(rescale)
+                  .event(self.svg);
+            }
+
+            function zoomInput(){
+                zoom.scale(d3.select(this).property('value'))
+                  .event(self.svg);
+            }
+
+            function zoomEvent() {
+              $('#zoom input').val(Math.log2(d3.event.scale));
                 if (d3.event.scale > 1) {
                     self.map.style('stroke-width', 1.5 / d3.event.scale + 'px');
                     self.map.attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
                 }
-            }
-
-            function slided(){
-                zoom.scale(d3.select(this).property('value'))
-                  .event(self.svg);
             }
 
             function stopped() {
@@ -155,7 +187,7 @@ Solidarity.Views = Solidarity.Views || {};
                 Solidarity.log('clickState', d.properties.name);
 
                 // zoom back out if double clicked
-                if (activeState.node() === this) { return resetZoom(); }
+                if (activeState.node() === this) { return zoomReset(); }
 
                 activeState
                   .style('fill', this.colorUnselected)
