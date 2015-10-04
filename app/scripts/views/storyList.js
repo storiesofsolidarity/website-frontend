@@ -34,7 +34,7 @@ Solidarity.Views = Solidarity.Views || {};
             this.collection.getFirstPage({
                 success: function(results) {
                     if (results.length === 0) {
-                        $(self.templateNoResults({})).insertBefore('.storyList .item.more');
+                        $(self.templateNoResults({})).appendTo('.storyList');
                     }
                     if (self.collection.hasNextPage()) {
                         $('.item.more').show();
@@ -44,23 +44,35 @@ Solidarity.Views = Solidarity.Views || {};
 
                         //TODO, check to see if story param is greater than the first page
                     }
-                    
+
+                    self.layout();
                 }
             });
         },
 
         addStory: function(story) {
             if (story.attributes.content) {
-                $(this.templateItem(story.attributes)).insertBefore('.storyList .item.more');
+                $(this.templateItem(story.attributes)).appendTo('.storyList');
             }
             if(!this.collection.hasNextPage()) {
                 $('.item.more').hide();
             }
         },
 
-        render: function () {
+        render: function() {
             this.$el.html(this.template({}));
             return this;
+        },
+
+        layout: function() {
+            $('.storyList.grid').stalactite({
+                duration: 150,
+                easing: 'swing',
+                cssPrefix: '.stalactite',
+                cssPrep: true,
+                fluid: true,
+                loader: '<img />',
+            });
         },
 
         loadMore: function() {

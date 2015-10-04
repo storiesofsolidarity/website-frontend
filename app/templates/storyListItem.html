@@ -5,16 +5,14 @@
         <% } else { %>
             <%- data.content %>
         <% } %>
-        <span class="readMore">
-            <a class="readMore" href="#read/story/<%= data.id %>">+ read more</a>
+        
+    </div>
+    <div class="meta">
+        <span class="permalink">
+            <a class="permalink" href="#read/story/<%= data.id %>">permalink</a>
+        </span>
+        <span class="date">
+            <%= moment(data.created_at).format('M/D/YYYY - h:mma') %>
         </span>
     </div>
-    <h3><%= (new Date(data.created_at)).toDateString() %> <br>
-        by <% if (data.author && data.author.user) { %>
-            <!-- <a href="#read/author/<%-data.author.user.id%>"><%- data.author.user.first_name %> <%- data.author.user.last_name %></a> -->
-            <%- data.author.user.first_name %> <%- data.author.user.last_name %>
-        <% } else { %>
-            Anonymous
-        <% } %>
-        </h3>
 </div>

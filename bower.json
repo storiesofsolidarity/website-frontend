@@ -4,7 +4,6 @@
   "dependencies": {
     "bootstrap-sass-official": "~3.3.1",
     "jquery": "~2.1.0",
-    "jquery.cookie": "1.4.1",
     "lodash": "~2.4.1",
     "backbone": "~1.1.0",
     "modernizr": "~2.7.1",
@@ -14,7 +13,9 @@
     "bootstrap-filestyle": "~1.1.2",
     "d3-tip": "~0.6.6",
     "bootstrap-select": "~1.6.4",
-    "jquery-bgswitcher": "git@github.com:rewish/jquery-bgswitcher.git#~0.4.3"
+    "jquery-bgswitcher": "git@github.com:rewish/jquery-bgswitcher.git#~0.4.3",
+    "stalactite": "git@github.com:jonobr1/stalactite.git",
+    "moment": "~2.10.6"
   },
   "homepage": "http://www.storiesofsolidarity.org",
   "authors": [
