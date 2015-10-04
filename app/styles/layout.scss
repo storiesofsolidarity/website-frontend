@@ -25,11 +25,12 @@ a:hover {
     }
 }
 
-.warning#browsehappy {
-    margin: 0.2em 0;
+.warning#browsehappy, .warning#noscript {
+    margin: 0.5em 0;
     background-color: #FF8800;
-    color: $gray-lighter;
-    padding: 0.2em 0;
+    color: $white;
+    padding: 0.5em;
+    a { color: white; text-decoration: underline; }
 }
 
 section.main {
