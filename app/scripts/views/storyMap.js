@@ -20,8 +20,6 @@ Solidarity.Views = Solidarity.Views || {};
             this.states = new Solidarity.Collections.States({});
             this.counties = new Solidarity.Collections.Counties({});
             this.locations = new Solidarity.Collections.Locations({});
-            this.colorBackground = '#3F3F3F';
-            this.colorUnselected = '#E4E4E4';
             this.colorList = ['#E4E4E4','#F3EB99','#FAC85F','#F9A946','#EC913D'];
         },
         
@@ -41,6 +39,9 @@ Solidarity.Views = Solidarity.Views || {};
                 height = 500,
                 activeState = d3.select(null),
                 activeCounty = d3.select(null);
+
+            this.colorBackground = '#3F3F3F';
+            this.colorUnselected = '#E4E4E4';
 
             this.projection = d3.geo.albersUsaPr() // US including puerto rico
                 .scale(1000)
@@ -116,7 +117,7 @@ Solidarity.Views = Solidarity.Views || {};
             function zoomReset() {
                 // reset active features to normal colors
                 activeState
-                  .style('fill', this.colorUnselected)
+                  .style('fill', self.colorUnselected)
                   .classed('feature', true)
                   .classed('background', false)
                   .classed('active', false);
@@ -189,12 +190,19 @@ Solidarity.Views = Solidarity.Views || {};
                 // zoom back out if double clicked
                 if (activeState.node() === this) { return zoomReset(); }
 
+                // reset activeState colors
                 activeState
-                  .style('fill', this.colorUnselected)
+                  .style('fill', self.colorUnselected)
                   .classed('feature', true)
                   .classed('background', false)
                   .classed('active', false);
-                activeState = d3.select(this).classed('active', true);
+
+                // select new activeState
+                activeState = d3.select(this)
+                  .classed('active', true);
+                
+                // hide background
+                d3.selectAll('path.background').style('fill', self.colorBackground);
 
                 // clear existing state counties
                 d3.selectAll('g.state').remove();
@@ -288,6 +296,9 @@ Solidarity.Views = Solidarity.Views || {};
                   .attr('class', 'feature county')
                   .on('click', clickCounty);
 
+                // reset state background color
+                state.selectAll('path.background').style('fill', self.colorBackground);
+
                 // merge county boundaries for mesh
                 state.append('path')
                   .datum(topojson.mesh(data, data.objects[geomKey]))
@@ -323,7 +334,7 @@ Solidarity.Views = Solidarity.Views || {};
 
                 var counties = state.selectAll('path')
                   .attr('class','zipcodes')
-                  .style('fill', self.colorUnselected)
+                  .style('fill', self.colorUnselected) // so holes don't appear through the zipcodes layer
                   .data(topojson.feature(data, data.objects[geomKey]).features)
                 .enter().append('path')
                   .attr('d', path)
@@ -374,24 +385,23 @@ Solidarity.Views = Solidarity.Views || {};
             var story_properties = _.pluck(geoms_joined, 'properties');
             var colorFunction = this.colorScale(story_properties, 'story_count');
 
+            var self = this;
             this.map.selectAll(geomSelector)
               .data(geoms_joined)
               .style('fill', function(d) {
-                    if (d.properties === undefined) { return this.colorUnselected; }
+                    if (d.properties === undefined) { return self.colorUnselected; }
                     return colorFunction(d.properties.story_count || 0);
             });
-
-            d3.selectAll('path.background')
-              .attr('fill', null); //reset background features
 
             if (geomUnselector) {
                 // unselect
                 d3.selectAll(geomUnselector)
                   .style('fill', this.colorUnselected);
-                 // hide active geoms, so higher resolution coastline appears
+                // hide background paths, so higher resolution geoms appear
                 d3.selectAll('path.active')
-                  .attr('class', 'background');
-            }
+                  .attr('class', 'background')
+                  .style('fill', this.colorBackground);
+            } 
 
             // TEMP display tooltip
             var tip = d3.tip().html(function(d) {
