@@ -23,6 +23,8 @@
 [data-icon]:before { content: attr(data-icon); }
 
 [data-icon]:before,
+.icon-arrow_down:before,
+.icon-arrow_up:before,
 .icon-article:before,
 .icon-camera:before,
 .icon-check:before,
@@ -48,6 +50,8 @@
   font-smoothing: antialiased;
 }
 
+.icon-arrow_down:before { content: "\f10c"; }
+.icon-arrow_up:before { content: "\f10d"; }
 .icon-article:before { content: "\f100"; }
 .icon-camera:before { content: "\f101"; }
 .icon-check:before { content: "\f10a"; }
@@ -60,6 +64,8 @@
 .icon-search:before { content: "\f106"; }
 .icon-write:before { content: "\f107"; }
 
+$font-customicons-arrow_down: "\f10c";
+$font-customicons-arrow_up: "\f10d";
 $font-customicons-article: "\f100";
 $font-customicons-camera: "\f101";
 $font-customicons-check: "\f10a";
