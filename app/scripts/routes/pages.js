@@ -32,13 +32,13 @@ Solidarity.Routers = Solidarity.Routers || {};
             Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/learn.html'), '#learn');
         },
         about: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/about.html'));
+            Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/about.html'), null, '#about');
         },
         privacy: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/privacy.html'));
+            Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/privacy.html'), null, '#privacy');
         },
         copyright: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/copyright.html'));
+            Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/copyright.html'), null, '#contact');
         },
         adminRedirect: function() {
             window.location.href = 'https://stories-of-solidarity.herokuapp.com/admin/';

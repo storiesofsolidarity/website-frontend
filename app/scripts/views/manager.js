@@ -31,17 +31,22 @@ Solidarity.RegionManager = (function (Backbone, $) {
         }
     };
  
-    region.show = function (view, button) {
+    region.show = function (view, button, footerLink) {
         closeView(currentView);
         currentView = view;
         openView(currentView);
 
-        if (button !== undefined) {
+        if (button) {
             $(navbar + ' li.button.active').removeClass('active');
             $(navbar + ' li.button a[href='+button+']')
                 .parent('li.button').addClass('active');
         } else {
             $(navbar + ' li.button.active').removeClass('active');
+        }
+
+        if (footerLink) {
+            $('.footer ul.links a.active').removeClass('active');
+            $('.footer ul.links a[href='+footerLink+']').addClass('active');
         }
     };
     region.currentView = function() {
