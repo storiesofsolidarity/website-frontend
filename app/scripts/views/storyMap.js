@@ -129,7 +129,7 @@ Solidarity.Views = Solidarity.Views || {};
                   .classed('active', false);
                 activeCounty = d3.select(null);
 
-                // remove state group entirely
+                // remove existing state geometry
                 d3.selectAll('g.state').remove();
 
                 self.svg.transition()
@@ -204,7 +204,7 @@ Solidarity.Views = Solidarity.Views || {};
                 // hide background
                 d3.selectAll('path.background').style('fill', self.colorBackground);
 
-                // clear existing state counties
+                // remove existing state geometry
                 d3.selectAll('g.state').remove();
 
                 var scaleFactor = 0.9;
@@ -241,9 +241,7 @@ Solidarity.Views = Solidarity.Views || {};
 
             function clickZip(d) {
                 Solidarity.log('clickZip', d.id);
-                // make us country background transparent
-                d3.selectAll('g.country path.background').style('fill', 'transparent');
-
+                
                 // show stories for zip
             }
 
@@ -287,7 +285,9 @@ Solidarity.Views = Solidarity.Views || {};
                   .attr('class', 'state')
                   .attr('id', stateName);
 
-                var counties = state.selectAll('path')
+                var counties = state.append('g')
+                  .attr('class', 'counties')
+                .selectAll('path')
                   .attr('class','counties')
                   .style('fill', self.colorUnselected)
                   .data(topojson.feature(data, data.objects[geomKey]).features)
@@ -332,7 +332,10 @@ Solidarity.Views = Solidarity.Views || {};
                 var geomKey = stateName + '.geo';
                 var data = self.dataCache.zips[geomKey];
 
-                var counties = state.selectAll('path')
+                var zipcodes = state.append('g')
+                  .attr('class', 'zipcodes');
+                
+                zipcodes.selectAll('path')
                   .attr('class','zipcodes')
                   .style('fill', self.colorUnselected) // so holes don't appear through the zipcodes layer
                   .data(topojson.feature(data, data.objects[geomKey]).features)
@@ -341,15 +344,15 @@ Solidarity.Views = Solidarity.Views || {};
                   .attr('class', 'feature zipcode')
                   .on('click', clickZip);
 
-                state.append('path')
-                  .datum(topojson.mesh(data, data.objects[geomKey])) // don't provide mesh function here
+                zipcodes.append('path')
+                  .datum(topojson.mesh(data, data.objects[geomKey]))
                   .attr('class', 'border')
                   .attr('d', path);
 
                 // TEMP render dummy zipcodes collection
                 var dummyCollection = {models: []};
                 self.renderStoryCollection(dummyCollection,
-                    'g.state path.zipcode',
+                    'g.zipcodes path.zipcode',
                     'g.state path.county', 10);
             }
         },
@@ -369,16 +372,17 @@ Solidarity.Views = Solidarity.Views || {};
             // extract model attributes from the backbone collection
             var stories = collection.models.map(function(s) { return s.attributes; });
             var geoms = this.map.selectAll(geomSelector).data();
+            console.log('renderStoryCollection geoms', geoms.length, geoms);
 
             // join manually, might zip be faster?
             var geoms_joined = _.map(geoms, function(g, index) {
                 if (g.properties) {
-                    var s = _.findWhere(stories, {name: g.properties.name});
+                    var s = _.findWhere(stories, {name: g.properties.id});
                     if (s) { g.properties.story_count = s.story_count; }
-
-                    // TEMP randomize state story counts
-                    g.properties.story_count = Math.floor(Math.random(1)*randomScale);
                 }
+
+                // TEMP randomize state story counts
+                g.properties.story_count = Math.floor(Math.random(1)*randomScale);
                 return g;
             });
 
