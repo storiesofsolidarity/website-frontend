@@ -372,7 +372,6 @@ Solidarity.Views = Solidarity.Views || {};
             // extract model attributes from the backbone collection
             var stories = collection.models.map(function(s) { return s.attributes; });
             var geoms = this.map.selectAll(geomSelector).data();
-            console.log('renderStoryCollection geoms', geoms.length, geoms);
 
             // join manually, might zip be faster?
             var geoms_joined = _.map(geoms, function(g, index) {
