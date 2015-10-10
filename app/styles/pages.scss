@@ -18,7 +18,7 @@
 		}
 		h2 {
 			@include make-sm-column(3);
-			margin: 0;
+			margin: 0 0 10px 0;
 			font-size: 24px;
 			line-height: 1;
 			font-weight: lighter;
@@ -27,13 +27,13 @@
 
 		ul {
 			list-style-type: none;
-			margin: 0;
+			margin: 0 0 10px 0;
 			padding: 0;
 			li em { font-weight: bold; font-style: normal; }
 		}
 
 		.content {
-			font-family: $font-family-sans-serif;
+			font-family: $font-family-content;
 			@include make-sm-column(9);
 			@include make-sm-column-offset(3);
 
@@ -43,6 +43,7 @@
 			}
 			&.two-col {
 				@include make-row;
+				margin: 0;
 				.text {
 					// use css3 columns for more flexible wrapping
 					-webkit-columns: 2 250px;
@@ -77,5 +78,48 @@
 	section.gray { background-color: #3F3F3F; color: $white; }
 	section.orange { background-color: #F9A946; color: $black; }
 	section.yellow { background-color: #F4EB99; color: $black; }
-	
+}
+
+.privacy {
+	section { 
+		min-height: 100%;
+		padding: 70px 40px;
+		@include make-row;
+
+		background-color:#DDD;
+		color: $black;
+
+		h2 {
+			@include make-sm-column(3);
+			font-family: $font-family-sans-serif;
+
+			margin: 0 0 10px 0;
+			font-size: 24px;
+			line-height: 1;
+			font-weight: lighter;
+			text-transform: uppercase;
+			color: inherit;
+		}
+
+		.content {
+			font-family: $font-family-content;
+			@include make-sm-column(9);
+			@include make-sm-column-offset(3);
+
+			&.two-col {
+				@include make-row;
+				margin: 0;
+				.text {
+					// use css3 columns for more flexible wrapping
+					-webkit-columns: 2 250px;
+					-moz-columns: 2 250px;
+					columns: 2 250px;
+				}
+			}
+			&.half-col {
+				@include make-row;
+				.text { @include make-sm-column(6); }
+			}
+		}
+	}
 }
