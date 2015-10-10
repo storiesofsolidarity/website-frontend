@@ -29,7 +29,7 @@ Solidarity.Views = Solidarity.Views || {};
             this.states.fetch({
                 success: function(data) {
                     // do first render
-                    self.renderStoryCollection(data, 'g.country path.feature', undefined, 1000);
+                    self.renderStoryCollection(data, 'g.country path.feature');
                 }
             });
         },
@@ -136,7 +136,7 @@ Solidarity.Views = Solidarity.Views || {};
                   .duration(750)
                   .call(zoom.translate([0, 0]).scale(1).event);
 
-                self.renderStoryCollection(self.states, 'g.country path.state', undefined, 1000);
+                self.renderStoryCollection(self.states, 'g.country path.state');
             }
 
             function zoomClick() {
@@ -310,7 +310,7 @@ Solidarity.Views = Solidarity.Views || {};
                 var dummyCollection = {models: []};
                 self.renderStoryCollection(dummyCollection,
                     'g.state path.county',
-                    'g.country path.state', 100);
+                    'g.country path.state');
             }
 
             function loadZips(error, data) {
@@ -353,13 +353,13 @@ Solidarity.Views = Solidarity.Views || {};
                 var dummyCollection = {models: []};
                 self.renderStoryCollection(dummyCollection,
                     'g.zipcodes path.zipcode',
-                    'g.state path.county', 10);
+                    'g.state path.county');
             }
         },
 
         colorScale: function(list, key) {
             // compute colors using jenks natural breaks
-            var data = _.pluck(_.reject(list, _.isUndefined), key).sort();
+            var data = _.reject(_.pluck(list, key), _.isUndefined);
             var breaks = jenks(data, 5);
             breaks[4] = breaks[4] + 1;
             var colorScale = d3.scale.quantile()
@@ -368,7 +368,7 @@ Solidarity.Views = Solidarity.Views || {};
             return colorScale;
         },
 
-        renderStoryCollection: function(collection, geomSelector, geomUnselector, randomScale) {
+        renderStoryCollection: function(collection, geomSelector, geomUnselector) {
             // extract model attributes from the backbone collection
             var stories = collection.models.map(function(s) { return s.attributes; });
             var geoms = this.map.selectAll(geomSelector).data();
@@ -376,12 +376,10 @@ Solidarity.Views = Solidarity.Views || {};
             // join manually, might zip be faster?
             var geoms_joined = _.map(geoms, function(g, index) {
                 if (g.properties) {
-                    var s = _.findWhere(stories, {name: g.properties.id});
+                    var s = _.findWhere(stories, {name: g.properties.name});
                     if (s) { g.properties.story_count = s.story_count; }
                 }
 
-                // TEMP randomize state story counts
-                g.properties.story_count = Math.floor(Math.random(1)*randomScale);
                 return g;
             });
 
