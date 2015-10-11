@@ -1,0 +1,14 @@
+<div class="resultsBar">
+	<div class="btn left">
+		<span class="icon icon-arrow_up"></span> View
+	</div>
+
+	<div class="filters">
+		<span>
+			<span class="count"><%= data.count %> stories from <span class="geography"><%= data.geography %></span>
+		</span>
+		<% _.each(data.filters, function(filter) { %>
+			<span><%= filter %> <a class="close">X</a> </span>
+		<% }); %>
+	</div>
+</div>

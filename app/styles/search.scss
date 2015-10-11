@@ -1,0 +1,48 @@
+@import '_variables.scss';
+
+.resultsBar {
+	position: absolute;
+	bottom: 40px;
+	left: 15px;
+
+	width: calc(100% - 30px);
+	height: 50px;
+	padding: 5px;
+
+	background: $gray-darker;
+
+	.btn {
+		font-size: 20px;
+		line-height: 1;
+		font-weight: bold;
+		&.left { float: left; }
+	}
+
+	.filters {
+		margin: 10px;
+		display: inline-block;
+		
+		&> span {
+			display: inline-block;
+			text-transform: uppercase;
+			font-size: 16px;
+			line-height: 1;
+		}
+		a.close {
+			margin-left: 5px;
+
+			// reset default bs styles
+			text-shadow: none;
+			opacity: 1;
+			font-weight: normal;
+			font-size: 16px;
+
+
+			color: $orange;
+			&:hover {
+				color: $white;
+				border: 0;
+			}
+		}
+	}
+}

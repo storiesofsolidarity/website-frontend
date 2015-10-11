@@ -29,9 +29,10 @@ Solidarity.Views = Solidarity.Views || {};
             this.states.fetch({
                 success: function(data) {
                     // do first render
-                    self.renderStoryCollection(data, 'g.country path.feature');
+                    self.renderStoryCollection('USA', data, 'g.country path.feature');
                 }
             });
+            this.resultsBar = new Solidarity.Views.ResultsBar();
         },
 
         drawMap: function () {
@@ -136,7 +137,7 @@ Solidarity.Views = Solidarity.Views || {};
                   .duration(750)
                   .call(zoom.translate([0, 0]).scale(1).event);
 
-                self.renderStoryCollection(self.states, 'g.country path.state');
+                self.renderStoryCollection('USA', self.states, 'g.country path.state');
             }
 
             function zoomClick() {
@@ -228,6 +229,8 @@ Solidarity.Views = Solidarity.Views || {};
                     .await(loadZips);
 
                 // show stories for state
+
+
             }
 
             function clickCounty(d) {
@@ -310,7 +313,7 @@ Solidarity.Views = Solidarity.Views || {};
                 self.counties.fetch({
                   data: {state_name: stateName},
                   success: function() {
-                    self.renderStoryCollection(self.counties,
+                    self.renderStoryCollection(stateName, self.counties,
                       'g.state path.county',
                       'g.country path.state');
                   }
@@ -356,7 +359,7 @@ Solidarity.Views = Solidarity.Views || {};
                 self.locations.fetch({
                   data: {state_name: stateName},
                   success: function() {
-                    self.renderStoryCollection(self.locations,
+                    self.renderStoryCollection(stateName, self.locations,
                       'g.zipcodes path.zipcode',
                       'g.state path.county');
                   }
@@ -395,7 +398,7 @@ Solidarity.Views = Solidarity.Views || {};
             }             
         },
 
-        renderStoryCollection: function(collection, geomSelector, geomUnselector) {
+        renderStoryCollection: function(name, collection, geomSelector, geomUnselector) {
             // extract model attributes from the backbone collection
             var stories = collection.models.map(function(s) { return s.attributes; });
             var geoms = this.map.selectAll(geomSelector).data();
@@ -431,26 +434,22 @@ Solidarity.Views = Solidarity.Views || {};
                   .style('fill', this.colorBackground);
             } 
 
-            // TEMP display tooltip
-            var tip = d3.tip().html(function(d) {
-                if (d.properties && d.properties.story_count) {
-                    var tmpl = '<%= story_count %> stor<%= story_count > 1 ? "ies" : "y"%>'+
-                               ' in <%= name %>';
-                    if (d.properties.name === undefined && d.id) {
-                        d.properties.name = d.id;
-                    }
-                    return _.template(tmpl)(d.properties);
-                }
-            });
-            tip.style('color', '#666');
-            tip.offset(function() {
-                // place tooltip inside element
-                return [this.getBBox().height / 2, 0];
-            });
-            this.map.call(tip);
+            var totalStoriesInCollection = _.reduce(
+              _.reject( _.pluck(story_properties, 'story_count'), _.isUndefined),
+              function(num, memo) { return memo + num; }, 0
+            );
+            var renderStoryResults = function() {
+              self.resultsBar.render({
+                count: totalStoriesInCollection,
+                geography: name,
+              });
+            };
+            renderStoryResults();
+
+            // on geom hover, update results
             this.map.selectAll(geomSelector)
-              .on('mouseover', tip.show)
-              .on('mouseout', tip.hide);
+              .on('mouseover', _.bind(this.resultsBar.updateGeom, this.resultsBar))
+              .on('mouseout', _.bind(renderStoryResults, this));
         },
 
     });
