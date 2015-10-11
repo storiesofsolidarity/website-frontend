@@ -11,8 +11,11 @@ Solidarity.Collections = Solidarity.Collections || {};
     });
 
     Solidarity.Collections.Counties = Solidarity.Collections.BaseCollection.extend({
-        model: Solidarity.Models.State,
+        model: Solidarity.Models.County,
         url: Solidarity.apiRoot + 'county/',
+        state: {
+            pageSize: 100, // increase default pageSize
+        },
     });
 
     Solidarity.Collections.Locations = Solidarity.Collections.BaseCollection.extend({

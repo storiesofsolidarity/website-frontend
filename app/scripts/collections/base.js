@@ -21,7 +21,7 @@ Solidarity.Collections = Solidarity.Collections || {};
 
         // explicit default pageSize
         state: {
-            pageSize: 25,
+            pageSize: 50,
         },
 
         // modified from https://gist.github.com/burtyish/10006579

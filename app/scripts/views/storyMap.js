@@ -306,19 +306,22 @@ Solidarity.Views = Solidarity.Views || {};
                   .style('border', 'white')
                   .attr('d', path);
 
-                // TEMP render dummy counties collection
-                var dummyCollection = {models: []};
-                self.renderStoryCollection(dummyCollection,
-                    'g.state path.county',
-                    'g.country path.state');
+                // request and render counties collection for this state
+                self.counties.fetch({
+                  data: {state_name: stateName},
+                  success: function() {
+                    self.renderStoryCollection(self.counties,
+                      'g.state path.county',
+                      'g.country path.state');
+                  }
+                });
+                
             }
 
             function loadZips(error, data) {
-                Solidarity.log('loadZips', data);
                 if (error) { Solidarity.error(error, 'error in loadZips'); return false; }
 
                 for(var geomKey in data.objects) { break; }
-                Solidarity.log('loaded',geomKey);
                 self.dataCache.zips[geomKey] = data;
                 // save to dataCache
             }
@@ -349,23 +352,45 @@ Solidarity.Views = Solidarity.Views || {};
                   .attr('class', 'border')
                   .attr('d', path);
 
-                // TEMP render dummy zipcodes collection
-                var dummyCollection = {models: []};
-                self.renderStoryCollection(dummyCollection,
-                    'g.zipcodes path.zipcode',
-                    'g.state path.county');
+                // request and render locations for this state
+                self.locations.fetch({
+                  data: {state_name: stateName},
+                  success: function() {
+                    self.renderStoryCollection(self.locations,
+                      'g.zipcodes path.zipcode',
+                      'g.state path.county');
+                  }
+                });
             }
         },
 
         colorScale: function(list, key) {
-            // compute colors using jenks natural breaks
+            // pluck key values, and remove undefineds from list
             var data = _.reject(_.pluck(list, key), _.isUndefined);
-            var breaks = jenks(data, 5);
-            breaks[4] = breaks[4] + 1;
-            var colorScale = d3.scale.quantile()
-                .domain(breaks.slice(1))
-                .range(this.colorList);
-            return colorScale;
+
+            if (data.length === 0) {
+              // no data, all grey
+              Solidarity.log('no data for '+key, list);
+              return d3.functor('#E4E4E4');
+            }
+
+            // compute jenks natural breaks for data
+            // starting with 5 classes, decrease until 2
+            var breaks = null;
+            for (var i = 5; i >= 2; i--) {
+              breaks = jenks(data, i);
+              if (breaks) { break; }
+              else { continue; } // retry with fewer classes
+            }
+            if (breaks) {
+              return d3.scale.quantile()
+                  .domain(breaks.slice(1))
+                  .range(this.colorList);
+            } else {
+              // unable to determine jenks breaks
+              Solidarity.error('unable to determine jenks breaks', list, key);
+              return d3.functor('#E4E4E4');
+            }             
         },
 
         renderStoryCollection: function(collection, geomSelector, geomUnselector) {
