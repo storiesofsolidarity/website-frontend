@@ -93,6 +93,10 @@
         height: 30px;
     }
 
+    input[type="text"] {
+        text-transform: uppercase;
+    }
+    
     textarea, input[type="text"], .input-group.row {
         width: 100% !important;
         height: 25px;

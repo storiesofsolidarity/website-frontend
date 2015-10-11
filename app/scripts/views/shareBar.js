@@ -108,8 +108,9 @@ Solidarity.Views = Solidarity.Views || {};
                 },
                 success: function(data) {
                     var match = data.features[0];
-                    $('input#city').val(match.properties.locality.toUpperCase());
-                    $('#state.selectpicker').selectpicker('val', match.properties.region_a);
+                    $('input#city').val(match.properties.locality);
+                    $('input#county').val(match.properties.county);
+                    $('select#state').selectpicker('val', match.properties.region_a);
                     $('button#geolocate').attr('disabled','disabled');
                 },
                 error: function(resp, status, err) {
