@@ -375,10 +375,12 @@ Solidarity.Views = Solidarity.Views || {};
             }
 
             // compute jenks natural breaks for data
-            // starting with 5 classes, decrease until 2
+            // starting with 5 classes, decrease until 1
             var breaks = null;
-            for (var i = 5; i >= 2; i--) {
-              breaks = jenks(data, i);
+            for (var i = 5; i >= 1; i--) {
+              try { breaks = jenks(data, i); }
+              catch(err) { continue; }
+
               if (breaks) { break; }
               else { continue; } // retry with fewer classes
             }
