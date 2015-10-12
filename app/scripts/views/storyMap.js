@@ -21,6 +21,7 @@ Solidarity.Views = Solidarity.Views || {};
             this.counties = new Solidarity.Collections.Counties({});
             this.locations = new Solidarity.Collections.Locations({});
             this.colorList = ['#E4E4E4','#F3EB99','#FAC85F','#F9A946','#EC913D'];
+            this.resultsBar = new Solidarity.Views.ResultsBar();
         },
         
         onShow: function() {
@@ -32,7 +33,11 @@ Solidarity.Views = Solidarity.Views || {};
                     self.renderStoryCollection('USA', data, 'g.country path.feature');
                 }
             });
-            this.resultsBar = new Solidarity.Views.ResultsBar();
+            this.resultsBar.show();
+        },
+
+        close: function() {
+            this.resultsBar.hide();
         },
 
         drawMap: function () {
