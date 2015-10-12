@@ -44,17 +44,17 @@
         list-style: none;
         background: rgba(0, 0, 0, 0.75);
         padding: 20px 50px; 
-        height: 350px;
+        height: 300px;
         position: relative; // required for animated entrance
         top: -50px; // initial high position
 
         li {
             position: absolute; // required to fix jump on crossfade
             left: 0;
+            width: 100%;
             img {
                 display: block;
                 margin: 0 auto;
-                width: 75%;
                 margin-bottom: 20px;
             }
             text-align: center;
