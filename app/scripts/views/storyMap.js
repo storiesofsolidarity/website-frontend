@@ -19,7 +19,7 @@ Solidarity.Views = Solidarity.Views || {};
         initialize: function () {
             this.states = new Solidarity.Collections.States({});
             this.counties = new Solidarity.Collections.Counties({});
-            this.locations = new Solidarity.Collections.Locations({});
+            this.zipcodes = new Solidarity.Collections.Zipcodes({});
             this.colorList = ['#E4E4E4','#F3EB99','#FAC85F','#F9A946','#EC913D'];
             this.resultsBar = new Solidarity.Views.ResultsBar();
         },
@@ -360,11 +360,11 @@ Solidarity.Views = Solidarity.Views || {};
                   .attr('class', 'border')
                   .attr('d', path);
 
-                // request and render locations for this state
-                self.locations.fetch({
+                // request and render zipcodes for this state
+                self.zipcodes.fetch({
                   data: {state_name: stateName},
                   success: function() {
-                    self.renderStoryCollection(stateName, self.locations,
+                    self.renderStoryCollection(stateName, self.zipcodes,
                       'g.zipcodes path.zipcode',
                       'g.state path.county');
                   }
@@ -408,10 +408,15 @@ Solidarity.Views = Solidarity.Views || {};
             var stories = collection.models.map(function(s) { return s.attributes; });
             var geoms = this.map.selectAll(geomSelector).data();
 
-            // join manually, might zip be faster?
+            // join stories and geoms by name or id
             var geoms_joined = _.map(geoms, function(g, index) {
                 if (g.properties) {
-                    var s = _.findWhere(stories, {name: g.properties.name});
+                    var s;
+                    if (g.properties.name) {
+                      s = _.findWhere(stories, {name: g.properties.name});  
+                    } else {
+                      s = _.findWhere(stories, {zipcode: g.id});
+                    }
                     if (s) { g.properties.story_count = s.story_count; }
                 }
 
