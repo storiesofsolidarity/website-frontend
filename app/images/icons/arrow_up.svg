@@ -5,6 +5,9 @@
 	 height="22px" viewBox="0 0 18 22" enable-background="new 0 0 18 22" xml:space="preserve">
 
 	<g id="arrow_up">
-		<polygon points="15.917,10 9.167,4.645 2.417,10 6,10 6,18 12,18 12,10 			"/>
+		<polygon id="arrow_up_background" fill="#000000" points="18,22 0,22 0,0 11.501,0 18,4.167"/>
+		<g id="arrow_up_path">
+			<polygon fill="#FFFFFF" points="15.917,10 9.167,4.645 2.417,10 6,10 6,18 12,18 12,10"/>
+		</g>
 	</g>
 </svg>

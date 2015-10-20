@@ -1,7 +1,7 @@
 {
   "checksum": {
-    "previous": "64c49f3bfd35948e97d8368b12bab545f44fd95599864526aa07ef4e43e3c7ff",
-    "current": "64c49f3bfd35948e97d8368b12bab545f44fd95599864526aa07ef4e43e3c7ff"
+    "previous": "1f16553014c1d68c8805d7db5aa3e255aa99a5d0de80746acae6e5810221bdd7",
+    "current": "1f16553014c1d68c8805d7db5aa3e255aa99a5d0de80746acae6e5810221bdd7"
   },
   "fonts": [
     "app/styles/fonts/customicons/customicons.ttf",

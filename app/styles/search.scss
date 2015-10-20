@@ -7,18 +7,21 @@
 
 	width: calc(100% - 30px);
 	height: 50px;
-	padding: 5px;
 
 	background: $gray-darker;
 
 	.btn {
+		height: 100%;
+		font-family: $headings-font-family;
 		font-size: 20px;
-		line-height: 1;
+		padding-top: 13px;
+		line-height: 1.0;
 		font-weight: bold;
 		&.left { float: left; }
 	}
 
 	.filters {
+		padding: 5px;
 		margin: 10px;
 		display: inline-block;
 		
