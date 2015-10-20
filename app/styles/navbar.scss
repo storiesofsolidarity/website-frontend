@@ -212,8 +212,8 @@ ul.nav {
 /* fixed page footer */
 .footer {
     background-color: $black;
-    color: $text-color;
-    a { color: $text-color; }
+    color: $gray-text;
+    a { color: $gray-text; }
     text-transform: uppercase;
     letter-spacing: 1px;
     box-shadow: 0 -1px 10px #333;
@@ -225,10 +225,12 @@ ul.nav {
     ul {
         margin-bottom: 0;
         &.right { text-align: right; }
+        &.links { a { color: $text-color; } }
         list-style-type: none;
         li {
             display: inline-block;
-            &:after{ content: "|"; margin-left: 8px; }
+            a:hover { color: $text-color; }
+            &:after { content: "|"; margin-left: 8px; }
             &:last-child:after { content: ""; margin-left: 0; }
             a.active { color: $orange;
                 border-bottom: 1px solid #ff9900;

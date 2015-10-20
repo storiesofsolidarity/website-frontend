@@ -47,6 +47,8 @@ Solidarity.RegionManager = (function (Backbone, $) {
         if (footerLink) {
             $('.footer ul.links a.active').removeClass('active');
             $('.footer ul.links a[href='+footerLink+']').addClass('active');
+        } else {
+            $('.footer ul.links a.active').removeClass('active');
         }
     };
     region.currentView = function() {
@@ -63,7 +65,7 @@ Solidarity.RegionManager = (function (Backbone, $) {
         }
     };
     region.hideOverlay = function() {
-        $('body > #overlay').removeClass('active')//.delay(500).remove();
+        $('body > #overlay').removeClass('active');
     };
 
     return region;
