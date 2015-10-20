@@ -68,10 +68,19 @@
     }
 
     .btn {
-        background-color: $white;
         border-radius: 0;
         border: none;
-        color: $black;
+        font-family: $headings-font-family;
+        font-size: 20px;
+        padding-top: 13px;
+        height: 50px;
+        background-color: $orange;
+        color: $white;
+        &:hover { background-color: $orange-light; }
+        &.btn-white {
+            background-color: $white;
+            color: $gray-light;
+        }
     }
 
     .form-group {
@@ -96,6 +105,7 @@
 
     input[type="text"] {
         text-transform: uppercase;
+        letter-spacing: 1px;
     }
     
     textarea, input[type="text"], .input-group.row {
@@ -119,15 +129,17 @@
 
     input[type="text"], .input-group.row {
         position: relative;
-        top: -10px;
+        top: -7px;
     }
 
-    textarea#content {
+    textarea#storyContent {
+        letter-spacing: 1px;
         width: 100%;
         padding: 10px;
         margin: 0;
         &.open {
             height: 150px;
+            padding-top: 8px;
         }
         &.closed {
             padding: 5px 10px;
@@ -169,9 +181,16 @@
     }
 
     .selectpicker {
-        // ugly hack to make it line up with input-group
+        // remove default .btn styles
+        background-color: $white;
+        &:hover { background-color: $white; }
+        color: $gray-base;
+        font-family: $font-family-sans-serif;
+        font-size: 14px;
 
+        // ugly hack to make it line up with input-group
         height: 28px;
+        padding-top: 8px;
         span.filter-option { line-height:1; }
         text-transform: uppercase;
     }
@@ -199,49 +218,49 @@
         .btn {
             box-shadow: 0 1px 10px #333;
         }
+    }
 
-        // nest file input inside span
-        // from http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/
-        .btn-file {
+    // nest file input inside span
+    // from http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+
+        height: 50px; // square
+        & span.icon {
+            font-size: 25px;
             position: relative;
-            overflow: hidden;
-
-            height: 36px;
-            & span.icon {
-                font-size: 25px;
-                position: relative;
-                top: -3px;
-            }
+            top: 1px;
         }
-        .btn-file input[type=file] {
-            position: absolute;
-            top: 0;
-            right: 0;
-            min-width: 100%;
-            min-height: 100%;
-            font-size: 100px;
-            text-align: right;
-            filter: alpha(opacity=0);
-            opacity: 0;
-            outline: none;
-            background: white;
-            cursor: inherit;
-            display: block;
-        }
+    }
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+    }
 
-        button[type="submit"] {
-            background-color: $orange;
-            color: $white;
-            border-radius: 0;
-            border: none;
+    button[type="submit"] {
+        background-color: $orange;
+        color: $white;
+        border-radius: 0;
+        border: none;
 
-            margin-left: 10px;
-        }
+        margin-left: 10px;
     }
 
     .break.push-down {
         margin-top: 5px;
-        margin-bottom: 0px;
+        margin-bottom: 5px;
         box-shadow: 0 1px 10px #333;
     }
 }
