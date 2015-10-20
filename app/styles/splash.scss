@@ -32,8 +32,11 @@
         @extend %center-vertical;
         position: relative;
         margin: 0 auto;
-        width: 40%;
-        min-width: 400px;
+        width: 30%;
+        min-width: 380px;
+        @media (min-width: $screen-sm-min) {
+            min-width: 420px;
+        }
     }
 
     button {
@@ -65,16 +68,20 @@
             font-size: $font-size-h6;
 
             @media (min-width: $screen-sm-min) {
-                font-size: $font-size-h5;
+                font-size: 18px;
             }
-
             line-height: 1.0;
-            margin-bottom: 10px;
+            margin: 10px 0;
         }
 
         button {
             text-transform: uppercase;
+            font-family: $headings-font-family;
+            font-size: $font-size-h5;
+            line-height: $font-size-h5;
 
+            margin-top: 15px;
+            padding-top: 13px;
             background: #F9AB4E;
             border: 1px solid $orange;
 

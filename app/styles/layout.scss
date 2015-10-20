@@ -1,5 +1,12 @@
 @import '_variables.scss';
 
+// consistentify box model
+* {
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+}
+
 html { 
     position: relative;
     min-height: 100%;
