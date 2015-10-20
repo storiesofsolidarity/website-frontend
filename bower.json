@@ -14,7 +14,7 @@
     "d3-tip": "~0.6.6",
     "bootstrap-select": "~1.6.4",
     "jquery-bgswitcher": "git@github.com:rewish/jquery-bgswitcher.git#~0.4.3",
-    "stalactite": "git@github.com:jonobr1/stalactite.git",
+    "stalactite": "git@github.com:storiesofsolidarity/stalactite.git",
     "moment": "~2.10.6"
   },
   "homepage": "http://www.storiesofsolidarity.org",

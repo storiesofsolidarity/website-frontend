@@ -67,6 +67,7 @@ Solidarity.Views = Solidarity.Views || {};
         layout: function() {
             $('.storyList.grid').stalactite({
                 duration: 150,
+                delay: 500,
                 easing: 'swing',
                 cssPrefix: '.stalactite',
                 cssPrep: true,
