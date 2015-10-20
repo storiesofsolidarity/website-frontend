@@ -13,27 +13,27 @@
 .navbar-header { 
     width: 100%;
     height: $navbar-height;
-    background-color: $gray-darker;
+    background-color: $black;
 }
 
 .navbar-brand {    
-    width: calc(100% - 600px - 25px);
+    width: calc(100% - 500px);
     height: $navbar-height;
-    line-height: 28px;
-    padding: 10px 0 0 38px;
+    line-height: 26px;
+    padding: 10px 0 0 30px;
 
     a {
         color: $white;
         text-transform: uppercase;
-        font-size: 28px;
+        font-size: 26px;
         letter-spacing: 2px;
     }
 }
 
 .navbar-search {
-    width: 585px;
+    width: 480px;
     float: left;
-    margin-left: 35px;
+    margin-top: 2px;
     position: relative;
     padding: 5px 10px;
     input {
@@ -66,9 +66,9 @@
     width: 100%;
 
     &> li {
-        width: 200px;
+        width: 165px;
         height: calc(#{$navbar-height} + 10px);
-        font-size: 28px;
+        font-size: 26px;
         text-align: center;
 
         border-right: 2px solid $orange-dark;
@@ -79,7 +79,7 @@
 
         &> a {
             color: $white;
-            line-height: 28px;
+            line-height: 26px;
             padding: 15px 0 10px 0;
 
             .icon {
@@ -99,13 +99,13 @@
 
     &> li.last { border-right: none; }
     &> li.spacer {
-        width: 15px;
+        width: 10px;
         border: none;
     }
 
     &> li.share {
-        width: calc(100% - 600px);
-        padding: 10px 20px 10px 38px;
+        width: calc(100% - 510px);
+        padding: 10px 10px 10px 30px;
 
         .icon.icon-write {
             float: left;
@@ -128,6 +128,7 @@
             margin: 0 10px;
             font-size: 16px;
             line-height: 16px;
+            letter-spacing: 1px;
 
             color: $gray-darker;
             &::-webkit-input-placeholder { color: $gray-darker; }
@@ -176,7 +177,7 @@ ul.nav {
   }
   li.button.active {
    height: 58px;
-   width: 150px;
+   width: 130px;
    top: 6px;
    margin: -10px 20px 0 20px;
    padding-top: 4px;
@@ -210,13 +211,16 @@ ul.nav {
 
 /* fixed page footer */
 .footer {
-    background-color: #030303;
+    background-color: $black;
     color: $text-color;
     a { color: $text-color; }
     text-transform: uppercase;
+    letter-spacing: 1px;
     box-shadow: 0 -1px 10px #333;
 
-    padding: 7px 12px;
+    padding: 7px 15px;
+
+    .row { margin: 0; }
 
     ul {
         margin-bottom: 0;
