@@ -19,9 +19,22 @@ Solidarity.Views = Solidarity.Views || {};
 
         render: function () {
             this.$el.html(this.template());
-
-            // rebind rotation function bound to backbone view
             var self = this;
+
+            // set up background image switcher
+              $('.splash').bgswitcher({
+                images: [Solidarity.siteRoot+'images/splash/splash-1.jpg',
+                         Solidarity.siteRoot+'images/splash/splash-2.jpg',
+                         Solidarity.siteRoot+'images/splash/splash-3.jpg',
+                         Solidarity.siteRoot+'images/splash/splash-4.jpg',
+                         Solidarity.siteRoot+'images/splash/splash-5.jpg',
+                         Solidarity.siteRoot+'images/splash/splash-6.jpg',
+                         Solidarity.siteRoot+'images/splash/splash-7.jpg'],
+                shuffle: true,
+                loop: true,
+                interval: 10*1000,
+                effect: 'fade',
+               });
 
             // animate entrance
             $.when(
@@ -35,15 +48,6 @@ Solidarity.Views = Solidarity.Views || {};
 
               // start language rotation, bound to backbone view
               self.rotateLanguageTimer = setInterval(self.rotateLanguage.bind(self), 2.5*1000);
-
-              // set up background image switcher
-              $('.splash').bgswitcher({
-                images: [Solidarity.siteRoot+'images/splash/temp-1.jpg',
-                         Solidarity.siteRoot+'images/splash/temp-2.jpg',
-                         Solidarity.siteRoot+'images/splash/temp-3.jpg'],
-                interval: 10*1000,
-                effect: 'fade',
-               });
             });
             
 
