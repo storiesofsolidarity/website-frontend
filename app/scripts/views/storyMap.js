@@ -179,10 +179,26 @@ Solidarity.Views = Solidarity.Views || {};
             }
 
             function zoomEvent() {
-              $('#zoom input').val(Math.log2(d3.event.scale));
+                // cap translations to viewport dimensions
+                var e = d3.event,
+                    tx = Math.min(0, Math.max(e.translate[0], width - width * e.scale)),
+                    ty = Math.min(0, Math.max(e.translate[1], height - height * e.scale));
+                zoom.translate([tx, ty]);
+
+                // set zoom input to log-based scale
+                $('#zoom input').val(Math.log2(e.scale));
+                // draw lines at appropriate width
+                self.map.style('stroke-width', 1.5 / e.scale + 'px');
+
+                // zoom in
                 if (d3.event.scale > 1) {
-                    self.map.style('stroke-width', 1.5 / d3.event.scale + 'px');
-                    self.map.attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
+                    self.map.attr('transform', 'translate(' + [tx, ty] + ')scale(' + e.scale + ')');
+                } else {
+                  // reset map translation to center
+                  self.map.transition()
+                    .duration(75)
+                    .attr('transform', 'translate([0,0])scale(1)');
+                  zoom.translate([0,0]).scale(1);
                 }
             }
 
