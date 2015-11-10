@@ -43,13 +43,13 @@ Solidarity.Views = Solidarity.Views || {};
         drawMap: function () {
             var width = 960,
                 height = 500,
-                activeState = d3.select(null),
-                activeCounty = d3.select(null);
+                activeGeom = d3.select(null),
+                hoveredGeom = d3.select(null);
 
             this.colorBackground = '#3F3F3F';
             this.colorUnselected = '#E4E4E4';
 
-            this.projection = d3.geo.albersUsaPr() // US including puerto rico
+            var projection = d3.geo.albersUsaPr() // US including puerto rico
                 .scale(1000)
                 .translate([width / 2, height / 2]);
 
@@ -58,6 +58,7 @@ Solidarity.Views = Solidarity.Views || {};
                 .scale(1)
                 .scaleExtent([1, 256])
                 .on('zoom', zoomEvent);
+            this.zoom = zoom; // save to view
 
             // map zoom extent goes from 1-256
             // input from 1-8 (log2 scale)
@@ -70,7 +71,8 @@ Solidarity.Views = Solidarity.Views || {};
                 .on('click', zoomClick);
 
             var path = d3.geo.path()
-                .projection(this.projection);
+                .projection(projection);
+            this.path = path;
 
             this.svg = d3.select('#map').append('svg')
                 .attr('preserveAspectRatio', 'xMinYMin meet')
@@ -122,18 +124,12 @@ Solidarity.Views = Solidarity.Views || {};
 
             function zoomReset() {
                 // reset active features to normal colors
-                activeState
+                activeGeom
                   .style('fill', self.colorUnselected)
                   .classed('feature', true)
                   .classed('background', false)
                   .classed('active', false);
-                activeState = d3.select(null);
-
-                activeCounty
-                  .classed('feature', true)
-                  .classed('background', false)
-                  .classed('active', false);
-                activeCounty = d3.select(null);
+                activeGeom = d3.select(null);
 
                 // remove existing state geometry
                 d3.selectAll('g.state').remove();
@@ -200,6 +196,12 @@ Solidarity.Views = Solidarity.Views || {};
                     .attr('transform', 'translate([0,0])scale(1)');
                   zoom.translate([0,0]).scale(1);
                 }
+
+                // check if hoveredGeom fills most of viewport
+                // var b = path.bounds(hoveredGeom);
+                // set it to activeGeom
+                // activeGeom = hoveredGeom;
+                // trigger click on it
             }
 
             function stopped() {
@@ -210,19 +212,21 @@ Solidarity.Views = Solidarity.Views || {};
                 Solidarity.log('clickState', d.properties.name);
 
                 // zoom back out if double clicked
-                if (activeState.node() === this) { return zoomReset(); }
+                if (activeGeom.node() === this) { return zoomReset(); }
 
-                // reset activeState colors
-                activeState
+                // reset activeGeom colors
+                activeGeom
                   .style('fill', self.colorUnselected)
                   .classed('feature', true)
                   .classed('background', false)
                   .classed('active', false);
 
-                // select new activeState
-                activeState = d3.select(this)
+                // select new activeGeom
+                activeGeom = d3.select(this)
                   .classed('active', true);
                 
+                console.log('clickState activeGeom', activeGeom);
+
                 // hide background
                 d3.selectAll('path.background').style('fill', self.colorBackground);
 
@@ -250,8 +254,7 @@ Solidarity.Views = Solidarity.Views || {};
                     .await(loadZips);
 
                 // show stories for state
-
-
+                self.resultsBar.updateGeom(d);
             }
 
             function clickCounty(d) {
@@ -261,12 +264,14 @@ Solidarity.Views = Solidarity.Views || {};
                 drawZips(d);
 
                 // show stories for county
+                self.resultsBar.updateGeom(d);
             }
 
             function clickZip(d) {
                 Solidarity.log('clickZip', d.id);
                 
                 // show stories for zip
+                self.resultsBar.updateGeom(d);
             }
 
             function drawStates(error, data) {
@@ -276,7 +281,7 @@ Solidarity.Views = Solidarity.Views || {};
                   .attr('class', 'country')
                   .attr('id', 'US');
 
-                //merge all states for background
+                // merge all states for background
                 us.append('path')
                   .datum(topojson.merge(data, data.objects.states.geometries))
                   .attr('class', 'background')
@@ -419,6 +424,14 @@ Solidarity.Views = Solidarity.Views || {};
             }             
         },
 
+        hoverState: function(geom) {
+            // save hovered state to map context
+            this.hoveredGeom = geom;
+            
+            // update resultsBar
+            this.resultsBar.updateGeom(geom);
+        },
+
         renderStoryCollection: function(name, collection, geomSelector, geomUnselector) {
             // extract model attributes from the backbone collection
             var stories = collection.models.map(function(s) { return s.attributes; });
@@ -455,7 +468,7 @@ Solidarity.Views = Solidarity.Views || {};
                 d3.selectAll(geomUnselector)
                   .style('fill', this.colorUnselected);
                 // hide background paths, so higher resolution geoms appear
-                d3.selectAll('path.active')
+                d3.selectAll(geomUnselector+'.active')
                   .attr('class', 'background')
                   .style('fill', this.colorBackground);
             } 
@@ -472,9 +485,9 @@ Solidarity.Views = Solidarity.Views || {};
             };
             renderStoryResults();
 
-            // on geom hover, update results
+            // on geom hover, update results and zoom
             this.map.selectAll(geomSelector)
-              .on('mouseover', _.bind(this.resultsBar.updateGeom, this.resultsBar))
+              .on('mouseover', _.bind(this.hoverState, this))
               .on('mouseout', _.bind(renderStoryResults, this));
         },
 

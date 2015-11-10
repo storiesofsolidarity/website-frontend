@@ -15,6 +15,7 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         updateGeom: function(geom) {
+            //console.log('resultsBar.updateGeom', geom);
             // convert map geom to results hash
             return this.render({
                 count: geom.properties.story_count || 0,
