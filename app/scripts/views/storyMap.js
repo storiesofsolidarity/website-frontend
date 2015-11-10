@@ -142,7 +142,7 @@ Solidarity.Views = Solidarity.Views || {};
                   .duration(750)
                   .call(zoom.translate([0, 0]).scale(1).event);
 
-                self.renderStoryCollection('USA', self.states, 'g.country path.state');
+                self.renderStoryCollection('USA', self.states, 'g.country path.feature');
             }
 
             function zoomClick() {
@@ -320,7 +320,7 @@ Solidarity.Views = Solidarity.Views || {};
                   success: function() {
                     self.renderStoryCollection(stateName, self.counties,
                       'g.state path.county',
-                      'g.country path.state');
+                      'g.country path.feature');
                   }
                 });
                 
