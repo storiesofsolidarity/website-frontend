@@ -16,10 +16,12 @@ Solidarity.Routers = Solidarity.Routers || {};
         cached: {},
 
         storyMap: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.StoryMap(), '#map');
+            if (this.cached.storyMap === undefined) { this.cached.storyMap = new Solidarity.Views.StoryMap(); }
+            Solidarity.mainContent.show(this.cached.storyMap, '#map');
         },
         storyList: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.StoryList(), '#read');
+            if (this.cached.storyList === undefined) { this.cached.storyList = new Solidarity.Views.StoryList(); }
+            Solidarity.mainContent.show(this.cached.storyList, '#read');
         },
         storyListLocation: function(state, city) {
             Solidarity.mainContent.show(

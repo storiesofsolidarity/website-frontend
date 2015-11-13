@@ -14,6 +14,7 @@ Solidarity.Views = Solidarity.Views || {};
         el: '#content',
 
         events: {'click a.loadMore': 'loadMore'},
+        hasLoaded: false,
 
         initialize: function (options) {
             this.options = _.extend(this.optionsDefaults, options);
@@ -46,7 +47,8 @@ Solidarity.Views = Solidarity.Views || {};
                         //TODO, check to see if story param is greater than the first page
                     }
 
-                    self.layout();
+                    self.layout(self.hasLoaded);
+                    self.hasLoaded = true;
                 }
             });
         },
@@ -55,26 +57,36 @@ Solidarity.Views = Solidarity.Views || {};
             if (story.attributes.content) {
                 $(this.templateItem(story.attributes)).appendTo('.storyList');
             }
-            if(!this.collection.hasNextPage()) {
-                $('.item.more').hide();
-            }
         },
 
         render: function(data) {
+            if (data === undefined) { data = {}; }
             this.$el.html(this.template(data));
             return this;
         },
 
-        layout: function() {
+        layout: function(skipAnimation) {
+            var duration = 150,
+                delay = 500;
+
+            if (skipAnimation) {
+                duration = 0;
+                delay = 0;
+            }
             $('.storyList.grid').stalactite({
-                duration: 150,
-                delay: 500,
+                duration: duration,
+                delay: delay,
                 easing: 'swing',
                 cssPrefix: '.stalactite',
                 cssPrep: true,
                 fluid: true,
                 loader: '<img />',
             });
+        },
+
+        onShow: function() {
+            _.each(this.collection.models, _.bind(this.addStory, this));
+            this.layout(this.hasLoaded);
         },
 
         loadMore: function() {

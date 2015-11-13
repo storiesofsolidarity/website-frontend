@@ -12,11 +12,10 @@ Solidarity.Views = Solidarity.Views || {};
         events: {},
 
         initialize: function () {
-            var self = this;
             this.listenTo(this.model, 'add', this.render);
 
             this.model.fetch({
-                success: $.proxy(self.render, self)
+                success: $.proxy(this.render, this)
             });
         },
 

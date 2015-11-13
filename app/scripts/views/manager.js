@@ -31,14 +31,14 @@ Solidarity.RegionManager = (function (Backbone, $) {
         }
     };
  
-    region.show = function (view, button, footerLink) {
+    region.show = function (view, navButton, footerLink) {
         closeView(currentView);
         currentView = view;
         openView(currentView);
 
-        if (button) {
+        if (navButton) {
             $(navbar + ' li.button.active').removeClass('active');
-            $(navbar + ' li.button a[href='+button+']')
+            $(navbar + ' li.button a[href='+navButton+']')
                 .parent('li.button').addClass('active');
         } else {
             $(navbar + ' li.button.active').removeClass('active');
@@ -65,7 +65,7 @@ Solidarity.RegionManager = (function (Backbone, $) {
         }
     };
     region.hideOverlay = function() {
-        $('body > #overlay').removeClass('active');
+        $('body > #overlay').removeClass('active').remove();
     };
 
     return region;
