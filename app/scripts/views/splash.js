@@ -32,6 +32,7 @@ Solidarity.Views = Solidarity.Views || {};
                          Solidarity.siteRoot+'images/splash/splash-7.jpg'],
                 shuffle: true,
                 loop: true,
+                start: false,
                 interval: 10*1000,
                 effect: 'fade',
                });
@@ -39,15 +40,16 @@ Solidarity.Views = Solidarity.Views || {};
             // animate entrance
             $.when(
               $('ul.statement').animate({'top': 0}, 1000).promise(),
-              $('ul.languages li').eq(0).delay( 500).animate({'top': '5px', 'opacity': 1}, 1000).promise(),
-              $('ul.languages li').eq(1).delay(1000).animate({'top': '5px', 'opacity': 1}, 1000).promise(),
-              $('ul.languages li').eq(2).delay(1500).animate({'top': '5px', 'opacity': 1}, 1000).promise(),
-              $('ul.languages li').eq(3).delay(2000).animate({'top': '5px', 'opacity': 1}, 1000).promise()
+              $('ul.languages li').eq(0).delay( 500).animate({'top': '0px', 'opacity': 1}, 1000).promise(),
+              $('ul.languages li').eq(1).delay(1000).animate({'top': '0px', 'opacity': 1}, 1000).promise(),
+              $('ul.languages li').eq(2).delay(1500).animate({'top': '0px', 'opacity': 1}, 1000).promise(),
+              $('ul.languages li').eq(3).delay(2000).animate({'top': '0px', 'opacity': 1}, 1000).promise()
             ).done( function(){
               Solidarity.log('Splash load complete.');
 
               // start language rotation, bound to backbone view
               self.rotateLanguageTimer = setInterval(self.rotateLanguage.bind(self), 2.5*1000);
+              $('.splash').bgswitcher('start');
             });
             
 
