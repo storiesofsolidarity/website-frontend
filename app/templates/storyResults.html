@@ -1,5 +1,5 @@
 <div class="resultsBar">
-	<div class="btn left">
+	<div class="btn left show-results">
 		<span class="icon icon-arrow_up"></span> Show Results
 	</div>
 
@@ -10,5 +10,9 @@
 		<% _.each(data.filters, function(filter) { %>
 			<span><%= filter %> <a class="close">X</a> </span>
 		<% }); %>
+	</div>
+
+	<div class="storyList grid">
+	    <!-- story items added here -->
 	</div>
 </div>

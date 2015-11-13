@@ -1,5 +1,7 @@
-<% if(data.filtered) { %>
-<h1>Stories from <%= data.city %>, <%= data.state %></h1>
+<% if(data.filtered && data.geography) { %>
+	<h1>Stories from <%= data.geography %></h1>
+<% } else if (data.filtered) { %>
+	<h1>Filtered Stories</h1>
 <% } %>
 <div class="storyList grid">
     <!-- story items added here -->

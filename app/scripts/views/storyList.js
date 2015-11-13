@@ -6,6 +6,7 @@ Solidarity.Views = Solidarity.Views || {};
     'use strict';
 
     Solidarity.Views.StoryList = Solidarity.Views.BaseView.extend({
+        optionsDefaults: {},
 
         template: JST['app/templates/storyList.html'],
         templateItem: JST['app/templates/storyListItem.html'],
@@ -15,9 +16,9 @@ Solidarity.Views = Solidarity.Views || {};
         events: {'click a.loadMore': 'loadMore'},
 
         initialize: function (options) {
-            this.options = options;
+            this.options = _.extend(this.optionsDefaults, options);
 
-            this.render();
+            this.render({});
             this.collection = new Solidarity.Collections.Stories({mode: 'infinite'});
             this.listenTo(this.collection, 'add', this.addStory);
             this.filterData();
@@ -59,8 +60,8 @@ Solidarity.Views = Solidarity.Views || {};
             }
         },
 
-        render: function() {
-            this.$el.html(this.template({}));
+        render: function(data) {
+            this.$el.html(this.template(data));
             return this;
         },
 
@@ -91,13 +92,28 @@ Solidarity.Views = Solidarity.Views || {};
 
     Solidarity.Views.StoryListLocation = Solidarity.Views.StoryList.extend({
         filterData: function () {
-            // send city, state filter to api as query params
+            // send location filters to api as query params
             this.collection.queryParams = _.extend(this.collection.queryParams,
-                                {'city': this.options.city, 'state': this.options.state});
+                                {'city': this.options.city,
+                                'county': this.options.county,
+                                'state': this.options.state,
+                                'limit': this.options.limit}
+                            );
         },
 
-        render: function () {
-            this.$el.html(this.template({'filtered': true, 'city': this.options.city, 'state': this.options.state}));
+        render: function (data) {
+            var geography = '';
+            if (this.options.city && this.options.state) {
+                geography = this.options.city + ',' + this.options.state;
+            } else if (this.options.county && this.options.state) {
+                geography = this.options.county + ',' + this.options.state;
+            } else if (this.options.state) {
+                geography = this.options.state;
+            }
+            this.$el.html(this.template({
+                'filtered': true,
+                'geography': geography})
+            );
             return this;
         },
     });

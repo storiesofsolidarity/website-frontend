@@ -21,7 +21,7 @@ Solidarity.Views = Solidarity.Views || {};
             this.counties = new Solidarity.Collections.Counties({});
             this.zipcodes = new Solidarity.Collections.Zipcodes({});
             this.colorList = ['#E4E4E4','#F3EB99','#FAC85F','#F9A946','#EC913D'];
-            this.resultsBar = new Solidarity.Views.ResultsBar();
+            this.resultsBar = new Solidarity.Views.ResultsBar({});
         },
         
         onShow: function() {
@@ -225,8 +225,6 @@ Solidarity.Views = Solidarity.Views || {};
                 activeGeom = d3.select(this)
                   .classed('active', true);
                 
-                console.log('clickState activeGeom', activeGeom);
-
                 // hide background
                 d3.selectAll('path.background').style('fill', self.colorBackground);
 
@@ -254,7 +252,7 @@ Solidarity.Views = Solidarity.Views || {};
                     .await(loadZips);
 
                 // show stories for state
-                self.resultsBar.updateGeom(d);
+                self.resultsBar.updateGeom(d, 'state');
             }
 
             function clickCounty(d) {
@@ -264,14 +262,14 @@ Solidarity.Views = Solidarity.Views || {};
                 drawZips(d);
 
                 // show stories for county
-                self.resultsBar.updateGeom(d);
+                self.resultsBar.updateGeom(d, 'county');
             }
 
             function clickZip(d) {
                 Solidarity.log('clickZip', d.id);
                 
                 // show stories for zip
-                self.resultsBar.updateGeom(d);
+                self.resultsBar.updateGeom(d, 'zip');
             }
 
             function drawStates(error, data) {
@@ -281,6 +279,10 @@ Solidarity.Views = Solidarity.Views || {};
                   .attr('class', 'country')
                   .attr('id', 'US');
 
+                // get features from topojson, and set type
+                var features = topojson.feature(data, data.objects.states).features;
+                _.each(features, function(f) { f.properties.type = 'state'; });
+                
                 // merge all states for background
                 us.append('path')
                   .datum(topojson.merge(data, data.objects.states.geometries))
@@ -290,7 +292,7 @@ Solidarity.Views = Solidarity.Views || {};
                 // add individual states as paths
                 us.selectAll('path')
                   .attr('class', 'states')
-                  .data(topojson.feature(data, data.objects.states).features)
+                  .data(features)
                 .enter().append('path')
                   .attr('d', path)
                   .attr('class', 'feature state')
@@ -314,12 +316,16 @@ Solidarity.Views = Solidarity.Views || {};
                   .attr('class', 'state')
                   .attr('id', stateName);
 
+                // get features from topojson, and set type
+                var features = topojson.feature(data, data.objects[geomKey]).features;
+                _.each(features, function(f) { f.properties.type = 'county'; });
+
                 var counties = state.append('g')
                   .attr('class', 'counties')
                 .selectAll('path')
                   .attr('class','counties')
                   .style('fill', self.colorUnselected)
-                  .data(topojson.feature(data, data.objects[geomKey]).features)
+                  .data(features)
                 .enter().append('path')
                   .attr('d', path)
                   .attr('class', 'feature county')
@@ -367,10 +373,14 @@ Solidarity.Views = Solidarity.Views || {};
                 var zipcodes = state.append('g')
                   .attr('class', 'zipcodes');
                 
+                // get features from topojson, and set type
+                var features = topojson.feature(data, data.objects[geomKey]).features;
+                _.each(features, function(f) { f.properties.type = 'zip'; });
+
                 zipcodes.selectAll('path')
                   .attr('class','zipcodes')
                   .style('fill', self.colorUnselected) // so holes don't appear through the zipcodes layer
-                  .data(topojson.feature(data, data.objects[geomKey]).features)
+                  .data(features)
                 .enter().append('path')
                   .attr('d', path)
                   .attr('class', 'feature zipcode')
@@ -424,12 +434,12 @@ Solidarity.Views = Solidarity.Views || {};
             }             
         },
 
-        hoverState: function(geom) {
-            // save hovered state to map context
+        hoverGeometry: function(geom) {
+            // save hovered geometry to map context
             this.hoveredGeom = geom;
             
             // update resultsBar
-            this.resultsBar.updateGeom(geom);
+            this.resultsBar.updateGeom(geom, geom.properties.type);
         },
 
         renderStoryCollection: function(name, collection, geomSelector, geomUnselector) {
@@ -477,18 +487,14 @@ Solidarity.Views = Solidarity.Views || {};
               _.reject( _.pluck(story_properties, 'story_count'), _.isUndefined),
               function(num, memo) { return memo + num; }, 0
             );
-            var renderStoryResults = function() {
-              self.resultsBar.render({
+            this.resultsBar.setTotal({
                 count: totalStoriesInCollection,
                 geography: name,
-              });
-            };
-            renderStoryResults();
+            });
 
-            // on geom hover, update results and zoom
+            // on geom hover, update results
             this.map.selectAll(geomSelector)
-              .on('mouseover', _.bind(this.hoverState, this))
-              .on('mouseout', _.bind(renderStoryResults, this));
+              .on('mouseover', _.bind(this.hoverGeometry, this));
         },
 
     });

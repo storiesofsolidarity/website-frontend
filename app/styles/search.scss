@@ -14,11 +14,12 @@
 	.btn {
 		height: 100%;
 		font-family: $headings-font-family;
-		font-size: 20px;
-		padding-top: 13px;
+		font-size: 26px;
+		padding-top: 10px;
 		line-height: 1.0;
-		font-weight: bold;
+		font-weight: normal;
 		&.left { float: left; }
+		&:hover { background-color: $orange-light; }
 	}
 
 	.filters {
