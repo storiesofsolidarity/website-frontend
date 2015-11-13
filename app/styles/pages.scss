@@ -9,6 +9,7 @@
 
 		h1, h2 { 
 			font-family: $font-family-sans-serif;
+			letter-spacing: 1px;
 			color: inherit;
 		}
 		h1 {
@@ -24,11 +25,18 @@
 			font-weight: lighter;
 			text-transform: uppercase;
 		}
+		h3 { 
+			font-family: $font-family-content;
+			color: $black;
+			font-size: 18px;
+			margin: 0 0 24px 0;
+		}
 
 		ul {
 			list-style-type: none;
 			margin: 0 0 10px 0;
 			padding: 0;
+			li { margin-bottom: 10px; }
 			li em { font-weight: bold; font-style: normal; }
 		}
 
@@ -53,6 +61,9 @@
 					-webkit-columns: 2 250px;
 					-moz-columns: 2 250px;
 					columns: 2 250px;
+					-webkit-column-gap: 50px;
+					-mozilla-column-gap: 50px;
+					column-gap: 50px;
 				}
 			}
 			&.one-third-col {
@@ -79,7 +90,7 @@
 		}
 	}
 
-	section.light-gray { background-color:#DDD; color: $black; }
+	section.light-gray { background-color:#DDD; color: $black; a { color: $orange; } }
 	section.gray { background-color: #3F3F3F; color: $white; }
 	section.orange { background-color: #F9A946; color: $black; }
 	section.yellow { background-color: #F4EB99; color: $black; }
