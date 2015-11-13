@@ -2,8 +2,9 @@
 @import '_mixins.scss';
 
 .page {
+	height: 100%;
+
 	section {
-		min-height: 100%;
 		padding: 70px 40px;
 		@include make-row;
 
@@ -90,7 +91,7 @@
 		}
 	}
 
-	section.light-gray { background-color:#DDD; color: $black; a { color: $orange; } }
+	&.light-gray, section.light-gray { background-color:#DDD; color: $black; a { color: $orange; } }
 	section.gray { background-color: #3F3F3F; color: $white; }
 	section.orange { background-color: #F9A946; color: $black; }
 	section.yellow { background-color: #F4EB99; color: $black; }
