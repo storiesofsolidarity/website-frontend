@@ -21,7 +21,6 @@ Solidarity.Views = Solidarity.Views || {};
             this.counties = new Solidarity.Collections.Counties({});
             this.zipcodes = new Solidarity.Collections.Zipcodes({});
             this.colorList = ['#E4E4E4','#F3EB99','#FAC85F','#F9A946','#EC913D'];
-            this.resultsBar = new Solidarity.Views.ResultsBar({});
         },
         
         onShow: function() {
@@ -33,12 +32,8 @@ Solidarity.Views = Solidarity.Views || {};
                     self.renderStoryCollection('USA', data, 'g.country path.feature');
                 }
             });
-            this.resultsBar.show();
         },
 
-        close: function() {
-            this.resultsBar.hide();
-        },
 
         drawMap: function () {
             var width = 960,
@@ -251,8 +246,6 @@ Solidarity.Views = Solidarity.Views || {};
                     .defer(d3.json, Solidarity.dataRoot + 'geography/zcta/'+fn+'.topo.json')
                     .await(loadZips);
 
-                // show stories for state
-                self.resultsBar.updateGeom(d, 'state');
             }
 
             function clickCounty(d) {
@@ -260,16 +253,11 @@ Solidarity.Views = Solidarity.Views || {};
                 d3.selectAll(d).style('fill', 'transparent');
                 zoomToBounds(d);
                 drawZips(d);
-
-                // show stories for county
-                self.resultsBar.updateGeom(d, 'county');
             }
 
             function clickZip(d) {
                 Solidarity.log('clickZip', d.id);
                 
-                // show stories for zip
-                self.resultsBar.updateGeom(d, 'zip');
             }
 
             function drawStates(error, data) {
@@ -438,8 +426,6 @@ Solidarity.Views = Solidarity.Views || {};
             // save hovered geometry to map context
             this.hoveredGeom = geom;
             
-            // update resultsBar
-            this.resultsBar.updateGeom(geom, geom.properties.type);
         },
 
         renderStoryCollection: function(name, collection, geomSelector, geomUnselector) {
@@ -481,16 +467,7 @@ Solidarity.Views = Solidarity.Views || {};
                 d3.selectAll(geomUnselector+'.active')
                   .attr('class', 'background')
                   .style('fill', this.colorBackground);
-            } 
-
-            var totalStoriesInCollection = _.reduce(
-              _.reject( _.pluck(story_properties, 'story_count'), _.isUndefined),
-              function(num, memo) { return memo + num; }, 0
-            );
-            this.resultsBar.setTotal({
-                count: totalStoriesInCollection,
-                geography: name,
-            });
+            }
 
             // on geom hover, update results
             this.map.selectAll(geomSelector)
