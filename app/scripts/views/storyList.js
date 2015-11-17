@@ -19,7 +19,7 @@ Solidarity.Views = Solidarity.Views || {};
         initialize: function (options) {
             this.options = _.extend(this.optionsDefaults, options);
 
-            this.render({});
+            this.render(this.options);
             this.collection = new Solidarity.Collections.Stories({mode: 'infinite'});
             this.listenTo(this.collection, 'add', this.addStory);
             this.filterData();
@@ -36,7 +36,7 @@ Solidarity.Views = Solidarity.Views || {};
             this.collection.getFirstPage({
                 success: function(results) {
                     if (results.length === 0) {
-                        $(self.templateNoResults({})).appendTo('.storyList');
+                        $(self.templateNoResults({})).appendTo('.stories');
                     }
                     if (self.collection.hasNextPage()) {
                         $('.item.more').show();
@@ -55,7 +55,7 @@ Solidarity.Views = Solidarity.Views || {};
 
         addStory: function(story) {
             if (story.attributes.content) {
-                $(this.templateItem(story.attributes)).appendTo('.storyList');
+                $(this.templateItem(story.attributes)).appendTo('.stories');
             }
         },
 
@@ -73,7 +73,7 @@ Solidarity.Views = Solidarity.Views || {};
                 duration = 0;
                 delay = 0;
             }
-            $('.storyList.grid').stalactite({
+            $('.stories.grid').stalactite({
                 duration: duration,
                 delay: delay,
                 easing: 'swing',
@@ -108,19 +108,28 @@ Solidarity.Views = Solidarity.Views || {};
             this.collection.queryParams = _.extend(this.collection.queryParams,
                                 {'city': this.options.city,
                                 'county': this.options.county,
-                                'state': this.options.state,
+                                'state_name': this.options.state_name,
                                 'limit': this.options.limit}
                             );
         },
 
         render: function (data) {
+            if (data && data.location) {
+                if (data.location.match(/^\d+$/)) {
+                    this.options.zip = data.location;
+                } else {
+                    this.options.county = data.location;
+                }
+            }
+            if (data && data.state_name) {
+                this.options.state_name = data.state_name;
+            }
+            
             var geography = '';
-            if (this.options.city && this.options.state) {
-                geography = this.options.city + ',' + this.options.state;
-            } else if (this.options.county && this.options.state) {
-                geography = this.options.county + ',' + this.options.state;
-            } else if (this.options.state) {
-                geography = this.options.state;
+            if (this.options.location && this.options.state_name) {
+                geography = this.options.location + ', ' + this.options.state_name;
+            } else if (this.options.state_name) {
+                geography = this.options.state_name;
             }
             this.$el.html(this.template({
                 'filtered': true,

@@ -212,9 +212,15 @@ Solidarity.Views = Solidarity.Views || {};
 
                 if (data.type === 'state') {
                     data.state_name = data.name;
+                    data.url = data.state_name;
                 }
                 if (data.type === 'county') {
-                    data.state_name = '';
+                    data.state_name = d3.select('g.state').attr('id');
+                    data.url = data.state_name + '/' + data.name;
+                }
+                if (data.type === 'zip') {
+                  data.state_name = d3.select('g.state').attr('id');
+                  data.url = data.state_name + '/' + data.name;
                 }
 
                 return self.templateTip(data);

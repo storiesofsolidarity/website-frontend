@@ -10,10 +10,13 @@ Solidarity.Routers = Solidarity.Routers || {};
             'map': 'storyMap',
             'read': 'storyList',
             'read/story/:id': 'storyView',
-            'list/:state/:city': 'storyListLocation',
+            'view/:state_name': 'storyListLocation',
+            'view/:state_name/:location': 'storyListLocation',
         },
 
-        cached: {},
+        cached: {
+            storyListLocation: {}
+        },
 
         storyMap: function() {
             if (this.cached.storyMap === undefined) { this.cached.storyMap = new Solidarity.Views.StoryMap(); }
@@ -23,11 +26,15 @@ Solidarity.Routers = Solidarity.Routers || {};
             if (this.cached.storyList === undefined) { this.cached.storyList = new Solidarity.Views.StoryList(); }
             Solidarity.mainContent.show(this.cached.storyList, '#read');
         },
-        storyListLocation: function(state, city) {
-            Solidarity.mainContent.show(
-                new Solidarity.Views.StoryListLocation(
-                    {state: state, city: city}
-                ), '#read');
+        storyListLocation: function(state_name, location) {
+            // cache view with key state_name:county:zip
+            var key = state_name + ':' + (location || '');
+
+            if (this.cached.storyListLocation[key] === undefined) {
+                this.cached.storyListLocation[key] = new Solidarity.Views.StoryListLocation(
+                    {state_name: state_name, location: location});
+            }
+            Solidarity.mainContent.show(this.cached.storyListLocation[key], '#read');
         },
         storyView: function(id) {
             Solidarity.mainContent.show(

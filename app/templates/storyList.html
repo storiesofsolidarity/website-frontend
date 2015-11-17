@@ -1,8 +1,17 @@
-<% if(data.filtered && data.geography) { %>
+<div class="storyList">
+	<% if(data.filtered) { %>
+		<button href="#close" onclick="history.go(-1);return false;" class="btn close gray" >
+	        <span>&times;</span> Close
+	    </button>
+	<% } %>
+
+	<% if(data.filtered && data.geography) { %>
 	<h1>Stories from <%= data.geography %></h1>
-<% } else if (data.filtered) { %>
+	<% } else if (data.filtered) { %>
 	<h1>Filtered Stories</h1>
-<% } %>
-<div class="storyList grid">
-    <!-- story items added here -->
+	<% } %>
+
+	<div class="stories grid">
+	    <!-- story items added here -->
+	</div>
 </div>
