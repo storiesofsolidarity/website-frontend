@@ -16,6 +16,9 @@ Solidarity.RegionManager = (function (Backbone, $) {
         if (view.close) {
             view.close();
         }
+        if (view.tip) {
+            view.tip.destroy();
+        }
     };
  
     var openView = function (view) {

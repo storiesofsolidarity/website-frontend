@@ -11,7 +11,7 @@
     "d3": "~3.5.5",
     "topojson": "~1.6.18",
     "bootstrap-filestyle": "~1.1.2",
-    "d3-tip": "~0.6.6",
+    "d3-tip": "git@github.com:storiesofsolidarity/d3-tip.git#master",
     "bootstrap-select": "~1.6.4",
     "jquery-bgswitcher": "git@github.com:rewish/jquery-bgswitcher.git#~0.4.3",
     "stalactite": "git@github.com:storiesofsolidarity/stalactite.git",
@@ -30,8 +30,5 @@
     "app/bower_components",
     "test",
     "tests"
-  ],
-  "resolutions": {
-    "d3": "~3.5.5"
-  }
+  ]
 }

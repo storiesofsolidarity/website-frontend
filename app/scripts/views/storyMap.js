@@ -8,6 +8,7 @@ Solidarity.Views = Solidarity.Views || {};
     Solidarity.Views.StoryMap = Solidarity.Views.BaseView.extend({
 
         template: JST['app/templates/storyMap.html'],
+        templateTip: JST['app/templates/storyMapTooltip.html'],
         el: '#content',
         events: {},
         dataCache: {
@@ -283,8 +284,7 @@ Solidarity.Views = Solidarity.Views || {};
                   .data(features)
                 .enter().append('path')
                   .attr('d', path)
-                  .attr('class', 'feature state')
-                  .on('click', clickState);
+                  .attr('class', 'feature state zoom-in')
 
                 // mesh borders
                 us.append('path')
@@ -316,8 +316,8 @@ Solidarity.Views = Solidarity.Views || {};
                   .data(features)
                 .enter().append('path')
                   .attr('d', path)
-                  .attr('class', 'feature county')
-                  .on('click', clickCounty);
+                  .attr('class', 'feature county zoom-in')
+                  .on('click', clickCounty)
 
                 // reset state background color
                 state.selectAll('path.background').style('fill', self.colorBackground);
@@ -372,7 +372,7 @@ Solidarity.Views = Solidarity.Views || {};
                 .enter().append('path')
                   .attr('d', path)
                   .attr('class', 'feature zipcode')
-                  .on('click', clickZip);
+                  .on('click', clickZip)
 
                 zipcodes.append('path')
                   .datum(topojson.mesh(data, data.objects[geomKey]))
@@ -469,9 +469,55 @@ Solidarity.Views = Solidarity.Views || {};
                   .style('fill', this.colorBackground);
             }
 
+            // tooltip
+            var tip = d3.tip().html(function(d) {
+                var data = d.properties;
+                data.story_count = data.story_count || 0;
+                data.name = data.name || d.id;
+
+                console.log(data);
+                if (data.type === 'state') {
+                    data.state = data.name;
+                }
+                if (data.type === 'county') {
+                    data.state = '';
+                }
+
+                return self.templateTip(data);
+            }).direction(function(d) {
+              switch(d.properties.name) {
+                case 'Puerto Rico':
+                case 'Maine':
+                  return 'w';
+                default:
+                  return 'e';
+              }
+              // for most states, appear to the east
+            }).offset(function(d) {
+              // for states with crooked eastern borders, offset to the left
+              switch(d.properties.name) {
+                case 'California':
+                  return [0, -40];
+                case 'Louisiana':
+                  return [0, -20];
+                case 'Idaho':
+                  return [0, -20];
+                case 'Alaska':
+                  return [0, -40];
+                case 'Minnesota':
+                  return [0, -25];
+                case 'Puerto Rico':
+                  return [0, -10];
+                default:
+                  return [0, -10];
+              }
+            });
+            this.map.call(tip);
+
             // on geom hover, update results
             this.map.selectAll(geomSelector)
-              .on('mouseover', _.bind(this.hoverGeometry, this));
+              .on('mouseover', tip.show)
+              .on('mouseout', tip.hide);
         },
 
     });
