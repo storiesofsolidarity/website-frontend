@@ -3,11 +3,12 @@
 
 .storyList {
     @include clearfix;
-
     padding-top: 20px;
 
     .stories {
+        margin: 50px auto;
         text-align: center;
+        .grid { text-align: left; }
     }
 
     .item { 

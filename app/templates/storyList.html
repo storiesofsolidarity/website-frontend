@@ -5,13 +5,13 @@
 	    </button>
 	<% } %>
 
-	<% if(data.filtered && data.geography) { %>
-	<h1>Stories from <%= data.geography %></h1>
-	<% } else if (data.filtered) { %>
-	<h1>Filtered Stories</h1>
+	<% if(data.location) { %>
+	<h1>Stories from <%= data.location %></h1>
 	<% } %>
 
-	<div class="stories grid">
+	<div class="stories">
+		<div class="grid">
 	    <!-- story items added here -->
+		</div>
 	</div>
 </div>

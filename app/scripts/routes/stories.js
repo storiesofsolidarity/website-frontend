@@ -28,7 +28,8 @@ Solidarity.Routers = Solidarity.Routers || {};
         },
         storyListLocation: function(state_name, location) {
             // cache view with key state_name:county:zip
-            var key = state_name + ':' + (location || '');
+            var key = state_name;
+            if (location) { key += ':' + location; }
 
             if (this.cached.storyListLocation[key] === undefined) {
                 this.cached.storyListLocation[key] = new Solidarity.Views.StoryListLocation(

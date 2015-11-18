@@ -23,15 +23,19 @@ Solidarity.RegionManager = (function (Backbone, $) {
  
     var openView = function (view) {
         freshView = false;
-        var content = view.render();
-        if (content && content.$el) {
-            content.$el.appendTo(el);
-            content.delegateEvents();
-        }
 
-        if (view.onShow) {
-            view.onShow();
-        }
+        var renderView = function() {
+            var content = view.render();
+            if (content && content.$el) {
+                content.$el.appendTo(el);
+                content.delegateEvents();
+            }
+        };
+        $.when( renderView() ).done(function() {
+            if (view.onShow) {
+                view.onShow();
+            }
+        });
     };
  
     region.show = function (view, navButton, footerLink) {

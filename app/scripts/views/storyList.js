@@ -12,18 +12,28 @@ Solidarity.Views = Solidarity.Views || {};
         templateItem: JST['app/templates/storyListItem.html'],
         templateNoResults: JST['app/templates/storyListNoResults.html'],
         el: '#content',
+        storyEl: '.grid',
 
-        events: {'click a.loadMore': 'loadMore'},
         hasLoaded: false,
 
         initialize: function (options) {
             this.options = _.extend(this.optionsDefaults, options);
+            console.log('initialize', this.options);
 
             this.render(this.options);
+
             this.collection = new Solidarity.Collections.Stories({mode: 'infinite'});
             this.listenTo(this.collection, 'add', this.addStory);
             this.filterData();
             this.getFirstPage();
+            
+            $('body').on('scroll', _.bind(this.watchScroll, this));
+            $(window).on('resize', _.bind(this.setGridWidth, this));
+        },
+
+        close: function() {
+            $('body').off('scroll', this.watchScroll);
+            $(window).off('resize', this.setGridWidth);
         },
 
         filterData: function() {
@@ -33,14 +43,13 @@ Solidarity.Views = Solidarity.Views || {};
 
         getFirstPage: function() {
             var self = this;
+            self.isLoading = true; // disable scroll reload
             this.collection.getFirstPage({
                 success: function(results) {
                     if (results.length === 0) {
-                        $(self.templateNoResults({})).appendTo('.stories');
+                        $(self.templateNoResults({})).appendTo(this.storyEl);
                     }
-                    if (self.collection.hasNextPage()) {
-                        $('.item.more').show();
-                    }
+
                     if (window.location.href.indexOf('?story=') > 0) {
                         self.scrollTo(Solidarity.urlParam('story'));
 
@@ -48,6 +57,8 @@ Solidarity.Views = Solidarity.Views || {};
                     }
 
                     self.layout(self.hasLoaded);
+                    self.setGridWidth();
+                    self.isLoading = false;
                     self.hasLoaded = true;
                 }
             });
@@ -55,14 +66,28 @@ Solidarity.Views = Solidarity.Views || {};
 
         addStory: function(story) {
             if (story.attributes.content) {
-                $(this.templateItem(story.attributes)).appendTo('.stories');
+                $(this.templateItem(story.attributes)).appendTo(this.storyEl);
             }
         },
 
         render: function(data) {
-            if (data === undefined) { data = {}; }
+            if (data === undefined) { data = this.options; }
             this.$el.html(this.template(data));
             return this;
+        },
+
+        setGridWidth: function() {
+            $('.stories').css('width','auto');
+            var itemWidth = $('.grid .item').outerWidth();
+            var itemMarginRight = 0;
+            if ($('.grid .item').length) {
+                itemMarginRight = parseInt($('.grid .item').css('margin-right').substr(0,2));
+            }
+            var gridWidth = $('.grid').width();
+            var numCols = Math.floor(gridWidth / (itemWidth + itemMarginRight));
+
+            console.log('setGridWidth',numCols);
+            $('.stories').css('width', numCols * (itemWidth+itemMarginRight));
         },
 
         layout: function(skipAnimation) {
@@ -76,7 +101,7 @@ Solidarity.Views = Solidarity.Views || {};
                 duration = 0;
                 delay = 0;
             }
-            $('.stories.grid').stalactite({
+            $(this.storyEl).stalactite({
                 duration: duration,
                 delay: delay,
                 easing: 'swing',
@@ -93,16 +118,37 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         loadMore: function() {
-            this.collection.getNextPage();
+            
         },
 
         scrollTo: function(storyId) {
             var storyDiv = $('#story-'+storyId);
             if (storyDiv.length > 0) {
-                $('html, body').scrollTop(storyDiv.offset().top);
+                $(this.storyEl).scrollTop(storyDiv.offset().top);
+            }
+        },
+
+        watchScroll: function(e) {
+            var triggerPoint = 100; // px from the bottom
+            var el = $(this.storyEl);
+            // element scroll height, using offset and window.innerHeight
+            // because we have body.overflow-y = scroll
+            var pxFromBottom = el.offset().top + el.height() - window.innerHeight;
+            
+            var self = this;
+            if( !this.isLoading && pxFromBottom < triggerPoint ) {
+                if (!this.collection.hasNextPage()) { return; }
+
+                self.isLoading = true; // disable scroll reload
+                this.collection.getNextPage({
+                    success: function() {
+                        self.layout();
+                        self.isLoading = false;
+                        self.hasLoaded = true;
+                    }
+                });
             }
         }
-
     });
 
     Solidarity.Views.StoryListLocation = Solidarity.Views.StoryList.extend({
@@ -117,25 +163,29 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         render: function (data) {
+            console.log('render storyList', data);
+
+            var geography, location;
+
+            // determine geom type via regex
             if (data && data.location) {
                 if (data.location.match(/^\d+$/)) {
-                    this.options.zip = data.location;
+                    geography = 'zip';
                 } else {
-                    this.options.county = data.location;
+                    geography = 'county';
                 }
-            }
-            if (data && data.state_name) {
-                this.options.state_name = data.state_name;
+            } else {
+                geography = 'state';
             }
             
-            var geography = '';
-            if (this.options.location && this.options.state_name) {
-                geography = this.options.location + ', ' + this.options.state_name;
-            } else if (this.options.state_name) {
-                geography = this.options.state_name;
+            if (data && data.location && data.state_name) {
+                location = data.location + ', ' + data.state_name;
+            } else if (data && data.state_name) {
+                location = data.state_name;
             }
             this.$el.html(this.template({
                 'filtered': true,
+                'location': location,
                 'geography': geography})
             );
             return this;
