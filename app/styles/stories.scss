@@ -226,7 +226,8 @@
     .selectpicker {
         // remove default .btn styles
         background-color: $white;
-        &:hover { background-color: $white; }
+        &:hover { background-color: $white; color: $gray-base; }
+        &:focus { outline: 0 !important; outline-offset: 0 !important; }
         color: $gray-base;
         font-family: $font-family-sans-serif;
         font-size: 14px;
@@ -238,13 +239,27 @@
         text-transform: uppercase;
     }
 
-    // remove focus outline
-    .dropdown-menu > li > a:focus {
-        outline: 0 !important;
-        outline-offset: 0 !important;
-    }
-    .dropdown-menu > li > a:hover {
-        border-bottom: none;
+    // remove bootstrap dropdown defaults
+    .dropdown-menu {
+        background-color: $white;
+        color: $black;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+
+        & > li {
+            background-color: $white;
+            & > a {
+                color: $black;
+                &:focus {
+                    outline: 0 !important;
+                    outline-offset: 0 !important;
+                }
+                &:hover {
+                    border-bottom: none;
+                }
+            }
+        }
     }
 
     .input-group.left {
