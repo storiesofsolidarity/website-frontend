@@ -533,8 +533,21 @@ Solidarity.Views = Solidarity.Views || {};
 
             // show tooltip on feature hover
             this.map.selectAll(geomSelector)
-              .on('mouseover', this.tip.show)
-              .on('mouseout', this.tip.hide);
+              .on('mouseover', function(d) {
+                d3.select('.hover').classed('hover', false);
+                d3.select(this).classed('hover', true);
+                self.tip.show(d);
+              })
+              .on('mouseout', function(d) {
+                // need to delay very slightly, so check happens after tooltip hides
+                var unhover = function() {
+                  if (self.tip.style('opacity') < 1) {
+                    d3.select(this).classed('hover', false);
+                  }
+                };
+                setTimeout(_.bind(unhover, this), 10);
+                self.tip.hide(d);
+              });
         },
 
     });
