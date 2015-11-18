@@ -1,7 +1,11 @@
 <div class="item story" id="story-<%=data.id%>">
     <div class="body">
         <% if (data.content.length > 160) { %>
-            <%- data.content.slice(0,160) %>...
+            <% if (data.content.charAt(159) == ' ') { %>
+                <%- data.content.slice(0,159) %>...
+            <% } else { %>
+                <%- data.content.slice(0,160) %>...
+            <% } %>
         <% } else { %>
             <%- data.content %>
         <% } %>
