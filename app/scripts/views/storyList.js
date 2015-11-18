@@ -10,11 +10,13 @@ Solidarity.Views = Solidarity.Views || {};
 
         template: JST['app/templates/storyList.html'],
         templateItem: JST['app/templates/storyListItem.html'],
+        templateBreak: JST['app/templates/storyListBreak.html'],
         templateNoResults: JST['app/templates/storyListNoResults.html'],
         el: '#content',
         storyEl: '.grid',
 
         hasLoaded: false,
+        forcedLayout: false,
 
         initialize: function (options) {
             this.options = _.extend(this.optionsDefaults, options);
@@ -27,7 +29,10 @@ Solidarity.Views = Solidarity.Views || {};
             this.getFirstPage();
             
             $('body').on('scroll', _.bind(this.watchScroll, this));
-            $(window).on('resize', _.debounce(_.bind(this.setGridWidth, this), 100));
+            $(window).on('resize', _.debounce(_.bind(function() {
+                this.setGridWidth();
+                this.layout(true);
+            }, this), 100));
         },
 
         close: function() {
@@ -138,18 +143,25 @@ Solidarity.Views = Solidarity.Views || {};
             if( !this.isLoading && pxFromBottom < triggerPoint ) {
                 if (!this.collection.hasNextPage()) { return; }
                 self.isLoading = true; // disable scroll reload
+
+                // add page break
+                $(this.templateBreak({num: this.collection.state.currentPage}))
+                    .appendTo(this.storyEl);
+
                 this.collection.getNextPage({
                     success: function() {
-                        self.layout();
+                        self.layout(true);
                         self.isLoading = false;
                         self.hasLoaded = true;
                     }
                 });
             }
 
-            if ( !this.isLoading && pxFromBottom > triggerPoint) {
-                this.layout(true);
-                this.isLoading = true;
+            // when new page loads, force layout again to avoid drawing errors
+            if (!this.forcedLayout && pxFromBottom > window.innerHeight * 2) {
+                self.layout(true);
+                this.forcedLayout = true;
+                console.log('force layout', this.forcedLayout);
             }
         }
     });
