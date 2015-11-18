@@ -75,7 +75,7 @@ window.urlParam = function(name) {
 $(document).ready(function () {
     Solidarity.init();
     if (!Solidarity.DEBUG) {
-        Raven.config('https://415051242ec344cbabbe0f419b0561c9@app.getsentry.com/53317').install();
+        Raven.config(window.Solidarity.ravenConfig).install();
     }
 
     if (window.location.hash && window.location.hash !== '#splash') {
