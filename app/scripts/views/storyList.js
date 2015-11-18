@@ -18,7 +18,6 @@ Solidarity.Views = Solidarity.Views || {};
 
         initialize: function (options) {
             this.options = _.extend(this.optionsDefaults, options);
-            console.log('initialize', this.options);
 
             this.render(this.options);
 
@@ -28,7 +27,7 @@ Solidarity.Views = Solidarity.Views || {};
             this.getFirstPage();
             
             $('body').on('scroll', _.bind(this.watchScroll, this));
-            $(window).on('resize', _.bind(this.setGridWidth, this));
+            $(window).on('resize', _.debounce(_.bind(this.setGridWidth, this), 100));
         },
 
         close: function() {
@@ -77,6 +76,10 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         setGridWidth: function() {
+            // stalactite works best with fixed pixel widths
+            // on window.resize, rejigger the width of the .stories div
+            // so it re-centers appropriately
+
             $('.stories').css('width','auto');
             var itemWidth = $('.grid .item').outerWidth();
             var itemMarginRight = 0;
@@ -86,7 +89,6 @@ Solidarity.Views = Solidarity.Views || {};
             var gridWidth = $('.grid').width();
             var numCols = Math.floor(gridWidth / (itemWidth + itemMarginRight));
 
-            console.log('setGridWidth',numCols);
             $('.stories').css('width', numCols * (itemWidth+itemMarginRight));
         },
 
@@ -115,10 +117,7 @@ Solidarity.Views = Solidarity.Views || {};
         onShow: function() {
             _.each(this.collection.models, _.bind(this.addStory, this));
             this.layout(this.hasLoaded);
-        },
-
-        loadMore: function() {
-            
+            this.setGridWidth();
         },
 
         scrollTo: function(storyId) {
@@ -138,7 +137,6 @@ Solidarity.Views = Solidarity.Views || {};
             var self = this;
             if( !this.isLoading && pxFromBottom < triggerPoint ) {
                 if (!this.collection.hasNextPage()) { return; }
-
                 self.isLoading = true; // disable scroll reload
                 this.collection.getNextPage({
                     success: function() {
@@ -147,6 +145,11 @@ Solidarity.Views = Solidarity.Views || {};
                         self.hasLoaded = true;
                     }
                 });
+            }
+
+            if ( !this.isLoading && pxFromBottom > triggerPoint) {
+                this.layout(true);
+                this.isLoading = true;
             }
         }
     });
@@ -163,8 +166,6 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         render: function (data) {
-            console.log('render storyList', data);
-
             var geography, location;
 
             // determine geom type via regex
