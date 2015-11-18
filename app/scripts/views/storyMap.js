@@ -240,16 +240,20 @@ Solidarity.Views = Solidarity.Views || {};
             function tooltipOffset(d) {
               // for states with crooked eastern borders, offset to the left
               switch(d.properties.name) {
-                case 'California':
-                  return [0, -40];
-                case 'Louisiana':
-                  return [0, -20];
-                case 'Idaho':
-                  return [0, -20];
                 case 'Alaska':
+                  return [0, -40];
+                case 'California':
                   return [0, -40];
                 case 'Minnesota':
                   return [0, -25];
+                case 'New York':
+                  return [0, -25];
+                case 'Idaho':
+                  return [0, -20];
+                case 'Louisiana':
+                  return [0, -20];
+                case 'Maine':
+                  return [0, 0];
                 case 'Puerto Rico':
                   return [0, -10];
                 default:
