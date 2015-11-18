@@ -66,8 +66,11 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         layout: function(skipAnimation) {
-            var duration = 150,
-                delay = 500;
+            var duration = 100,
+                delay = 200;
+
+            // on small screens, force skipAnimation
+            if (window.innerWidth < 768) { skipAnimation = true; }
 
             if (skipAnimation) {
                 duration = 0;

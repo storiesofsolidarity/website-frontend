@@ -28,7 +28,7 @@
 
 
 
-/* Responsive: screen-phone */
+/* Responsive: screen-small / tablet */
 @media screen and (max-width: $grid-float-breakpoint) {
     .container {
         max-width: $container-sm;
@@ -69,5 +69,20 @@
             width: 100%;
             margin-left: 0;
         }
+    }
+
+    .storyRead {
+        padding-bottom: 100px;
+    }
+
+    .storyList {
+        .item { width: 200px; }
+    }
+}
+
+// phone
+@media screen and (max-width: $screen-xs) {
+    .storyList {
+        .item { width: 100%; }
     }
 }
