@@ -1,0 +1,32 @@
+<input name="search" placeholder="Search"
+<% if (data.search) {%> value="<%- data.search %>" <% } %>
+/>
+
+<span class="icon icon-search"></span>
+<% if (data.search) { %>
+<span class="icon close">&times;</span>
+<% } %>
+
+<% if (data.count > 0) { %>
+<div class="searchResults">
+	<% for(i in data.results) { var r = data.results[i]; %>
+		<div class="result"><a href="#read/story/<%- r.id %>">
+			<% if (r.content.length > 160) { %>
+            <% if (r.content.charAt(159) == ' ') { %>
+                <%- r.content.slice(0,159) %>...
+            <% } else { %>
+                <%- r.content.slice(0,160) %>...
+            <% } %>
+        <% } else { %>
+            <%- r.content %>
+        <% } %>
+		</div>
+	<% } %>
+</div>
+<% } else { %>
+	<% if (data.search) { %>
+	<div class="searchResults">
+		<div class="result none">No results</div>
+	</div>
+	<% } %>
+<% } %>

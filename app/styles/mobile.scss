@@ -68,6 +68,10 @@
         .navbar-search {
             width: 100%;
             margin-left: 0;
+
+            .searchResults {
+                width: calc(100% - 20px);
+            }
         }
     }
 

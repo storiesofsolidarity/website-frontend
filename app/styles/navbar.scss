@@ -56,9 +56,17 @@
     }
     .icon {
         position: absolute;
-        top: 10px; 
-        left: 20px;
         color: #b8b8b8;
+
+        &.icon-search { 
+            top: 10px; 
+            left: 20px;
+        }
+        &.close {
+            top: -1px;
+            right: 20px;
+            font-size: 32px;
+        }
     }
 }
 

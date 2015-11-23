@@ -18,8 +18,7 @@ window.Solidarity = _.extend(window.Solidarity, {
 
         // initialize UI elements
         this.shareBar = new Solidarity.Views.ShareBar({});
-        // this.searchView = new Solidarity.Views.Search({});
-        // this.filterView = new Solidarity.Views.Filter({});
+        this.searchBar = new Solidarity.Views.SearchBar({});
         // this.loginView = new Solidarity.Views.Login({});
 
         // start history, redirect to about page if invalid route
