@@ -10,6 +10,11 @@ Solidarity.Routers = Solidarity.Routers || {};
             trailingSlashIsSignificant: true,
         },
 
+        _routeToRegExp: function(route) {
+            route = Backbone.Router.prototype._routeToRegExp.call(this, route);
+            return new RegExp(route.source, 'i'); // added 'i' to make case insensitive
+        },
+
         initialize: function() {
             this.bind('route', this.pageView);
         },
