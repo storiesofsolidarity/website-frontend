@@ -93,6 +93,7 @@
         input[type=range] {
           -webkit-appearance: none;
           width: 60px;
+          height: 2px; // weird, but fixes margin-collapse in ff
           position: relative;
           top: 36px;
           left: 10px;

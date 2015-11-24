@@ -24,6 +24,10 @@ a:hover {
     border-bottom: 1px solid #ff9900;
     padding-bottom: 1px;
 }
+// stop firefox outlines
+a:focus {
+    outline: none;
+}
 
 // but not for navbar
 .navbar { 
