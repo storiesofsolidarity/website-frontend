@@ -100,14 +100,14 @@
                 column-gap: 50px;
             }
         }
-        &.has-image {
+        &.has-photo {
             @include make-sm-column(12);
             @include make-sm-column-offset(0);
 
             .text { 
                 @include make-sm-column(6);   
             }
-            .image {
+            .photo {
                 @include make-sm-column(6);
                 img { width: 100%; }   
             }
@@ -349,7 +349,7 @@
     font-weight: normal;
     padding: 5px 10px;
     opacity: 1;
-    
+
     span { 
         font-size: 24px;
         line-height: 14px;
