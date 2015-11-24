@@ -32,7 +32,7 @@ Solidarity.Views = Solidarity.Views || {};
     Solidarity.Views.FormView = Solidarity.Views.BaseView.extend({
         events: {
             'submit': 'submit',
-            'keyup input.has-error': 'clearFieldErrors'
+            'keyup .has-error': 'clearFieldErrors'
         },
         templateError: JST['app/templates/formError.html'],
 
@@ -51,8 +51,8 @@ Solidarity.Views = Solidarity.Views || {};
             var self = this;
             var field = $(e.target).attr('name');
             $(self.form + ' label[for="'+field+'"]').removeClass('has-error');
-            $(self.form + ' input[name="'+field+'"]').removeClass('has-error');
-            $(self.form + ' input[name="'+field+'"] + .help-block').html('');
+            $(self.form + ' [name="'+field+'"]').removeClass('has-error');
+            $(self.form + ' [name="'+field+'"] + .help-block').html('');
         },
 
         clearAlerts: function() {
@@ -64,7 +64,7 @@ Solidarity.Views = Solidarity.Views || {};
             var self = this;
             Solidarity.log('submit '+ self.$form[0].id);
             Solidarity.log(self.$form.serializeArray());
-            
+
             $.ajax({
                 type: self.$form.attr('method'),
                 url: self.$form.attr('action'),
@@ -96,8 +96,8 @@ Solidarity.Views = Solidarity.Views || {};
 
                     _.map(errs, function(message, field) {
                         $(self.form + ' label[for="'+field+'"]').addClass('has-error');
-                        $(self.form + ' input[name="'+field+'"]').addClass('has-error');
-                        $(self.form + ' input[name="'+field+'"] + .help-block').html(message);
+                        $(self.form + ' [name="'+field+'"]').addClass('has-error');
+                        $(self.form + ' [name="'+field+'"] + .help-block').html(message).removeClass('hidden');
                     });
                     if (errs.non_field_errors !== undefined) {
                         self.$form.append(self.templateError(errs));

@@ -17,7 +17,7 @@ window.Solidarity = _.extend(window.Solidarity, {
         new Solidarity.Routers.Stories({});
 
         // initialize UI elements
-        this.shareBar = new Solidarity.Views.ShareBar({});
+        this.shareBar = new Solidarity.Views.StoryPost({});
         this.searchBar = new Solidarity.Views.SearchBar({});
         // this.loginView = new Solidarity.Views.Login({});
 

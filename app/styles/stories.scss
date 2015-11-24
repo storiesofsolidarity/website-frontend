@@ -1,4 +1,4 @@
-@import '_variables.scss';
+    @import '_variables.scss';
 @import '_mixins.scss';
 
 .storyList {
@@ -283,13 +283,12 @@
         }
     }
 
-    .input-group.left {
+    .help-block {
+        color: $yellow;
+        text-transform: none;
+        font-weight: bold;
         text-align: left;
-        float: left;
-    }
-    .input-group.right {
-        text-align: right;
-        float: right;
+        margin-left: 20px;
     }
 
     .form-group.buttons {
@@ -349,6 +348,8 @@
     font-family: $font-family-sans-serif;
     font-weight: normal;
     padding: 5px 10px;
+    opacity: 1;
+    
     span { 
         font-size: 24px;
         line-height: 14px;
@@ -357,4 +358,80 @@
     }
     &.gray { background: $gray; }
     &:hover { background: $gray-darker; color: $orange; }
+}
+
+@-webkit-keyframes pulse {
+    0% {color: $gray-light;}
+    100% {color: $gray;}
+}
+.pulse {
+    -webkit-animation: pulse 0.75s ease-in-out alternate infinite;
+}
+
+.input-group.left {
+    text-align: left;
+    float: left;
+}
+.input-group.right {
+    text-align: right;
+    float: right;
+}
+
+.storyThanks {
+    width: 50%;
+    top: 25%;
+    position: relative;
+    margin: 0 auto;
+
+    h1 {
+        font-family: $font-family-content;
+        font-size: 24px;
+        margin: 0;
+        font-weight: normal;
+    }
+    h2 {
+        font-family: $font-family-sans-serif;
+        letter-spacing: 1px;
+        font-weight: normal;
+
+        font-size: 18px;
+        text-transform: uppercase;
+        margin-top: 10px;
+        margin-bottom: 0px;
+    }
+
+    .content {
+        background: $gray-dark;
+        clear: both;
+        padding: 40px 20px;
+        margin: 10px 0;
+        width: 100%;    
+
+        div.copyLink {
+            display: inline-block;
+            width: 100%;
+            padding: 2px 5px;
+            margin: 5px -5px;
+
+            background-color: $orange;
+            color: $white;
+            text-transform: uppercase;
+
+            cursor: -webkit-pointer;
+            cursor: -moz-pointer;
+            cursor: pointer;
+        }
+    }
+    
+    .btn.btn-default { 
+        background: $gray;
+        margin-left: 10px;
+        margin-bottom: 10px;
+        box-shadow: 0 1px 10px #333;
+        &:hover { 
+            border: 1px solid transparent;
+            background-color: $orange;
+            color: $white;
+        }
+    }
 }
