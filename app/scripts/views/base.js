@@ -63,12 +63,31 @@ Solidarity.Views = Solidarity.Views || {};
             e.preventDefault();
             var self = this;
             Solidarity.log('submit '+ self.$form[0].id);
-            Solidarity.log(self.$form.serializeArray());
+            
+            // add inputs to FormData
+            var formData = new FormData();
+            var formItems = self.$form.find('input[type!="file"], select, textarea');
+            _.each(formItems, function(item) {
+                var $item = $(item);
+                if ($item.val()) {
+                  formData.append($item.attr('name'), $item.val());
+                }
+            });
+            // create file from blob
+            var fileItems = self.$form.find('input[type="file"]');
+            _.each(fileItems, function(item) {
+                var $item = $(item);
+                formData.append($item.attr('name'), item.files[0]);
+            });
+
+            console.log(formData);
 
             $.ajax({
                 type: self.$form.attr('method'),
                 url: self.$form.attr('action'),
-                data: self.$form.serializeArray(),
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: function(resp) {
                     $(self.form + ' .alert').remove();
 
