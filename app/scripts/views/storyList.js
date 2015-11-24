@@ -14,9 +14,7 @@ Solidarity.Views = Solidarity.Views || {};
         templateNoResults: JST['app/templates/storyListNoResults.html'],
         el: '#content',
         storyEl: '.grid',
-
         hasLoaded: false,
-        forcedLayout: false,
 
         initialize: function (options) {
             this.options = _.extend(this.optionsDefaults, options);
@@ -51,7 +49,9 @@ Solidarity.Views = Solidarity.Views || {};
             this.collection.getFirstPage({
                 success: function(results) {
                     if (results.length === 0) {
-                        $(self.templateNoResults({})).appendTo(this.storyEl);
+                        $(self.templateNoResults({})).appendTo(self.storyEl);
+                    } else {
+                        $('span#storyCount').text(results.state.totalRecords);
                     }
 
                     if (window.location.href.indexOf('?story=') > 0) {
@@ -93,13 +93,14 @@ Solidarity.Views = Solidarity.Views || {};
             }
             var gridWidth = $('.grid').width();
             var numCols = Math.floor(gridWidth / (itemWidth + itemMarginRight));
+            numCols = Math.max(numCols, 1);
 
             $('.stories').css('width', numCols * (itemWidth+itemMarginRight));
         },
 
         layout: function(skipAnimation) {
             var duration = 100,
-                delay = 200;
+                delay = 0;
 
             // on small screens, force skipAnimation
             if (window.innerWidth < 768) { skipAnimation = true; }
@@ -114,7 +115,7 @@ Solidarity.Views = Solidarity.Views || {};
                 easing: 'swing',
                 cssPrefix: '.stalactite',
                 cssPrep: true,
-                fluid: true,
+                fluid: false, // do our own window.resize listener
                 loader: '<img />',
             });
         },
@@ -135,6 +136,8 @@ Solidarity.Views = Solidarity.Views || {};
         watchScroll: function(e) {
             var triggerPoint = 100; // px from the bottom
             var el = $(this.storyEl);
+            if (el.length === 0) { return; }
+
             // element scroll height, using offset and window.innerHeight
             // because we have body.overflow-y = scroll
             var pxFromBottom = el.offset().top + el.height() - window.innerHeight;
@@ -157,24 +160,30 @@ Solidarity.Views = Solidarity.Views || {};
                 });
             }
 
-            // when new page loads, force layout again to avoid drawing errors
-            if (!this.forcedLayout && pxFromBottom > window.innerHeight * 2) {
-                self.layout(true);
-                this.forcedLayout = true;
-                console.log('force layout', this.forcedLayout);
+            var pxFromTop = -1 * el.offset().top;
+            if ( !this.isLoading && pxFromTop < triggerPoint ){
+                // trigger layout to fix packing weirdness
+                this.layout(true);
             }
         }
     });
 
     Solidarity.Views.StoryListLocation = Solidarity.Views.StoryList.extend({
         filterData: function () {
+            var geography;
+            if (this.options && this.options.location) {
+                if (this.options.location.match(/^\d+$/)) {
+                    geography = 'zipcode';
+                } else {
+                    geography = 'county';
+                }
+            }
             // send location filters to api as query params
             this.collection.queryParams = _.extend(this.collection.queryParams,
-                                {'city': this.options.city,
-                                'county': this.options.county,
-                                'state_name': this.options.state_name,
+                                {'state_name': this.options.state_name,
                                 'limit': this.options.limit}
                             );
+            this.collection.queryParams[geography] = this.options.location;
         },
 
         render: function (data) {
@@ -196,6 +205,7 @@ Solidarity.Views = Solidarity.Views || {};
             } else if (data && data.state_name) {
                 location = data.state_name;
             }
+
             this.$el.html(this.template({
                 'filtered': true,
                 'location': location,

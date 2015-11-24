@@ -25,7 +25,7 @@ Solidarity.RegionManager = (function (Backbone, $) {
         freshView = false;
 
         var renderView = function() {
-            var content = view.render();
+            var content = view.render(view.options);
             if (content && content.$el) {
                 content.$el.appendTo(el);
                 content.delegateEvents();

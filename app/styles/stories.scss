@@ -11,6 +11,20 @@
         .grid { text-align: left; }
     }
 
+    ul.filters {
+        list-style-type: none;
+        text-align: left;
+        padding: 0;
+        margin: 0 0 20px 0;
+        width: 100%;
+
+        font-size: 18px;
+        text-transform: uppercase;
+        li { 
+            margin-right: 10px;
+        }
+    }
+
     .item { 
         text-align: left;
         width: 250px;
@@ -20,7 +34,7 @@
     }
 
     .item.break {
-        background-color: $gray;
+        background-color: $gray-base;
         width: 100%;
         text-align: right;
     }
