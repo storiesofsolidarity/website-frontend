@@ -9,7 +9,7 @@
 
 <% if (data.count > 0) { %>
 <div class="searchResults">
-	<% for(i in data.results) { var r = data.results[i]; %>
+	<% for(var i in data.results) { var r = data.results[i]; %>
 		<div class="result"><a href="#read/story/<%- r.id %>">
 			<% if (r.content.length > 160) { %>
             <% if (r.content.charAt(159) == ' ') { %>
