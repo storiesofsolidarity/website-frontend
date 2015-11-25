@@ -84,6 +84,8 @@ Solidarity.Views = Solidarity.Views || {};
 
             d3.selectAll('#zoom .btn')
                 .on('click', zoomClick);
+            d3.selectAll('#reset .btn')
+                .on('click', zoomReset);
 
             this.svg
               .call(zoom) // allow free zooming, but only when scale > 1

@@ -82,9 +82,9 @@
           width: 20px;
           height: 20px;
           padding: 0;
-          margin-left: 30px;
+          margin-left: 25px;
           border-radius: 0;
-          background-color: #19938E;
+          background-color: $green;
           color: $white;
           font-weight: bold;
           font-size: 20px;
@@ -101,7 +101,7 @@
           height: 2px; // weird, but fixes margin-collapse in ff
           position: relative;
           top: 36px;
-          left: 10px;
+          left: 5px;
           margin-bottom: 75px;
           transform:rotate(-90deg);
           cursor: ns-resize;
@@ -186,6 +186,29 @@
           background: rgba(41, 173, 167, 0.78);
         }
     }
+
+  #reset {
+        width: 70px;
+        height: 70px;
+        position: absolute;
+        left: 0;
+        top: 300px;
+        z-index: 10;
+        cursor: default;
+        background: #222;
+        box-shadow: 0 1px 10px #222;
+    .btn {
+          width: 100%;
+          height: 100%;
+          padding: 0;
+          border-radius: 0;
+          color: $green;
+          background: transparent;
+          font-weight: bold;
+          font-size: 50px;
+          line-height: 1.4;
+        }
+  }
 }
 
 #d3-tip {

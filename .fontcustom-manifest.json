@@ -1,7 +1,7 @@
 {
   "checksum": {
-    "previous": "1f16553014c1d68c8805d7db5aa3e255aa99a5d0de80746acae6e5810221bdd7",
-    "current": "1f16553014c1d68c8805d7db5aa3e255aa99a5d0de80746acae6e5810221bdd7"
+    "previous": "d0b900b6d2c55f989f1a7e741e66a0be598e4bb7c89d7b2065aaa75b103ac324",
+    "current": "d0b900b6d2c55f989f1a7e741e66a0be598e4bb7c89d7b2065aaa75b103ac324"
   },
   "fonts": [
     "app/styles/fonts/customicons/customicons.ttf",
@@ -53,6 +53,10 @@
     "map": {
       "codepoint": 61701,
       "source": "app/images/icons/map.svg"
+    },
+    "reset": {
+      "codepoint": 61710,
+      "source": "app/images/icons/reset.svg"
     },
     "search": {
       "codepoint": 61702,

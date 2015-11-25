@@ -34,6 +34,7 @@
 .icon-locate:before,
 .icon-login:before,
 .icon-map:before,
+.icon-reset:before,
 .icon-search:before,
 .icon-write:before {
   display: inline-block;
@@ -61,6 +62,7 @@
 .icon-locate:before { content: "\f109"; }
 .icon-login:before { content: "\f104"; }
 .icon-map:before { content: "\f105"; }
+.icon-reset:before { content: "\f10e"; }
 .icon-search:before { content: "\f106"; }
 .icon-write:before { content: "\f107"; }
 
@@ -75,5 +77,6 @@ $font-customicons-lightbulb: "\f102";
 $font-customicons-locate: "\f109";
 $font-customicons-login: "\f104";
 $font-customicons-map: "\f105";
+$font-customicons-reset: "\f10e";
 $font-customicons-search: "\f106";
 $font-customicons-write: "\f107";
