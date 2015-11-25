@@ -54,6 +54,11 @@
           opacity: 0.8;
         }
 
+        .locations circle {
+          stroke: black;
+          stroke-width: 0.1px;
+        }
+
         .border {
           fill: none;
           stroke: #fff;

@@ -18,9 +18,12 @@ Solidarity.Collections = Solidarity.Collections || {};
         },
     });
 
-    Solidarity.Collections.Zipcodes = Solidarity.Collections.BaseCollection.extend({
-        model: Solidarity.Models.Zipcode,
-        url: Solidarity.apiRoot + 'zipcode/',
+    Solidarity.Collections.Locations = Solidarity.Collections.BaseCollection.extend({
+        model: Solidarity.Models.Location,
+        url: Solidarity.apiRoot + 'location/',
+        state: {
+            pageSize: 1000, // increase default pageSize
+        },
     });
 
 

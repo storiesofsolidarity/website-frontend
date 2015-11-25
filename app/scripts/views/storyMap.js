@@ -20,7 +20,7 @@ Solidarity.Views = Solidarity.Views || {};
         initialize: function () {
             this.states = new Solidarity.Collections.States({});
             this.counties = new Solidarity.Collections.Counties({});
-            this.zipcodes = new Solidarity.Collections.Zipcodes({});
+            this.locations = new Solidarity.Collections.Locations({});
             this.colorList = ['#E4E4E4','#F3EB99','#FAC85F','#F9A946','#EC913D'];
         },
         
@@ -308,21 +308,17 @@ Solidarity.Views = Solidarity.Views || {};
                     .defer(d3.json, Solidarity.dataRoot + 'geography/counties/'+fn+'.topo.json')
                     .await(drawCounties);
 
-                queue()
-                    .defer(d3.json, Solidarity.dataRoot + 'geography/zcta/'+fn+'.topo.json')
-                    .await(loadZips);
-
             }
 
             function clickCounty(d) {
                 Solidarity.log('clickCounty', d.properties.name);
                 d3.selectAll(d).style('fill', 'transparent');
                 zoomToBounds(d);
-                drawZips(d);
+                drawLocations(d);
             }
 
-            function clickZip(d) {
-                Solidarity.log('clickZip', d.id);
+            function clickLocation(d) {
+                Solidarity.log('clickLocation', d.id);
                 
             }
 
@@ -407,52 +403,44 @@ Solidarity.Views = Solidarity.Views || {};
                 
             }
 
-            function loadZips(error, data) {
-                if (error) { Solidarity.error(error, 'error in loadZips'); return false; }
-
-                for(var geomKey in data.objects) { break; }
-                self.dataCache.zips[geomKey] = data;
-                // save to dataCache
-            }
-
-            function drawZips(d) {
-                // draw zips for selected state
-                // assumes topojson already present in dataCache
+            function drawLocations(d) {
+                // draw locations for selected county
 
                 var state = d3.selectAll('g.state');
                 var stateName = state[0][0].id; // ugly hack to get id from svg element
-                var geomKey = stateName + '.geo';
-                var data = self.dataCache.zips[geomKey];
 
-                var zipcodes = state.append('g')
-                  .attr('class', 'zipcodes');
-                
-                // get features from topojson, and set type
-                var features = topojson.feature(data, data.objects[geomKey]).features;
-                _.each(features, function(f) { f.properties.type = 'zip'; });
+                self.locations.queryParams = {'state_name': stateName};
+                self.locations.getFirstPage({
+                    success: function(results) {
 
-                zipcodes.selectAll('path')
-                  .attr('class','zipcodes')
-                  .style('fill', self.colorUnselected) // so holes don't appear through the zipcodes layer
-                  .data(features)
-                .enter().append('path')
-                  .attr('d', path)
-                  .attr('class', 'feature zipcode')
-                  .on('click', clickZip);
+                        var locations = state.append('g')
+                          .attr('class', 'locations')
+                        .selectAll('circle')
+                          .data(function() {
+                            // convert location model attributes to properties
+                            return _.map(self.locations.models, function(d) {
+                              return {
+                                properties: {
+                                  id: d.attributes.id,
+                                  story_count: d.attributes.story_count,
+                                  name: d.attributes.city || d.attributes.zipcode,
+                                },
+                                attributes: {lon: d.attributes.lon, lat: d.attributes.lat}
+                              };
+                            });
+                          })
+                        .enter()
+                          .append('circle')
+                            .attr('r', function(d) { return 1; })
+                            .attr('transform', function(d) {
+                              var coords = projection([d.attributes.lon, d.attributes.lat]);
+                              return 'translate(' + coords + ')';
+                          })
+                          .on('click', clickLocation);
 
-                zipcodes.append('path')
-                  .datum(topojson.mesh(data, data.objects[geomKey]))
-                  .attr('class', 'border')
-                  .attr('d', path);
-
-                // request and render zipcodes for this state
-                self.zipcodes.fetch({
-                  data: {state_name: stateName},
-                  success: function() {
-                    self.renderStoryCollection(stateName, self.zipcodes,
-                      'g.zipcodes path.zipcode',
-                      'g.state path.county');
-                  }
+                        self.renderStoryCollection(stateName, self.locations,
+                          'g.locations circle');
+                    }
                 });
             }
         },

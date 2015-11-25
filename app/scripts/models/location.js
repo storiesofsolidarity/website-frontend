@@ -22,8 +22,8 @@ Solidarity.Models = Solidarity.Models || {};
         },
     });
 
-    Solidarity.Models.Zipcode = Solidarity.Models.BaseModel.extend({
-        urlRoot: Solidarity.apiRoot+'zipcode/'
+    Solidarity.Models.Location = Solidarity.Models.BaseModel.extend({
+        urlRoot: Solidarity.apiRoot+'location/'
     });
 
 })();
