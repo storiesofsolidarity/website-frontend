@@ -50,6 +50,7 @@
         height: 300px;
         position: relative; // required for animated entrance
         top: -50px; // initial high position
+        margin-bottom: 5px;
 
         li {
             position: absolute; // required to fix jump on crossfade
@@ -104,7 +105,7 @@
             display: inline-block; 
             width: 50px;
             height: 20px;
-            margin: 0 5px 0 0;
+            margin: 0;
             span { width: 30px; }
 
             // animation initial
