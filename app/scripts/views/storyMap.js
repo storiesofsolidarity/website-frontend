@@ -52,6 +52,7 @@ Solidarity.Views = Solidarity.Views || {};
                 .translate([width / 2, height / 2]);
             var path = d3.geo.path()
                 .projection(projection);
+            this.projection = projection;
             this.path = path;
 
             // responsive SVG
@@ -74,7 +75,8 @@ Solidarity.Views = Solidarity.Views || {};
                 .translate([0, 0])
                 .scale(1)
                 .scaleExtent([1, 256])
-                .on('zoom', zoomEvent);
+                .on('zoom', zoomEvent)
+                .on('zoomend', coordsToHash);
             this.zoom = zoom; // save to view
 
             // zoom slider from 1-8 (log2 scale)
@@ -116,7 +118,7 @@ Solidarity.Views = Solidarity.Views || {};
                   scale = scaleFactor / Math.max(dx / width, dy / height),
                   translate = [width / 2 - scale * x, height / 2 - scale * y];
 
-                self.svg.transition()
+                self.map.transition()
                   .duration(750)
                   .call(zoom.translate(translate).scale(scale).event);
             }
@@ -133,7 +135,7 @@ Solidarity.Views = Solidarity.Views || {};
                 // remove existing state geometry
                 d3.selectAll('g.state').remove();
 
-                self.svg.transition()
+                self.map.transition()
                   .duration(750)
                   .call(zoom.translate([0, 0]).scale(1).event);
 
@@ -178,29 +180,38 @@ Solidarity.Views = Solidarity.Views || {};
                 var e = d3.event,
                     tx = Math.min(0, Math.max(e.translate[0], width - width * e.scale)),
                     ty = Math.min(0, Math.max(e.translate[1], height - height * e.scale));
-                zoom.translate([tx, ty]);
+
+                // set map transform to translate and scale
+                self.map.attr('transform', 'translate(' + [tx, ty] + ')scale(' + e.scale + ')');
 
                 // set zoom input to log-based scale
                 $('#zoom input').val(Math.log2(e.scale));
-                // draw lines at appropriate width
+                // draw border lines and circles at appropriate width
                 self.map.style('stroke-width', 1.5 / e.scale + 'px');
+                self.map.selectAll('g.locations circle')
+                  .style('stroke-width', 1 / e.scale + 'px')
+                  .attr('r', function() { return 10 / e.scale; });
 
-                // zoom in
-                if (d3.event.scale > 1) {
-                    self.map.attr('transform', 'translate(' + [tx, ty] + ')scale(' + e.scale + ')');
-                } else {
-                  // reset map translation to center
-                  self.map.transition()
-                    .duration(75)
-                    .attr('transform', 'translate([0,0])scale(1)');
-                  zoom.translate([0,0]).scale(1);
+                // check if srcElement is at bounds 
+                if(e.sourceEvent && e.sourceEvent.type === 'wheel') {
+                  //console.log('wheel zoom on', e.sourceEvent.srcElement.__data__);
+                  // TODO
                 }
+            }
 
-                // check if hoveredGeom fills most of viewport
-                // var b = path.bounds(hoveredGeom);
-                // set it to activeGeom
-                // activeGeom = hoveredGeom;
-                // trigger click on it
+            function coordsToHash() {
+                // save map params like #map/z/x?state=California&county=Alameda
+                var url = 'map/'+self.zoom.scale().toFixed(2) +
+                  '/'+self.zoom.translate()[1].toFixed(0) +
+                  '/'+self.zoom.translate()[0].toFixed(0);
+
+                if (activeGeom && activeGeom.data()[0]) {
+                  console.log(activeGeom.data()[0]);
+                  var p = activeGeom.data()[0].properties;
+                  url += '?geo=' + p.type +
+                         '&name=' + p.name;
+                }
+                Solidarity.routerStories.navigate(url);
             }
 
             function stopped() {
@@ -274,9 +285,6 @@ Solidarity.Views = Solidarity.Views || {};
             function clickState(d) {
                 Solidarity.log('clickState', d.properties.name);
 
-                // zoom back out if double clicked
-                if (activeGeom.node() === this) { return zoomReset(); }
-
                 // reset activeGeom colors
                 activeGeom
                   .style('fill', self.colorUnselected)
@@ -317,6 +325,10 @@ Solidarity.Views = Solidarity.Views || {};
                 d3.selectAll(d).style('fill', 'transparent');
                 zoomToBounds(d);
                 drawLocations(d);
+
+                // select new activeGeom
+                activeGeom = d3.select(this)
+                  .classed('active', true);
             }
 
             function clickLocation(d) {

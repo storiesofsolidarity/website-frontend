@@ -8,6 +8,7 @@ Solidarity.Routers = Solidarity.Routers || {};
     Solidarity.Routers.Stories = Solidarity.Routers.Base.extend({
         routes: {
             'map': 'storyMap',
+            'map/:z/:y/:x': 'storyMap',
             'read': 'storyList',
             'read/story/:id': 'storyView',
             'view/:state_name': 'storyListLocation',
@@ -18,9 +19,15 @@ Solidarity.Routers = Solidarity.Routers || {};
             storyListLocation: {}
         },
 
-        storyMap: function() {
+        storyMap: function(z, y, x) {
             if (this.cached.storyMap === undefined) { this.cached.storyMap = new Solidarity.Views.StoryMap(); }
             Solidarity.mainContent.show(this.cached.storyMap, '#map');
+
+            if (z && y && x) {
+                var storyMap = this.cached.storyMap;
+                storyMap.map.transition()
+                  .call(storyMap.zoom.translate([x,y]).scale(z).event);
+            }
         },
         storyList: function() {
             if (this.cached.storyList === undefined) { this.cached.storyList = new Solidarity.Views.StoryList(); }
