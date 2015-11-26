@@ -1,4 +1,4 @@
-/*global Solidarity, Backbone*/
+/*global Solidarity, Backbone, d3 */
 
 Solidarity.Routers = Solidarity.Routers || {};
 
@@ -21,14 +21,15 @@ Solidarity.Routers = Solidarity.Routers || {};
         },
 
         storyMap: function(z, y, x) {
-            if (this.cached.storyMap === undefined) { this.cached.storyMap = new Solidarity.Views.StoryMap(); }
-            Solidarity.mainContent.show(this.cached.storyMap, '#map');
+            var storyMap = this.cached.storyMap;
+            if (storyMap === undefined) { storyMap = new Solidarity.Views.StoryMap(); }
+            Solidarity.mainContent.show(storyMap, '#map');
 
             if (z && y && x) {
-                var storyMap = this.cached.storyMap;
                 storyMap.map.transition()
                   .call(storyMap.zoom.translate([x,y]).scale(z).event);
             }
+            this.cached.storyMap = storyMap;
         },
         storyList: function() {
             if (this.cached.storyList === undefined) { this.cached.storyList = new Solidarity.Views.StoryList(); }

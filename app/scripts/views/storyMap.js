@@ -31,6 +31,25 @@ Solidarity.Views = Solidarity.Views || {};
                 success: function(data) {
                     // do first render
                     self.renderStoryCollection('USA', data, 'g.country path.feature');
+
+                    // after render, check for selected state or county in url params
+                    var stateSelected = window.urlParam('state');
+                    var countySelected = window.urlParam('county');
+
+                    if (stateSelected) {
+                        var state = d3.selectAll('g.country .feature.state').filter(function(d) {
+                            return d.properties.name === stateSelected;
+                        });
+                        self.clickState(state.data());
+                    }
+                    if (countySelected) {
+                        var county = d3.selectAll('g.state .feature.county').filter(function(d) {
+                            return d.properties.name === countySelected;
+                        });
+                        self.clickCounty(county.data());
+                    }
+
+                    self.doneRendering = true;
                 }
             });
         },
@@ -200,18 +219,24 @@ Solidarity.Views = Solidarity.Views || {};
             }
 
             function coordsToHash() {
+              if (self.doneRendering) {
+
                 // save map params like #map/z/x?state=California&county=Alameda
                 var url = 'map/'+self.zoom.scale().toFixed(2) +
                   '/'+self.zoom.translate()[1].toFixed(0) +
                   '/'+self.zoom.translate()[0].toFixed(0);
 
                 if (activeGeom && activeGeom.data()[0]) {
-                  console.log(activeGeom.data()[0]);
                   var p = activeGeom.data()[0].properties;
-                  url += '?geo=' + p.type +
-                         '&name=' + p.name;
+                  if (p.type === 'state') {
+                    url += '?state=' + p.name;
+                  } else if (p.type === 'county') {
+                    url += '?state=' + p.state_name + '&county=' + p.name;
+                  }
+                  
                 }
                 Solidarity.routerStories.navigate(url);
+              }
             }
 
             function stopped() {
@@ -233,7 +258,7 @@ Solidarity.Views = Solidarity.Views || {};
                 }
                 if (data.type === 'location') {
                   data.state_name = d3.select('g.state').attr('id');
-                  data.url = data.state_name + '/' + data.city + '/' + data.zipcode;
+                  data.url = data.state_name + '/' + (data.city || 'zip') + '/' + data.zipcode;
                 }
 
                 return self.templateTip(data);
@@ -282,19 +307,32 @@ Solidarity.Views = Solidarity.Views || {};
             this.svg.call(this.tip);
             d3.selectAll('#d3-tip').on('mouseout', this.tip.hide);
 
-            function clickState(d) {
-                Solidarity.log('clickState', d.properties.name);
-
-                // reset activeGeom colors
+            function setActiveGeom(d, background) {
+              // reset activeGeom colors
+              if (background) {
+                activeGeom
+                  .style('fill', self.colorBackground)
+                  .classed('feature', true)
+                  .classed('background', true)
+                  .classed('active', false);
+              } else {
                 activeGeom
                   .style('fill', self.colorUnselected)
                   .classed('feature', true)
                   .classed('background', false)
                   .classed('active', false);
+              }
 
-                // select new activeGeom
-                activeGeom = d3.select(this)
-                  .classed('active', true);
+              // select new activeGeom
+              activeGeom = d3.select(this)
+                .classed('active', true);
+            }
+            // this.setActiveGeom = _.bind(setActiveGeom, this);
+
+            function clickState(d) {
+                if (d === undefined) { d = this; }
+                Solidarity.log('clickState', d);
+                setActiveGeom(d);
                 
                 // hide background
                 d3.selectAll('path.background').style('fill', self.colorBackground);
@@ -317,19 +355,19 @@ Solidarity.Views = Solidarity.Views || {};
                 queue()
                     .defer(d3.json, Solidarity.dataRoot + 'geography/counties/'+fn+'.topo.json')
                     .await(drawCounties);
-
             }
+            // this.clickState = _.bind(clickState, this);
 
             function clickCounty(d) {
+                if (d === undefined) { d = this; }
                 Solidarity.log('clickCounty', d.properties.name);
                 d3.selectAll(d).style('fill', 'transparent');
                 zoomToBounds(d);
                 drawLocations(d);
 
-                // select new activeGeom
-                activeGeom = d3.select(this)
-                  .classed('active', true);
+                setActiveGeom(d, true);
             }
+            // this.clickCounty = _.bind(clickCounty, this);
 
             function clickLocation(d) {
                 Solidarity.log('clickLocation', d.id);
