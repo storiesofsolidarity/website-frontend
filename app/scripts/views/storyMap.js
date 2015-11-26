@@ -484,6 +484,7 @@ Solidarity.Views = Solidarity.Views || {};
                               };
                             });
                           })
+
                         .enter()
                           .append('circle')
                             .attr('r', function(d) { return 1; })
@@ -492,6 +493,12 @@ Solidarity.Views = Solidarity.Views || {};
                               return 'translate(' + coords + ')';
                           })
                           .on('click', clickLocation);
+
+                        d3.selectAll('circle')
+                          .sort(function(a, b) {
+                            return d3.descending(b.properties.story_count,
+                                                 a.properties.story_count);
+                          });
 
                         self.renderStoryCollection(stateName, self.locations,
                           'g.locations circle');
