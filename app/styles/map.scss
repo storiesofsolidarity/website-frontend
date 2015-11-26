@@ -53,6 +53,10 @@
         .feature:hover, .feature.hover {
           opacity: 0.8;
         }
+        .feature.background.hover, .feature.background:hover {
+          opacity: 1;
+          fill: #3F3F3F;
+        }
 
         .locations circle {
           stroke: black;

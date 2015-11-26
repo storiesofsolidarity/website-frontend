@@ -231,9 +231,9 @@ Solidarity.Views = Solidarity.Views || {};
                     data.state_name = d3.select('g.state').attr('id');
                     data.url = data.state_name + '/' + data.name;
                 }
-                if (data.type === 'zip') {
+                if (data.type === 'location') {
                   data.state_name = d3.select('g.state').attr('id');
-                  data.url = data.state_name + '/' + data.name;
+                  data.url = data.state_name + '/' + data.city + '/' + data.zipcode;
                 }
 
                 return self.templateTip(data);
@@ -438,6 +438,9 @@ Solidarity.Views = Solidarity.Views || {};
                                   id: d.attributes.id,
                                   story_count: d.attributes.story_count,
                                   name: d.attributes.city || d.attributes.zipcode,
+                                  city: d.attributes.city,
+                                  zipcode: d.attributes.zipcode,
+                                  type: 'location',
                                 },
                                 attributes: {lon: d.attributes.lon, lat: d.attributes.lat}
                               };

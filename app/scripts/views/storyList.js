@@ -17,13 +17,11 @@ Solidarity.Views = Solidarity.Views || {};
         hasLoaded: false,
 
         initialize: function (options) {
-            this.options = _.extend(this.optionsDefaults, options);
-
-            this.render(this.options);
+            this.render(options);
 
             this.collection = new Solidarity.Collections.Stories({mode: 'infinite'});
             this.listenTo(this.collection, 'add', this.addStory);
-            this.filterData();
+            this.filterData(options);
             this.getFirstPage();
             
             $('body').on('scroll', _.bind(this.watchScroll, this));
@@ -38,7 +36,7 @@ Solidarity.Views = Solidarity.Views || {};
             $(window).off('resize', this.setGridWidth);
         },
 
-        filterData: function() {
+        filterData: function(options) {
             // no-op in base class
             // override below
         },
@@ -169,41 +167,39 @@ Solidarity.Views = Solidarity.Views || {};
     });
 
     Solidarity.Views.StoryListLocation = Solidarity.Views.StoryList.extend({
-        filterData: function () {
+        filterData: function (options) {
             var geography;
-            if (this.options && this.options.location) {
-                if (this.options.location.match(/^\d+$/)) {
-                    geography = 'zipcode';
-                } else {
-                    geography = 'county';
-                }
-            }
+            console.log('storyListLocation', options);
+
             // send location filters to api as query params
             this.collection.queryParams = _.extend(this.collection.queryParams,
-                                {'state_name': this.options.state_name,
-                                'limit': this.options.limit}
+                                {'state_name': options.state_name,
+                                'limit': options.limit}
                             );
-            this.collection.queryParams[geography] = this.options.location;
+            if (options.zipcode) {
+                this.collection.queryParams.zipcode = options.zipcode;
+            }
+            if (options.county) { 
+                this.collection.queryParams.county = options.county;
+            }
         },
 
         render: function (data) {
             var geography, location;
 
-            // determine geom type via regex
-            if (data && data.location) {
-                if (data.location.match(/^\d+$/)) {
-                    geography = 'zip';
-                } else {
-                    geography = 'county';
-                }
-            } else {
-                geography = 'state';
+            // determine location string in view, not template because logic is easier here
+            if (data && data.county && data.state_name) {
+                location = data.county + ', ' + data.state_name;
+            } else if (data && data.city && data.zipcode && data.state_name) {
+                location = data.city + ', ' + data.state_name + ', ' + data.zipcode;
             }
-            
-            if (data && data.location && data.state_name) {
-                location = data.location + ', ' + data.state_name;
-            } else if (data && data.state_name) {
+            else if (data && data.zipcode && data.state_name) {
+                location = data.zipcode + ', ' + data.state_name;
+            }
+            else if (data && data.state_name) {
                 location = data.state_name;
+            } else {
+                location = null;
             }
 
             this.$el.html(this.template({
