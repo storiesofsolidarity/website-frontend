@@ -209,7 +209,7 @@ Solidarity.Views = Solidarity.Views || {};
                 self.map.style('stroke-width', 1.5 / e.scale + 'px');
                 self.map.selectAll('g.locations circle')
                   .style('stroke-width', 1 / e.scale + 'px')
-                  .attr('r', function() { return 10 / e.scale; });
+                  .attr('r', function() { return 8 / e.scale; });
 
                 // check if srcElement is at bounds 
                 if(e.sourceEvent && e.sourceEvent.type === 'wheel') {
