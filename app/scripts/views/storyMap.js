@@ -276,27 +276,41 @@ Solidarity.Views = Solidarity.Views || {};
             }
 
             function tooltipOffset(d) {
-              // for states with crooked eastern borders, offset to the left
-              switch(d.properties.name) {
-                case 'Alaska':
-                  return [0, -40];
-                case 'California':
-                  return [0, -40];
-                case 'Minnesota':
-                  return [0, -25];
-                case 'New York':
-                  return [0, -25];
-                case 'Idaho':
-                  return [0, -20];
-                case 'Louisiana':
-                  return [0, -20];
-                case 'Maine':
-                  return [0, 0];
-                case 'Puerto Rico':
-                  return [0, -10];
-                default:
-                  return [0, -10];
+              if (d.properties.type === 'state') {
+                // for states with crooked eastern borders, offset to the left
+                switch(d.properties.name) {
+                  case 'Alaska':
+                    return [0, -40];
+                  case 'California':
+                    return [0, -40];
+                  case 'Minnesota':
+                    return [0, -25];
+                  case 'New York':
+                    return [0, -25];
+                  case 'Idaho':
+                    return [0, -20];
+                  case 'Louisiana':
+                    return [0, -20];
+                  case 'Maine':
+                    return [0, 0];
+                  case 'Puerto Rico':
+                    return [0, -10];
+                  default:
+                    return [0, -10];
+                }
               }
+
+              if (d.properties.type === 'location') {
+                // circle, offset to the right
+                return [0, 5];
+              }
+
+              if(d.properties.type === 'county') {
+                // unknown geom offset left
+                return [0, -5];
+              }
+
+              return [0, 0];
             }
 
             // setup feature tooltips
