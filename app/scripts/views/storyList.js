@@ -73,7 +73,7 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         render: function(data) {
-            if (data === undefined) { data = this.options; }
+            if (data === undefined) { data = {}; }
             this.$el.html(this.template(data));
             return this;
         },
