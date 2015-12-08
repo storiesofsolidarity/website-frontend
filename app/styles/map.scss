@@ -1,0 +1,280 @@
+@import '_variables.scss';
+
+.storyMap {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 10px;
+    vertical-align: top;
+    overflow: hidden;
+    cursor: -webkit-zoom-in;
+    cursor: -moz-zoom-in;
+    cursor:zoom-in;
+    z-index:0;
+
+    #map {
+        rect.background {
+          fill: none;
+          pointer-events: all;
+          cursor:default;
+        }
+
+        path.background {
+          fill: #3F3F3F;
+          cursor: normal;
+        }
+
+        text {
+          color: #666;
+        }
+
+        .feature {
+          fill: #E4E4E4;
+          cursor: -webkit-pointer;
+          cursor: -moz-pointer;
+          cursor: pointer;
+          opacity: 1;
+        }
+
+        .feature.zoom-in {
+          cursor: -webkit-zoom-in;
+          cursor: -moz-zoom-in;
+          cursor: zoom-in;
+
+        }
+
+        .feature.active {
+          fill: #ccc;
+          cursor: -webkit-zoom-out;
+          cursor: -moz-zoom-out;
+          cursor: zoom-out;
+        }
+
+        .feature:hover, .feature.hover {
+          opacity: 0.8;
+        }
+        .feature.background.hover, .feature.background:hover {
+          opacity: 1;
+          fill: #3F3F3F;
+        }
+
+        .locations circle {
+          stroke: #3F3F3F;
+          stroke-width: 0.1px;
+        }
+
+        .border {
+          fill: none;
+          stroke: #fff;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+    }
+
+    #zoom {
+        width: 70px;
+        height: 140px;
+        position: absolute;
+        left: 0;
+        top: 155px;
+        z-index: 10;
+        cursor: default;
+        background: #222;
+        box-shadow: 0 1px 10px #222;
+
+        .btn.zoom {
+          width: 20px;
+          height: 20px;
+          padding: 0;
+          margin-left: 25px;
+          border-radius: 0;
+          background-color: $green;
+          color: $white;
+          font-weight: bold;
+          font-size: 20px;
+          line-height: 1;
+          &.in { margin-top: 12px;}
+          &.out { margin-top: -10px; }
+        }
+    
+        // styles via the very helpful range.css
+        // http://danielstern.ca/range.css/
+        input[type=range] {
+          -webkit-appearance: none;
+          width: 60px;
+          height: 2px; // weird, but fixes margin-collapse in ff
+          position: relative;
+          top: 36px;
+          left: 5px;
+          margin-bottom: 75px;
+          transform:rotate(-90deg);
+          cursor: ns-resize;
+        }
+        input[type=range]:focus {
+          outline: none;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+          width: 100%;
+          height: 2px;
+          cursor: ns-resize;
+          box-shadow: 0;
+          background: rgba(35, 148, 143, 0.78);
+          border-radius: 0px;
+          border: 0px solid #010101;
+        }
+        input[type=range]::-webkit-slider-thumb {
+          box-shadow: none;
+          border: 0px solid #23948f;
+          height: 20px;
+          width: 4px;
+          border-radius: 0px;
+          background: #23948f;
+          cursor: ns-resize;
+          -webkit-appearance: none;
+          margin-top: -9px;
+        }
+        input[type=range]:focus::-webkit-slider-runnable-track {
+          background: rgba(41, 173, 167, 0.78);
+        }
+        input[type=range]::-moz-range-track {
+          width: 100%;
+          height: 2px;
+          cursor: pointer;
+          box-shadow: none;
+          background: rgba(35, 148, 143, 0.78);
+          border-radius: 0px;
+          border: 0px solid #010101;
+        }
+        input[type=range]::-moz-range-thumb {
+          box-shadow: none;
+          border: 0px solid #23948f;
+          height: 20px;
+          width: 4px;
+          border-radius: 0px;
+          background: #23948f;
+          cursor: pointer;
+        }
+        input[type=range]::-ms-track {
+          width: 100%;
+          height: 2px;
+          cursor: pointer;
+          background: transparent;
+          border-color: transparent;
+          color: transparent;
+        }
+        input[type=range]::-ms-fill-lower {
+          background: rgba(29, 123, 119, 0.78);
+          border: 0px solid #010101;
+          border-radius: 0px;
+          box-shadow: none;
+        }
+        input[type=range]::-ms-fill-upper {
+          background: rgba(35, 148, 143, 0.78);
+          border: 0px solid #010101;
+          border-radius: 0px;
+          box-shadow: none;
+        }
+        input[type=range]::-ms-thumb {
+          box-shadow: none;
+          border: 0px solid #23948f;
+          height: 30px;
+          width: 4px;
+          border-radius: 0px;
+          background: #23948f;
+          cursor: pointer;
+        }
+        input[type=range]:focus::-ms-fill-lower {
+          background: rgba(35, 148, 143, 0.78);
+        }
+        input[type=range]:focus::-ms-fill-upper {
+          background: rgba(41, 173, 167, 0.78);
+        }
+    }
+
+  #reset {
+        width: 70px;
+        height: 70px;
+        position: absolute;
+        left: 0;
+        top: 300px;
+        z-index: 10;
+        cursor: default;
+        background: #222;
+        box-shadow: 0 1px 10px #222;
+    .btn {
+          width: 100%;
+          height: 100%;
+          padding: 0;
+          border-radius: 0;
+          color: $green;
+          background: transparent;
+          font-weight: bold;
+          font-size: 50px;
+          line-height: 1.4;
+        }
+  }
+}
+
+#d3-tip, .alert, .help-block {
+  max-width: 150px;
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+
+  .header {
+    font-family: $headings-font-family;
+    font-size: 20px;
+    line-height: 26px;
+    text-align: left;
+
+    color: $white;
+    background: $orange;
+    padding: 5px 5px 2px 10px;
+
+
+    cursor: -webkit-pointer;
+    cursor: -moz-pointer;
+    cursor: pointer;
+
+    a {
+      width: 100%;
+      height: 100%;
+      color: $white;
+
+      &:hover { border: none; }
+    }
+    &:hover { background-color: $orange-light; }
+  }
+  .count, .message {
+    font-family: $font-family-sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: left;
+    font-size: 14px;
+    margin-top: -5px;
+    padding: 10px 5px 15px 10px;
+    background: #444;
+  }
+
+  &:after {
+    right: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-right-color: #444;
+    border-width: 10px;
+    margin-top: -10px;
+  }
+
+  &.w:after {
+    border-left-color: #444;
+    border-right-color: transparent;
+    left: 100%;
+    right: initial;
+  }
+}
+

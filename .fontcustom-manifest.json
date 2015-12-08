@@ -1,0 +1,100 @@
+{
+  "checksum": {
+    "previous": "d0b900b6d2c55f989f1a7e741e66a0be598e4bb7c89d7b2065aaa75b103ac324",
+    "current": "d0b900b6d2c55f989f1a7e741e66a0be598e4bb7c89d7b2065aaa75b103ac324"
+  },
+  "fonts": [
+    "app/styles/fonts/customicons/customicons.ttf",
+    "app/styles/fonts/customicons/customicons.svg",
+    "app/styles/fonts/customicons/customicons.woff",
+    "app/styles/fonts/customicons/customicons.eot"
+  ],
+  "glyphs": {
+    "arrow_down": {
+      "codepoint": 61708,
+      "source": "app/images/icons/arrow_down.svg"
+    },
+    "arrow_up": {
+      "codepoint": 61709,
+      "source": "app/images/icons/arrow_up.svg"
+    },
+    "article": {
+      "codepoint": 61696,
+      "source": "app/images/icons/article.svg"
+    },
+    "camera": {
+      "codepoint": 61697,
+      "source": "app/images/icons/camera.svg"
+    },
+    "check": {
+      "codepoint": 61706,
+      "source": "app/images/icons/check.svg"
+    },
+    "close": {
+      "codepoint": 61707,
+      "source": "app/images/icons/close.svg"
+    },
+    "eye": {
+      "codepoint": 61704,
+      "source": "app/images/icons/eye.svg"
+    },
+    "lightbulb": {
+      "codepoint": 61698,
+      "source": "app/images/icons/lightbulb.svg"
+    },
+    "locate": {
+      "codepoint": 61705,
+      "source": "app/images/icons/locate.svg"
+    },
+    "login": {
+      "codepoint": 61700,
+      "source": "app/images/icons/login.svg"
+    },
+    "map": {
+      "codepoint": 61701,
+      "source": "app/images/icons/map.svg"
+    },
+    "reset": {
+      "codepoint": 61710,
+      "source": "app/images/icons/reset.svg"
+    },
+    "search": {
+      "codepoint": 61702,
+      "source": "app/images/icons/search.svg"
+    },
+    "write": {
+      "codepoint": 61703,
+      "source": "app/images/icons/write.svg"
+    }
+  },
+  "options": {
+    "autowidth": true,
+    "config": "fontcustom.yml",
+    "css_selector": ".icon-{{glyph}}",
+    "debug": false,
+    "font_ascent": 448,
+    "font_descent": 64,
+    "font_design_size": 16,
+    "font_em": 512,
+    "font_name": "customicons",
+    "force": true,
+    "input": {
+      "templates": "app/images/icons",
+      "vectors": "app/images/icons"
+    },
+    "no_hash": true,
+    "output": {
+      "css": "app/styles/",
+      "fonts": "app/styles/fonts/customicons",
+      "preview": "app/styles/fonts/customicons"
+    },
+    "preprocessor_path": null,
+    "quiet": false,
+    "templates": [
+      "scss"
+    ]
+  },
+  "templates": [
+    "app/styles/_customicons.scss"
+  ]
+}

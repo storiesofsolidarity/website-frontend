@@ -8,6 +8,7 @@ Solidarity.Routers = Solidarity.Routers || {};
     Solidarity.Routers.Pages = Solidarity.Routers.Base.extend({
         routes: {
             '': 'index',
+            'learn': 'learn',
             'splash': 'splash',
             'about': 'about',
             'privacy': 'privacy',
@@ -20,20 +21,24 @@ Solidarity.Routers = Solidarity.Routers || {};
             if (Solidarity.mainContent.freshView()) {
                 Backbone.history.navigate('splash', {trigger: true});
             } else {
-                Solidarity.mainContent.show(new Solidarity.Views.Index({}));
+                // show the map
+                Backbone.history.navigate('map', {trigger: true});
             }
         },
         splash: function() {
             Solidarity.mainContent.show(new Solidarity.Views.Splash({}));
         },
+        learn: function() {
+            Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/learn.html'), '#learn');
+        },
         about: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.Page('app/scripts/templates/about.ejs'));
+            Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/about.html'), null, '#about');
         },
         privacy: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.Page('app/scripts/templates/privacy.ejs'));
+            Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/privacy.html'), null, '#privacy');
         },
         copyright: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.Page('app/scripts/templates/copyright.ejs'));
+            Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/copyright.html'), null, '#contact');
         },
         adminRedirect: function() {
             window.location.href = 'https://stories-of-solidarity.herokuapp.com/admin/';

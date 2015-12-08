@@ -1,4 +1,4 @@
-/*global Solidarity, Backbone, JST*/
+/*global Solidarity, Backbone, JST, jquery*/
 
 Solidarity.Views = Solidarity.Views || {};
 
@@ -7,10 +7,90 @@ Solidarity.Views = Solidarity.Views || {};
 
     Solidarity.Views.Splash = Solidarity.Views.BaseView.extend({
 
-        template: JST['app/scripts/templates/splash.ejs'],
+        template: JST['app/templates/splash.html'],
         el: '#content',
-        events: {'click button.enter': 'enter'},
-        languages: ['en', 'es', 'tl', 'zh'], // defined in display order
+        events: {
+            'click button.enter': 'enter',
+            'click button.lang': 'clickLanguage',
+        },
+        languages: ['zh', 'en', 'es', 'tl'], // defined in display order
+        langIndex: 0,
+        rotateLanguageTimer: undefined,
+
+        render: function () {
+            this.$el.html(this.template());
+            var self = this;
+
+            // set up background image switcher
+              $('.splash').bgswitcher({
+                images: [Solidarity.siteRoot+'images/splash/splash-1.jpg',
+                         Solidarity.siteRoot+'images/splash/splash-2.jpg',
+                         Solidarity.siteRoot+'images/splash/splash-3.jpg',
+                         Solidarity.siteRoot+'images/splash/splash-4.jpg',
+                         Solidarity.siteRoot+'images/splash/splash-5.jpg',
+                         Solidarity.siteRoot+'images/splash/splash-6.jpg',
+                         Solidarity.siteRoot+'images/splash/splash-7.jpg'],
+                shuffle: true,
+                loop: true,
+                start: false,
+                interval: 10*1000,
+                effect: 'fade',
+               });
+
+            // animate entrance
+            $.when(
+              $('ul.statement').animate({'top': 0}, 1000).promise(),
+              $('ul.languages li').eq(0).delay( 500).animate({'top': '0px', 'opacity': 1}, 1000).promise(),
+              $('ul.languages li').eq(1).delay(1000).animate({'top': '0px', 'opacity': 1}, 1000).promise(),
+              $('ul.languages li').eq(2).delay(1500).animate({'top': '0px', 'opacity': 1}, 1000).promise(),
+              $('ul.languages li').eq(3).delay(2000).animate({'top': '0px', 'opacity': 1}, 1000).promise()
+            ).done( function(){
+              Solidarity.log('Splash load complete.');
+
+              // start language rotation, bound to backbone view
+              self.rotateLanguageTimer = setInterval(self.rotateLanguage.bind(self), 2.5*1000);
+              $('.splash').bgswitcher('start');
+            });
+            
+
+
+            return this;
+        },
+
+        rotateLanguage: function() {
+            this.langIndex += 1;
+            if (this.langIndex === this.languages.length) { this.langIndex = 0; }
+
+            var nextLanguage = this.languages[this.langIndex];
+            var btn = $('ul.languages .btn[data-lang='+nextLanguage+']');
+            return this.changeLanguage(btn);
+        },
+
+        changeLanguage: function(btn) {
+            var lang = btn.data('lang');
+            $('ul.languages .btn.active').removeClass('active');
+            $('ul.statement li').fadeOut(500);
+            $('ul.statement li#'+lang).fadeIn(500);
+            btn.addClass('active');
+        },
+
+        clickLanguage: function(event) {
+            var target = $(event.target);
+            var btn = target;
+            if (btn.is('span')) {
+                btn = target.parents('button');
+            }
+            // stop rotation timer
+            clearInterval(this.rotateLanguageTimer);
+
+            return this.changeLanguage(btn);
+        },
+
+        rotateImage: function() {
+            this.imageIndex += 1;
+            if (this.imageIndex === this.images.length) { this.imageIndex = 0; }
+            $('div.splash').css('background-image', 'url('+this.images[this.imageIndex]+')');
+        },
 
         enter: function() {
             // show header and footer
@@ -19,7 +99,7 @@ Solidarity.Views = Solidarity.Views || {};
 
             // set current language from button text
             Solidarity.language = this.languages[this.currentLanguageID];
-            Backbone.history.navigate('#share', {trigger: true});
+            Backbone.history.navigate('#map', {trigger: true});
         }
 
     });

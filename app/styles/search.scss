@@ -1,0 +1,33 @@
+@import '_variables.scss';
+
+.searchResults {
+	z-index: 1;
+	position: absolute;
+	background-color: #333333;
+	font-family: $font-family-content;
+
+	// z-index isn't enough to cover perspective on navbar buttons below
+	// use transform to pop results over
+	-webkit-transform: translateZ(50px);
+	-moz-transform: translateZ(50px);
+	-ms-transform: translateZ(50px);
+	transform: translateZ(50px);
+	
+	// match padding on input
+	padding: 0 20px 10px 10px;
+
+	overflow-y: scroll;
+	max-height: 325px;
+	width: 460px;
+
+	.result { 
+		padding: 10px 20px 10px 30px;
+		width: 100%;
+
+		&:not(.none):hover {
+			background-color: $orange;
+			a { color: $white; }
+		}
+	}
+
+}

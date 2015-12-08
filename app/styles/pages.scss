@@ -1,0 +1,98 @@
+@import '_variables.scss';
+@import '_mixins.scss';
+
+.page {
+	height: 100%;
+
+	section {
+		padding: 70px 40px;
+		@include make-row;
+
+		h1, h2 { 
+			font-family: $font-family-sans-serif;
+			letter-spacing: 1px;
+			color: inherit;
+		}
+		h1 {
+			@include make-sm-column(9);
+			@include make-sm-column-offset(3);
+			font-size: 40px;
+		}
+		h2 {
+			@include make-sm-column(3);
+			margin: 0 0 10px 0;
+			font-size: 24px;
+			line-height: 1;
+			font-weight: lighter;
+			text-transform: uppercase;
+		}
+		h3 { 
+			font-family: $font-family-content;
+			color: $black;
+			font-size: 18px;
+			margin: 0 0 24px 0;
+		}
+
+		ul {
+			list-style-type: none;
+			margin: 0 0 10px 0;
+			padding: 0;
+			li { margin-bottom: 10px; }
+			li em { font-weight: bold; font-style: normal; }
+		}
+
+		.content {
+			font-family: $font-family-content;
+			@include make-sm-column(9);
+			@include make-sm-column-offset(3);
+
+			&.one-col {
+				@include make-row;
+				ul { @include make-sm-column(12); }
+			}
+			&.half-col {
+				@include make-row;
+				.text { @include make-sm-column(6); }
+			}
+			&.two-col {
+				@include make-row;
+				margin: 0;
+				.text {
+					// use css3 columns for more flexible wrapping
+					-webkit-columns: 2 250px;
+					-moz-columns: 2 250px;
+					columns: 2 250px;
+					-webkit-column-gap: 50px;
+					-mozilla-column-gap: 50px;
+					column-gap: 50px;
+				}
+			}
+			&.one-third-col {
+				@include make-row;
+				.text { @include make-sm-column(4); }
+				.image img {
+					@include make-sm-column(8);
+					@include make-xs-column(12);
+				}
+				p { font-size: 20px; }
+			}
+			&.three-col {
+				@include make-row;
+				ul {
+					@include make-sm-column(4);
+					@include make-xs-column(6);
+				}
+			}
+			
+		}
+		.row {
+			@include make-row;
+			& + .row { margin-top: 40px; }
+		}
+	}
+
+	&.light-gray, section.light-gray { background-color:#DDD; color: $black; a { color: $orange; } }
+	section.gray { background-color: #3F3F3F; color: $white; }
+	section.orange { background-color: #F9A946; color: $black; }
+	section.yellow { background-color: #F4EB99; color: $black; }
+}

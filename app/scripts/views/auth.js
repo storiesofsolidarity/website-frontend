@@ -7,7 +7,7 @@ Solidarity.Views = Solidarity.Views || {};
 
     Solidarity.Views.AuthLogin = Solidarity.Views.FormView.extend({
         form: 'form#login',
-        template: JST['app/scripts/templates/authLogin.ejs'],
+        template: JST['app/templates/authLogin.html'],
 
         onSuccess: function(resp) {
             // store token to cookie
@@ -23,27 +23,27 @@ Solidarity.Views = Solidarity.Views || {};
 
     Solidarity.Views.AuthRegister = Solidarity.Views.FormView.extend({
         form: 'form#register',
-        template: JST['app/scripts/templates/authRegister.ejs'],
+        template: JST['app/templates/authRegister.html'],
     });
 
     Solidarity.Views.AuthPasswordChange = Solidarity.Views.FormView.extend({
         form: 'form#passwordChange',
-        template: JST['app/scripts/templates/authPasswordChange.ejs'],
+        template: JST['app/templates/authPasswordChange.html'],
     });
 
     Solidarity.Views.AuthPasswordReset = Solidarity.Views.FormView.extend({
         form: 'form#passwordReset',
-        template: JST['app/scripts/templates/authPasswordReset.ejs'],
+        template: JST['app/templates/authPasswordReset.html'],
     });
 
     Solidarity.Views.AuthPasswordResetConfirm = Solidarity.Views.FormView.extend({
         form: 'form#passwordResetConfirm',
-        template: JST['app/scripts/templates/authPasswordResetConfirm.ejs'],
+        template: JST['app/templates/authPasswordResetConfirm.html'],
     });
 
     Solidarity.Views.AuthUserDetails = Solidarity.Views.FormView.extend({
         form: 'form#userDetails',
-        template: JST['app/scripts/templates/authUserDetails.ejs'],
+        template: JST['app/templates/authUserDetails.html'],
     });
 
 })();

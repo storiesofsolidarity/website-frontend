@@ -4,13 +4,17 @@ $icon-font-path: "/bower_components/bootstrap-sass-official/assets/fonts/bootstr
 @import '_variables.scss';
 @import '_mixins.scss';
 
-@import 'bootstrap-sass-official/assets/stylesheets/bootstrap.scss';
+@import '_bootstrap_components.scss';
 @import '_bootswatch.scss';
 
 @import 'layout.scss';
+@import 'navbar.scss';
 
 @import 'splash.scss';
 @import 'stories.scss';
+@import 'map.scss';
+@import 'search.scss';
 @import 'auth.scss';
+@import 'pages.scss';
 
 @import 'mobile.scss';

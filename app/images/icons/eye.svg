@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="39.696px" height="36.78px" viewBox="0 0 39.696 36.78" enable-background="new 0 0 39.696 36.78" xml:space="preserve">
+
+<g id="filters">
+  <g id="g15">
+    <g id="g19"><rect
+           fill="#05918D"
+           width="39.696"
+           height="36.78"
+           id="rect21"
+           style="fill:#000000" />
+         </g>
+       </g>
+       <g id="g23"><path
+         fill="#FFFFFF"
+         d="M4.127,17.134c0,0,13.552,17.278,30.83,0C34.957,17.134,19.755,1.008,4.127,17.134z"
+         id="path25" /><circle
+         fill="#05918D"
+         cx="18.958"
+         cy="17.39"
+         r="6.332"
+         id="circle27"
+         style="fill:#000000" /><circle
+         fill="#FFFFFF"
+         cx="18.927"
+         cy="17.422"
+         r="1.623"
+         id="circle29" />
+       </g>
+     </g>
+</svg>

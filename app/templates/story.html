@@ -1,0 +1,32 @@
+<div class="storyRead">
+    <button href="#close" onclick="history.go(-1);return false;" class="btn close gray" >
+        <span>&times;</span> Close
+    </button>
+
+    <div class="content <% if (data.content && data.content.length > 160) { %><%-'two-col'%><% } else { %><%-'one-col-right'%><% } %> <% if (data.photo) {%><%-'has-photo'%><% } %>">
+        <h1><% if (data.author && data.author.anonymous !== true) { %>
+                <!-- <a href="#read/author/<%-data.author.user.id%>"><%- data.author.user.first_name %> <%- data.author.user.last_name %></a> -->
+                <%- data.author.user.first_name %> <%- data.author.user.last_name %>
+            <% } else { %>
+                Anonymous
+            <% } %>
+            <!--
+            <% if (data.author && data.author.occupation) { %>  <%- data.author.occupation %> <% } %>
+            <% if (data.author && data.author.employer) { %> at <%- data.author.employer %> <% } %>
+            -->
+            <% if (data.location && data.location.city && data.location.state) { %>
+                from <%- data.location.city %>, <%- data.location.state %>
+            <% } %> wrote:
+        </h1>
+
+        <div class="text">
+            <%- data.content %>
+        </div>
+
+        <% if (data.photo) { %>
+        <div class="photo">
+            <img src="<%- data.photo %>">
+        </div>
+        <% } %>
+    </div>
+</div>

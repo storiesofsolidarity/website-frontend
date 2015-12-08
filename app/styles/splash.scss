@@ -1,66 +1,131 @@
 @import '_variables.scss';
 
+// try to handle webkit animation flicker
+// per http://stackoverflow.com/a/15280035/264790
+//and http://stackoverflow.com/a/15759785/264790
+/*
+#content {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    &> div {
+        -webkit-perspective: 1000;
+        perspective: 1000;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        -webkit-transform-style: preserve-3d;
+    }
+}
+*/
+
 .splash {
-    .statement {
-        padding: 0px 20px;
-        .inner {
-            @extend %center-vertical;
-            position: absolute;
-            width: calc(100% - 40px);
-        }
+    // fill entire window
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
 
-        // min-height for mobile stacking
-        min-height: 180px;
+    background-size: cover;
+    background-position: 50% 50%;
+    
+    .center {        
+        @extend %center-vertical;
+        position: relative;
+        margin: 0 auto;
+        width: 30%;
+        min-width: 380px;
         @media (min-width: $screen-sm-min) {
-            // viewport height for desktop vertical split
-            // 100% viewport - height of navbar
-            height: calc(100vh - 180px);
-            position: relative;
-            top: -40px;
+            min-width: 420px;
+        }
+    }
+
+    button {
+        border-radius: 0;
+    }
+
+    ul.statement {
+        list-style: none;
+        background: rgba(0, 0, 0, 0.75);
+        padding: 20px 50px; 
+        height: 300px;
+        position: relative; // required for animated entrance
+        top: -50px; // initial high position
+        margin-bottom: 5px;
+
+        li {
+            position: absolute; // required to fix jump on crossfade
+            left: 0;
+            width: 100%;
+            img {
+                display: block;
+                margin: 0 auto;
+                margin-bottom: 20px;
+            }
+            text-align: center;
         }
 
-        // bottom border for mobile
-        border-bottom: 1px solid black;
-        &:last-child { border-bottom: none; }
-        @media (min-width: $screen-sm-min) {
-            // right border for desktop
-            border-bottom: none;
-            border-right: 1px solid black;
-            &:last-child { border-right: none; }
-        }
-
-        h1 {
+        h1, h2 {
             font-family: $font-family-sans-serif;
-            font-size: $font-size-h5;
-            float: left;
+            font-size: $font-size-h6;
 
             @media (min-width: $screen-sm-min) {
-                font-size: $font-size-h5;
+                font-size: 18px;
             }
-
             line-height: 1.0;
-            margin: 0;
-
+            margin: 10px 0;
         }
 
         button {
-            position: absolute;
-            right: 20px;
-            bottom: 10px; 
-
-            @media (min-width: $screen-sm-min) {
-                bottom: 0;
-                left: calc(25% + 20px);
-                right: auto;
-            }
-
-            height: 50px;
-            font-family: "bignoodle";
-            font-size: $font-size-h3;
             text-transform: uppercase;
+            font-family: $headings-font-family;
+            font-size: $font-size-h5;
+            line-height: $font-size-h5;
 
-            background: $gray-darker;
-            border-radius: 0;
+            margin-top: 15px;
+            padding-top: 13px;
+            background: #F9AB4E;
+            border: 1px solid $orange;
+
+            &:hover {
+                background: $black;
+            }
+        }
+    }
+
+    ul.languages {
+        list-style: none;
+        text-align: center; 
+        padding: 0;
+
+        // 
+        position: absolute;
+        left: calc(50% - 115px);
+
+        li {
+            display: inline-block; 
+            width: 50px;
+            height: 20px;
+            margin: 0;
+            span { width: 30px; }
+
+            // animation initial
+            position: relative; 
+            top: -50px;
+            opacity: 0;
+        }
+        button {
+            text-transform: uppercase;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.75);
+            width: 50px;
+            span { width: 100%; height: 100%; }
+            &.active {
+                color: $orange;
+                span { border-bottom: 1px solid $orange; }
+            }
+            &:hover {
+                color: $orange;
+            }
         }
     }
 }

@@ -7,16 +7,15 @@ Solidarity.Views = Solidarity.Views || {};
 
     Solidarity.Views.Story = Solidarity.Views.BaseView.extend({
 
-        template: JST['app/scripts/templates/story.ejs'],
+        template: JST['app/templates/story.html'],
         el: '#content',
         events: {},
 
         initialize: function () {
-            var self = this;
             this.listenTo(this.model, 'add', this.render);
 
             this.model.fetch({
-                success: $.proxy(self.render, self)
+                success: $.proxy(this.render, this)
             });
         },
 

@@ -8,14 +8,10 @@
         <link rel="shortcut icon" href="/favicon.ico" />
         <!-- build:css(.tmp) styles/main.css -->
         <link rel="stylesheet" href="styles/main.css">
-        <!-- endbuild -->
-        
-        <!-- build:css styles/bower.css -->
         <link rel="stylesheet" href="bower_components/bootstrap-select/dist/css/bootstrap-select.css">
         <!-- endbuild -->
-        <!-- build:js scripts/vendor/modernizr.js -->
-        <script src="bower_components/modernizr/modernizr.js"></script>
-        <!-- endbuild -->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
         <!-- Google Analytics -->
         <script>
@@ -30,8 +26,11 @@
     </head>
     <body>
         <!--[if lt IE 10]>
-            <p class="warning" id="browsehappy">You are using an <strong>outdated</strong> browser. Please consider <a href="http://browsehappy.com/">upgrading your browser</a> to improve your internet experience.</p>
+            <p class="warning" id="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to view this site.</p>
         <![endif]-->
+        <noscript>
+            <p class="warning" id="noscript">Sorry, this site requires JavaScript to function. Please <a href="http://www.enable-javascript.com/"> enable JavaScript</a> and try again.</p>
+        </noscript>
 
         <nav class="navbar navbar-default navbar-fixed-top hidden">
             <div class="container-navbar">
@@ -42,14 +41,34 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <div class="navbar-brand"><a href="#">Stories of Solidarity</a></div>
+                    <div class="navbar-brand"><a href="#map">Stories of Solidarity</a></div>
+                    <div class="navbar-search" id="searchBar">
+                        <input name="search" placeholder="Search"/>
+                        <span class="icon icon-search"></span>
+                    </div>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbar-collapsed">
                     <ul class="nav navbar-nav">
-                        <li><a href="#share">Share Story</a></li>
-                        <li><a href="#read">Read Stories</a></li>
-                        <li><a href="#map">View Map</a></li>
+                        <li class="share fixed">
+                            <div id="shareBar" class="closed">
+                                <span class="icon icon-write"></span>
+                                <textarea name="content" placeholder="SHARE YOUR STORY"></textarea>
+                            </div>
+                        </li>
+                        <li class="button"><a href="#map">
+                            <span class="icon icon-map"></span>
+                            View Map</a>
+                        </li>
+                        <li class="button"><a href="#read">
+                            <span class="icon icon-article"></span>
+                            Live Feed</a>
+                        </li>
+                        <li class="button last"><a href="#learn">
+                            <span class="icon icon-lightbulb"></span>
+                            Learn More</a>
+                        </li>
+                        <li class="spacer"></li>
                     </ul>
                 </div>
             </div>
@@ -61,54 +80,54 @@
             </div>
         </section>
 
-        <footer class="footer hidden">
-            <div class="container-fluid">
-                <ul class="col-sm-6">
+        <footer class="footer hidden navbar-fixed-bottom">
+            <div class="row">
+                <ul class="col-sm-8">
                     <li>Stories of Solidarity <a href="#copyright">(cc)</a> 2015</li>
                     <li>Text <a href="sms:+1-855-464-7671">855.464.7671</a></li>
                 </ul>
-                <ul class="col-sm-3 col-sm-offset-3 right">
-                    <li><a href="http://sos.ucdavis.edu/">About</a></li>
-                    <!-- <li><a href="http://blog.storiesofsolidarity.org">Blog</a></li> -->
+                <ul class="col-sm-4 links right">
+                    <li><a href="#about">About</a></li>
                     <li><a href="#privacy">Privacy</a></li>
+                    <li><a href="mailto:storiesofsolidarity@gmail.com">Contact</a></li>
                 </ul>
             </div>
         </footer>
 
-        <!-- build:js scripts/vendor.js -->
-        <script src="bower_components/jquery/dist/jquery.js"></script>
-        <script src="bower_components/lodash/dist/lodash.compat.js"></script>
-        <script src="bower_components/backbone/backbone.js"></script>
-        <script src="bower_components/backbone.paginator/lib/backbone.paginator.js"></script>
-        <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
-        <!-- endbuild -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
+        <script src="//cdn.ravenjs.com/1.1.22/raven.min.js"></script>
 
-        <!-- build:js scripts/plugins.js -->
+        <!-- build:js scripts/display.js -->
+        <script src="bower_components/jquery-bgswitcher/jquery.bgswitcher.js"></script>
+        <script src="bower_components/stalactite/j/jquery.stalactite.js"></script>
+        <script src="bower_components/backbone.paginator/lib/backbone.paginator.js"></script>
         <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script>
         <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script>
         <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
-        <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
         <script src="bower_components/bootstrap-filestyle/src/bootstrap-filestyle.js"></script>
         <script src="bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+        <script src="bower_components/moment/moment.js"></script>
+        <script src="scripts/vendor/jquery.selecttext.js"></script>   
+        <!-- endbuild -->
 
+        <!-- build:js scripts/map.js -->
         <script src="bower_components/d3/d3.js"></script>
         <script src="bower_components/d3-tip/index.js"></script>
         <script src="bower_components/topojson/topojson.js"></script>
+        <script src="scripts/map/queue.v1.min.js"></script>
         <script src="scripts/map/albers-usa-pr.js"></script>
+        <script src="scripts/map/jenks.js"></script>
         <!-- endbuild -->
 
         <script>
             window.Solidarity = {
-                siteRoot: 'http://www.storiesofsolidarity.org/',
-                apiRoot: 'https://stories-of-solidarity.herokuapp.com/api/'
+                siteRoot: 'http://storiesofsolidarity.github.io/website-redesign/',
+                apiRoot: 'https://stories-of-solidarity.herokuapp.com/api/',
+                dataRoot: 'http://storiesofsolidarity.github.io/us-data/',
+                mapzenKey: 'search-0w-fs0s',
+                ravenConfig: 'https://415051242ec344cbabbe0f419b0561c9@app.getsentry.com/53317'
             };
         </script>
         <!-- build:dev -->
@@ -116,7 +135,8 @@
             // invalid block type means this won't appear in build
             console.log("DEV ENVIRONMENT");
             window.Solidarity.siteRoot = 'http://localhost:9000/';
-            window.Solidarity.apiRoot = 'http://localhost:8000/api/'; 
+            window.Solidarity.apiRoot = 'http://localhost:8000/api/';
+            window.Solidarity.dataRoot = 'http://localhost:3000/';
             window.Solidarity.DEBUG = true;
         </script>
         <!-- endbuild -->
@@ -141,9 +161,11 @@
         <script src="scripts/views/storyList.js"></script>
         <script src="scripts/views/storyMap.js"></script>
         <script src="scripts/views/storyPost.js"></script>
+        <script src="scripts/views/searchBar.js"></script>
         
         <script src="scripts/views/auth.js"></script>
         <script src="scripts/views/page.js"></script>
+        <script src="scripts/views/dialog.js"></script>
         <script src="scripts/views/splash.js"></script>
         <script src="scripts/views/index.js"></script>
         
@@ -151,6 +173,7 @@
         <script src="scripts/routes/auth.js"></script>
         <script src="scripts/routes/pages.js"></script>
         <script src="scripts/routes/stories.js"></script>
+
         <!-- endbuild -->
 </body>
 </html>

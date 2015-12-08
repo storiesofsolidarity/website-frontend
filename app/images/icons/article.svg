@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="28.051px"
+   height="21.724px" viewBox="0 0 28.051 21.724" enable-background="new 0 0 28.051 21.724" xml:space="preserve">
+  <g id="live-feed-icon" style="fill:#000000">
+    <path fill="#FFFFFF"
+           d="M28.051,0v18.47c0,1.718-1.499,3.254-3.072,3.254H3.985C1.39,21.724,0,20.372,0,17.08V3.585h3.878V0     H28.051L28.051,0z M3.878,5.56H1.974v11.52c0,1.682,0.402,2.486,0.914,2.486c0.623,0,0.988-0.805,0.988-2.486V5.56H3.878z      M26.076,1.976H5.852V17.08c0,1.17-0.219,2.012-0.549,2.669h19.676c0.658,0,1.098-0.767,1.098-1.278V1.976z M13.641,8.924H8.997     V8.266h4.644V8.924z M13.641,11.083H8.997v-0.66h4.644V11.083z M13.641,13.166H8.997v-0.658h4.644V13.166z M13.641,15.177H8.997     v-0.658h4.644V15.177z M13.641,17.262H8.997v-0.657h4.644V17.262z M9.691,4.865h12.18v1.28H9.691V4.865z M15.471,8.266h7.787     v7.423h-7.787V8.266z"
+           id="path12"
+           style="fill:#000000" />
+  </g>
+</svg>

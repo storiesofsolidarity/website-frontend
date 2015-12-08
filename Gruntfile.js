@@ -39,12 +39,11 @@ module.exports = function (grunt) {
                     '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
                     '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-                    '<%= yeoman.app %>/scripts/templates/*.{ejs,mustache,hbs}',
                 ]
             },
             jst: {
                 files: [
-                    '<%= yeoman.app %>/scripts/templates/*.ejs'
+                    '<%= yeoman.app %>/templates/*.html'
                 ],
                 tasks: ['jst']
             }
@@ -221,7 +220,7 @@ module.exports = function (grunt) {
             },
             compile: {
                 files: {
-                    '.tmp/scripts/templates.js': ['<%= yeoman.app %>/scripts/templates/*.ejs']
+                    '.tmp/scripts/templates.js': ['<%= yeoman.app %>/templates/*.html']
                 }
             }
         },
@@ -237,12 +236,32 @@ module.exports = function (grunt) {
                 }
             }
         },
-        'gh-pages': {
+        buildcontrol: {
             options: {
-                base: 'dist'
+              dir: 'dist',
+              commit: true,
+              push: true,
+              message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
             },
-            src: ['**']
-        },
+            redesign: {
+              options: {
+                remote: 'git@github.com:storiesofsolidarity/website-redesign.git',
+                branch: 'gh-pages'
+              }
+            },
+            live: {
+              options: {
+                remote: 'git@github.com:storiesofsolidarity/website-frontend.git',
+                branch: 'gh-pages',
+              }
+            },
+            local: {
+              options: {
+                remote: '../',
+                branch: 'build'
+              }
+            }
+        }
     });
 
     grunt.registerTask('createDefaultTemplate', function () {
@@ -285,6 +304,8 @@ module.exports = function (grunt) {
         'rev',
         'usemin'
     ]);
+
+    grunt.loadNpmTasks('grunt-build-control');
 
     grunt.registerTask('default', [
         'jshint',

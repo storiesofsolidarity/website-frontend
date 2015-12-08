@@ -6,10 +6,11 @@ A static site to pull stories from the [stories-of-solidarity-api](https://githu
 
 ### Technologies
 
-* Grunt
-* Backbone.js
-* Bootstrap
-* D3
+* [Grunt](http://gruntjs.com)
+* [Backbone.js](http://backbonejs.org)
+* [Bootstrap](http://getbootstrap.com)
+* [D3](http://d3js.org)
+* [Fontcustom](http://fontcustom.com)
 
 ### Development
 
@@ -31,6 +32,9 @@ Now compile and serve the site locally. This will watch for changes as you make 
 $ grunt serve --watch
 ```
 
+You may also want to run the [data-api](https://github.com/storiesofsolidarity/data-api) and [us-data](https://github.com/storiesofsolidarity/us-data) servers locally for a complete development stack. If you don't, comment out the `Solidarity.apiRoot` and `dataRoot` settings in `index.html` to use the production endpoints.
+
+To add new icons to the custom font, put the SVG file in `/app/images/icons` and re-run `fontcustom compile` from the repository root.
 
 ### Deployment
 
@@ -38,5 +42,5 @@ Using GitHub Pages, build and push the resulting `dist` directory to the gh-page
 
 ``bash
 $ grunt build
-$ grunt gh-pages --gh-pages-message 'commit message'
+$ grunt buildcontrol:live
 ``

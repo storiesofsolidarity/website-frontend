@@ -1,0 +1,18 @@
+<div class="storyList">
+	<button href="#close" onclick="history.go(-1);return false;" class="btn close gray" >
+        <span>&times;</span> Close
+    </button>
+
+
+	<div class="stories">
+		<ul class="filters">
+			<% if(data.location) { %>
+			<li><span id="storyCount"><%= data.story_count %></span> stor<%= data.story_count == 1 ? "y" : "ies"%> from <%= data.location %></li>
+			<% } %>
+		</ul>
+
+		<div class="grid">
+	    <!-- story items added here -->
+		</div>
+	</div>
+</div>

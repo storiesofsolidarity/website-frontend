@@ -1,4 +1,4 @@
-/*global Solidarity, $, _*/
+/*global Solidarity, $, _, Raven */
 
 'use strict';
 
@@ -14,11 +14,11 @@ window.Solidarity = _.extend(window.Solidarity, {
         this.mainContent = Solidarity.RegionManager;
         new Solidarity.Routers.Auth({});
         new Solidarity.Routers.Pages({});
-        new Solidarity.Routers.Stories({});
+        this.routerStories = new Solidarity.Routers.Stories({});
 
         // initialize UI elements
-        // this.searchView = new Solidarity.Views.Search({});
-        // this.filterView = new Solidarity.Views.Filter({});
+        this.shareBar = new Solidarity.Views.StoryPost({});
+        this.searchBar = new Solidarity.Views.SearchBar({});
         // this.loginView = new Solidarity.Views.Login({});
 
         // start history, redirect to about page if invalid route
@@ -39,10 +39,23 @@ window.Solidarity = _.extend(window.Solidarity, {
             // just do it if window width > $grid-float-breakpoint
             if (window.innerWidth > 768) { return false; }
         });
+
+        // collapse navbar on button click, if mobile
+        $('.navbar-collapse li.button a').on('click', function() {
+            if( $('.navbar-collapse').hasClass('in') ) {
+                $('.navbar-collapse').collapse('hide');   
+            }
+        });
     },
 
-    log: function(msg) {
-        if (Solidarity.DEBUG) { console.log(msg); }
+    log: function(msg, object) {
+        if (Solidarity.DEBUG) { if (object) { console.log(msg, object); } else { console.log(msg); } }
+    },
+    error: function(exception, msg) {
+        if (Solidarity.DEBUG) { console.error(msg); console.error(exception);}
+        else { 
+            Raven.captureException(exception);
+        }
     }
 });
 
@@ -60,6 +73,9 @@ window.urlParam = function(name) {
 
 $(document).ready(function () {
     Solidarity.init();
+    if (!Solidarity.DEBUG) {
+        Raven.config(window.Solidarity.ravenConfig).install();
+    }
 
     if (window.location.hash && window.location.hash !== '#splash') {
         Solidarity.log('starting at'+window.location.hash);

@@ -1,0 +1,22 @@
+<div class="item story" id="story-<%=data.id%>">
+    <div class="body">
+        <% if (data.content.length > 160) { %>
+            <% if (data.content.charAt(159) == ' ') { %>
+                <%- data.content.slice(0,159) %>...
+            <% } else { %>
+                <%- data.content.slice(0,160) %>...
+            <% } %>
+        <% } else { %>
+            <%- data.content %>
+        <% } %>
+        
+    </div>
+    <div class="meta">
+        <span class="permalink">
+            <a class="permalink" href="#read/story/<%= data.id %>">more</a>
+        </span>
+        <span class="date">
+            <%= moment(data.created_at).format('M/D/YYYY - h:mma') %>
+        </span>
+    </div>
+</div>
