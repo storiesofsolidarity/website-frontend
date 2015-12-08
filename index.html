@@ -6,10 +6,9 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <link rel="shortcut icon" href="/favicon.ico">
-        <link rel="stylesheet" href="styles/820f015a.main.css">
-        
-        <link rel="stylesheet" href="styles/21be59e2.bower.css">
-        <script src="scripts/vendor/a52a8685.modernizr.js"></script>
+        <link rel="stylesheet" href="styles/53cb0faf.main.css">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
         <!-- Google Analytics -->
         <script>
@@ -24,8 +23,11 @@
     </head>
     <body>
         <!--[if lt IE 10]>
-            <p class="warning" id="browsehappy">You are using an <strong>outdated</strong> browser. Please consider <a href="http://browsehappy.com/">upgrading your browser</a> to improve your internet experience.</p>
+            <p class="warning" id="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to view this site.</p>
         <![endif]-->
+        <noscript>
+            <p class="warning" id="noscript">Sorry, this site requires JavaScript to function. Please <a href="http://www.enable-javascript.com/"> enable JavaScript</a> and try again.</p>
+        </noscript>
 
         <nav class="navbar navbar-default navbar-fixed-top hidden">
             <div class="container-navbar">
@@ -36,14 +38,34 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <div class="navbar-brand"><a href="#">Stories of Solidarity</a></div>
+                    <div class="navbar-brand"><a href="#map">Stories of Solidarity</a></div>
+                    <div class="navbar-search" id="searchBar">
+                        <input name="search" placeholder="Search">
+                        <span class="icon icon-search"></span>
+                    </div>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbar-collapsed">
                     <ul class="nav navbar-nav">
-                        <li><a href="#share">Share Story</a></li>
-                        <li><a href="#read">Read Stories</a></li>
-                        <li><a href="#map">View Map</a></li>
+                        <li class="share fixed">
+                            <div id="shareBar" class="closed">
+                                <span class="icon icon-write"></span>
+                                <textarea name="content" placeholder="SHARE YOUR STORY"></textarea>
+                            </div>
+                        </li>
+                        <li class="button"><a href="#map">
+                            <span class="icon icon-map"></span>
+                            View Map</a>
+                        </li>
+                        <li class="button"><a href="#read">
+                            <span class="icon icon-article"></span>
+                            Live Feed</a>
+                        </li>
+                        <li class="button last"><a href="#learn">
+                            <span class="icon icon-lightbulb"></span>
+                            Learn More</a>
+                        </li>
+                        <li class="spacer"></li>
                     </ul>
                 </div>
             </div>
@@ -55,32 +77,40 @@
             </div>
         </section>
 
-        <footer class="footer hidden">
-            <div class="container-fluid">
-                <ul class="col-sm-6">
+        <footer class="footer hidden navbar-fixed-bottom">
+            <div class="row">
+                <ul class="col-sm-8">
                     <li>Stories of Solidarity <a href="#copyright">(cc)</a> 2015</li>
                     <li>Text <a href="sms:+1-855-464-7671">855.464.7671</a></li>
                 </ul>
-                <ul class="col-sm-3 col-sm-offset-3 right">
-                    <li><a href="http://sos.ucdavis.edu/">About</a></li>
-                    <!-- <li><a href="http://blog.storiesofsolidarity.org">Blog</a></li> -->
+                <ul class="col-sm-4 links right">
+                    <li><a href="#about">About</a></li>
                     <li><a href="#privacy">Privacy</a></li>
+                    <li><a href="mailto:storiesofsolidarity@gmail.com">Contact</a></li>
                 </ul>
             </div>
         </footer>
 
-        <script src="scripts/dff65862.vendor.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
+        <script src="//cdn.ravenjs.com/1.1.22/raven.min.js"></script>
 
-        <script src="scripts/9f3b3cfd.plugins.js"></script>
+        <script src="scripts/b9549708.display.js"></script>
+
+        <script src="scripts/b6633f95.map.js"></script>
 
         <script>
             window.Solidarity = {
-                siteRoot: 'http://www.storiesofsolidarity.org/',
-                apiRoot: 'https://stories-of-solidarity.herokuapp.com/api/'
+                siteRoot: 'http://storiesofsolidarity.github.io/website-redesign/',
+                apiRoot: 'https://stories-of-solidarity.herokuapp.com/api/',
+                dataRoot: 'http://storiesofsolidarity.github.io/us-data/',
+                mapzenKey: 'search-0w-fs0s',
+                ravenConfig: 'https://415051242ec344cbabbe0f419b0561c9@app.getsentry.com/53317'
             };
         </script>
 
 
-        <script src="scripts/10def997.main.js"></script>
+        <script src="scripts/6f60f8e3.main.js"></script>
 </body>
 </html>
