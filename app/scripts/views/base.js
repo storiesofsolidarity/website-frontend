@@ -77,10 +77,8 @@ Solidarity.Views = Solidarity.Views || {};
             var fileItems = self.$form.find('input[type="file"]');
             _.each(fileItems, function(item) {
                 var $item = $(item);
-                formData.append($item.attr('name'), item.files[0]);
+                formData.append($item.attr('name'), $item[0].files[0]);
             });
-
-            console.log(formData);
 
             $.ajax({
                 type: self.$form.attr('method'),
@@ -116,7 +114,10 @@ Solidarity.Views = Solidarity.Views || {};
                     _.map(errs, function(message, field) {
                         $(self.form + ' label[for="'+field+'"]').addClass('has-error');
                         $(self.form + ' [name="'+field+'"]').addClass('has-error');
-                        $(self.form + ' [name="'+field+'"] + .help-block').html(message).removeClass('hidden');
+                        var helpBlock = $(self.form + ' [name="'+field+'"] + .help-block');
+                        helpBlock.children('.header').text('Please');
+                        helpBlock.children('.message').text(message);
+                        helpBlock.removeClass('hidden');
                     });
                     if (errs.non_field_errors !== undefined) {
                         self.$form.append(self.templateError(errs));

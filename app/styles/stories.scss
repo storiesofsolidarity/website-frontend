@@ -1,4 +1,4 @@
-    @import '_variables.scss';
+@import '_variables.scss';
 @import '_mixins.scss';
 
 .storyList {
@@ -283,14 +283,6 @@
         }
     }
 
-    .help-block {
-        color: $yellow;
-        text-transform: none;
-        font-weight: bold;
-        text-align: left;
-        margin-left: 20px;
-    }
-
     .form-group.buttons {
         padding: 0;
         .btn {
@@ -340,6 +332,10 @@
         margin-top: 5px;
         margin-bottom: 5px;
         box-shadow: 0 1px 10px #333;
+    }
+
+    .help-block {
+        max-width: 170px;
     }
 }
 
