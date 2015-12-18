@@ -7,7 +7,7 @@
 
         <div class="box white">
             <div class="form-group first">
-                <label for="content" class="hidden"><%= _t("Story")%>: <span class="required">*</span></label>
+                <label for="content" class="hidden"><%= _t("Story")%>: <span class="required notranslate">*</span></label>
                 <textarea id="storyContent" rows="12" class="open" name="content"
                 placeholder="<%= _t('SHARE YOUR STORY') %>" value="" required="required"></textarea>
                 <div class="help-block hidden">
@@ -45,7 +45,7 @@
 
                     <input id="city" name="location.city" value="" type="text" placeholder="<%= _t('City') %>">
                     <input id="county" name="location.county" type="hidden">
-                    <select id="state" class="selectpicker show-tick show-menu-arrow" data-size="auto" name="location.state">
+                    <select id="state" class="selectpicker show-tick show-menu-arrow notranslate" data-size="auto" name="location.state">
                         <option value=""><%= _t('State') %></option>
                         <option value="AL">Alabama</option>
                         <option value="AK">Alaska</option>
@@ -115,7 +115,7 @@
         <div class="form-group buttons last clearfix">
             <div class="input-group left">
                 <button class="btn btn-white" id="cancel">
-                    <span class="icon icon-close"></span>
+                    <span class="icon icon-close notranslate"></span>
                     <%= _t('Cancel') %>
                 </button>
             </div>
@@ -123,12 +123,12 @@
             <div class="input-group right">
                 <label for="photo" class="hidden"><%= _t('Photo') %>:</label>
                 <span class="btn btn-default btn-file">
-                    <span class="icon icon-camera"></span>
+                    <span class="icon icon-camera notranslate"></span>
                     <input type="file" name="photo" accept="image/*" />
                 </span>
 
                 <button type="submit" class="btn btn-success" id="submit">
-                    <span class="icon icon-check"></span>
+                    <span class="icon icon-check notranslate"></span>
                     <%= _t('Share') %>
                 </button>
             </div>
