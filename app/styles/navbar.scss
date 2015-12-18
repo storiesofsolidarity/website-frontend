@@ -247,3 +247,12 @@ ul.nav {
         }
     }
 }
+
+// transifex switcher
+.txlive-langselector {
+    min-width: 100px;
+    .txlive-langselector-toggle {
+        border-bottom: none;
+        height: 34px;
+    }
+}

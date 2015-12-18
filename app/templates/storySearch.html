@@ -1,4 +1,4 @@
-<input name="search" placeholder="Search"
+<input name="search" placeholder="<%= _t('Search') %>"
 <% if (data.search) {%> value="<%- data.search %>" <% } %>
 />
 
@@ -26,7 +26,7 @@
 <% } else { %>
 	<% if (data.search) { %>
 	<div class="searchResults">
-		<div class="result none">No results</div>
+		<div class="result none"><%= _t('No results') %></div>
 	</div>
 	<% } %>
 <% } %>

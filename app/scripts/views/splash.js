@@ -1,4 +1,4 @@
-/*global Solidarity, Backbone, JST, jquery*/
+/*global Solidarity, Backbone, JST, jquery, Transifex */
 
 Solidarity.Views = Solidarity.Views || {};
 
@@ -72,6 +72,8 @@ Solidarity.Views = Solidarity.Views || {};
             $('ul.statement li').fadeOut(500);
             $('ul.statement li#'+lang).fadeIn(500);
             btn.addClass('active');
+
+            Transifex.live.translateTo(lang, true);
         },
 
         clickLanguage: function(event) {
@@ -98,7 +100,10 @@ Solidarity.Views = Solidarity.Views || {};
             $('footer.footer').removeClass('hidden');
 
             // set current language from button text
-            Solidarity.language = this.languages[this.currentLanguageID];
+            var lang = this.languages[this.langIndex];
+            Transifex.live.translateTo(lang, true);
+            Solidarity.log('transifex translateTo: '+lang);
+
             Backbone.history.navigate('#map', {trigger: true});
         }
 

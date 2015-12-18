@@ -1,34 +1,34 @@
-<div class="auth register container-fluid">
+<div class="auth register container-fluid" tx-tags="auth">
 
 <div class="alert alert-info alert-dismissable">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    Already registered? <a href="#auth/login">Login</a>
+    <%= _t("Already registered?") %> <a href="#auth/login">Login</a>
 </div>
 
-<h2>Register New User</h2>
+<h2><%= _t("Register New User") %></h2>
 
 <form class="form-horizontal" id="register" action="<%= Solidarity.apiRoot %>auth/registration/" method="POST">
     <div class="form-group">
-        <label for="username" class="col-sm-2 control-label">Username:</label>
+        <label for="username" class="col-sm-2 control-label"><%= _t("Username") %></label>
         <input name="username" class="col-sm-4" />
         <span class="help-block col-sm-4"></span>
     </div>
 
     <div class="form-group">
-        <label for="password1" class="col-sm-2 control-label">Password:</label>
+        <label for="password1" class="col-sm-2 control-label"><%= _t("Password") %></label>
         <input name="password1" class="col-sm-4" type="password"/>
         <span class="help-block col-sm-4"></span>
     </div>
 
     <div class="form-group">
-        <label for="password2" class="col-sm-2 control-label">Confirm Password:</label>
+        <label for="password2" class="col-sm-2 control-label"><%= _t("Confirm Password") %></label>
         <input name="password2" class="col-sm-4" type="password"/>
         <span class="help-block col-sm-4"></span>
     </div>
 
     <div class="form-group">
         <button class="btn btn-primary col-sm-offset-2" type="submit">
-            <span class="glyphicon glyphicon-log-in"></span> Go
+            <span class="glyphicon glyphicon-log-in"></span> <%= _t("Go") %>
         </button>
     </div>
 </form>

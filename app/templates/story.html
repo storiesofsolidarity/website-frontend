@@ -1,6 +1,6 @@
 <div class="storyRead">
     <button href="#close" onclick="history.go(-1);return false;" class="btn close gray" >
-        <span>&times;</span> Close
+        <span>&times;</span> <%= _t("Close") %>
     </button>
 
     <div class="content <% if (data.content && data.content.length > 160) { %><%-'two-col'%><% } else { %><%-'one-col-right'%><% } %> <% if (data.photo) {%><%-'has-photo'%><% } %>">

@@ -1,4 +1,4 @@
-<div class="header"><a href="#view/<%=data.url %>">View Results</a></div>
+<div class="header"><a href="#view/<%=data.url %>"><%= _t('View Results') %></a></div>
 <div class="count">
-	<%= data.story_count %> stor<%= data.story_count == 1 ? "y" : "ies"%> from <%= data.name %>
+	<%= data.story_count %> stor<%= data.story_count == 1 ? "y" : "ies"%> <%= _t("from")+' '+data.name %>
 </div>

@@ -1,35 +1,35 @@
-<div class="auth user container-fluid">
+<div class="auth user container-fluid" tx-tags="auth">
 
-<h2>User Update</h2>
+<h2><%= _t("User Update") %></h2>
 
 <form class="form-horizontal" id="userDetails" action="<%= Solidarity.apiRoot %>auth/user/" method="POST">
     <div class="form-group">
-        <label for="email" class="col-sm-2 control-label">Email:</label>
+        <label for="email" class="col-sm-2 control-label"><%= _t("Email") %></label>
         <input name="email" class="col-sm-4" />
         <span class="help-block col-sm-4"></span>
     </div>
 
     <div class="form-group">
-        <label for="first_name" class="col-sm-2 control-label">First Name:</label>
+        <label for="first_name" class="col-sm-2 control-label"><%= _t("First Name") %></label>
         <input name="first_name" class="col-sm-4" />
         <span class="help-block col-sm-4"></span>
     </div>
 
     <div class="form-group">
-        <label for="last_name" class="col-sm-2 control-label">Last Name:</label>
+        <label for="last_name" class="col-sm-2 control-label"><%= _t("Last Name") %></label>
         <input name="last_name" class="col-sm-4" />
         <span class="help-block col-sm-4"></span>
     </div>
 
     <div class="form-group">
-        <label for="phone" class="col-sm-2 control-label">SMS Number:</label>
+        <label for="phone" class="col-sm-2 control-label"><%= _t("SMS Number") %></label>
         <input name="phone" class="col-sm-4" />
         <span class="help-block col-sm-4"></span>
     </div>
 
     <div class="form-group">
         <button class="btn btn-primary col-sm-offset-2" type="submit">
-            <span class="glyphicon glyphicon-log-in"></span> Go
+            <span class="glyphicon glyphicon-log-in"></span> <%= _t("Go") %>
         </button>
     </div>
 </form>

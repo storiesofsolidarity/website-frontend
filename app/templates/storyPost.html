@@ -7,9 +7,9 @@
 
         <div class="box white">
             <div class="form-group first">
-                <label for="content" class="hidden">Story: <span class="required">*</span></label>
+                <label for="content" class="hidden"><%= _t("Story")%>: <span class="required">*</span></label>
                 <textarea id="storyContent" rows="12" class="open" name="content"
-                placeholder="SHARE YOUR STORY" value="" required="required"></textarea>
+                placeholder="<%= _t('SHARE YOUR STORY') %>" value="" required="required"></textarea>
                 <div class="help-block hidden">
                     <div class="header"></div>
                     <div class="message"></div>
@@ -17,36 +17,36 @@
             </div>
 
             <div class="form-group row break">
-                <h4>Optional Information</h4>
+                <h4><%= _t("Optional Information") %></h4>
             </div>
 
             <div class="form-group row">
-                <label for="name" class="hidden">Name:</label>
+                <label for="name" class="hidden"><%= _t('Name')%></label>
                 <input id="name" name="name"
-                placeholder="NAME" value="" type="text">
+                placeholder="<%= _t('Name') %>" value="" type="text">
             </div>
 
             <div class="form-group row">
-                <label for="occupation" class="hidden">Occupation:</label>
+                <label for="occupation" class="hidden"><%= _t('Occupation') %></label>
                 <input id="occupation" name="occupation"
-                placeholder="OCCUPATION"  value="" type="text">
+                placeholder="<%= _t('Occupation') %>"  value="" type="text">
             </div>
 
             <div class="form-group row">
-                <label for="employer" class="hidden">Employer:</label>
+                <label for="employer" class="hidden"><%= _t('Employer') %></label>
                 <input id="employer" name="employer"
-                placeholder="EMPLOYER" value="" type="text">
+                placeholder="<%= _t('Employer') %>" value="" type="text">
             </div>
 
             <div class="form-group row last">
-                <label for="location" class="hidden">Location:</label>
+                <label for="location" class="hidden"><%= _t('Location') %>:</label>
                 <div class="input-group" id="location">
                     <button type="button" class="btn btn-sm btn-white line-height-1" id="geolocate"><span class="icon icon-locate"></span></button>
 
-                    <input id="city" name="location.city" value="" type="text" placeholder="CITY">
+                    <input id="city" name="location.city" value="" type="text" placeholder="<%= _t('City') %>">
                     <input id="county" name="location.county" type="hidden">
                     <select id="state" class="selectpicker show-tick show-menu-arrow" data-size="auto" name="location.state">
-                        <option value="">STATE</option>
+                        <option value=""><%= _t('State') %></option>
                         <option value="AL">Alabama</option>
                         <option value="AK">Alaska</option>
                         <option value="AS">American Samoa</option>
@@ -109,19 +109,19 @@
         </div>
 
         <div class="form-group break push-down">
-            <h4>Or text your story to 855.464.7671</h4>
+            <h4><%= _t('Or text your story to 855.464.7671') %></h4>
         </div>
 
         <div class="form-group buttons last clearfix">
             <div class="input-group left">
                 <button class="btn btn-white" id="cancel">
                     <span class="icon icon-close"></span>
-                    CANCEL
+                    <%= _t('Cancel') %>
                 </button>
             </div>
 
             <div class="input-group right">
-                <label for="photo" class="hidden">Photo:</label>
+                <label for="photo" class="hidden"><%= _t('Photo') %>:</label>
                 <span class="btn btn-default btn-file">
                     <span class="icon icon-camera"></span>
                     <input type="file" name="photo" accept="image/*" />
@@ -129,7 +129,7 @@
 
                 <button type="submit" class="btn btn-success" id="submit">
                     <span class="icon icon-check"></span>
-                    SHARE
+                    <%= _t('Share') %>
                 </button>
             </div>
         </div>
