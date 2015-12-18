@@ -11,7 +11,7 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         initialize: function () {
-            Solidarity.log('initalize '+this.cid);
+            //Solidarity.log('initalize '+this.cid);
         },
 
         render: function () {
