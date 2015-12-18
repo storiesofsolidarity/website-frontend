@@ -1,4 +1,4 @@
-/*global Solidarity, Backbone, JST, Modernizr*/
+/*global Solidarity, Backbone, JST, Modernizr, Transifex */
 
 Solidarity.Views = Solidarity.Views || {};
 
@@ -42,6 +42,10 @@ Solidarity.Views = Solidarity.Views || {};
                 if (!this.beenRendered) {
                     this.render();
                 } else {
+                    // force translations update
+                    Solidarity.log('Transifex translateNode', this.$el);
+                    Transifex.live.translateNode(this.$el);
+
                     this.$el.animate({'height': '100%'}, 500);
                     $('textarea', this.$el).delay(500).removeClass('closed').addClass('open');
                 }
