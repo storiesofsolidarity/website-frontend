@@ -232,7 +232,9 @@ ul.nav {
 
     ul {
         margin-bottom: 0;
-        &.right { text-align: right; }
+        &.right { text-align: right;
+            padding-right: 90px; // match width of tx-live-lang-container
+        }
         &.links { a { color: $text-color; } }
         list-style-type: none;
         li {
@@ -249,10 +251,11 @@ ul.nav {
 }
 
 // transifex switcher
-.txlive-langselector {
+#tx-live-lang-container {
     min-width: 100px;
     .txlive-langselector-toggle {
         border-bottom: none;
-        height: 34px;
+        height: 32px;
+        line-height: 26px;
     }
 }
