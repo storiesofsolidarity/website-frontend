@@ -94,13 +94,13 @@ Solidarity.Views = Solidarity.Views || {};
             $('div.splash').css('background-image', 'url('+this.images[this.imageIndex]+')');
         },
 
-        enter: function() {
+        enter: function(btn) {
             // show header and footer
             $('nav.navbar-default').removeClass('hidden');
             $('footer.footer').removeClass('hidden');
 
-            // set current language from button text
-            var lang = this.languages[this.langIndex];
+            // set current language from button
+            var lang = $(btn).data('lang');
             Transifex.live.translateTo(lang, true);
             Solidarity.log('transifex translateTo: '+lang);
 
