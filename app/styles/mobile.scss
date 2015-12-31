@@ -112,7 +112,10 @@
 
     .storyPost {
         position: absolute;
-        top: 225px;
+        z-index: 100;
+        width: 100%;
+        top: 0;
+        left: -10px;
     }
 }
 
