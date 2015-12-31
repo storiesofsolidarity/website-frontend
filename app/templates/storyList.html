@@ -5,9 +5,14 @@
 
 
 	<div class="stories">
-		<ul class="filters">
+		<ul class="filters notranslate">
 			<% if(data.location) { %>
-			<li><span id="storyCount"><%= data.story_count %></span> stor<%= data.story_count == 1 ? "y" : "ies"%> from <%= data.location %></li>
+			<li>
+				<%= '<var id="storyCount">'+data.story_count +'</var> '+
+	        (data.story_count == 1 ? _t('Story') : _t('Stories'))+' '
+	        +_t('From')+' '
+	        +'<var>'+data.name+'</var>' %>
+			</li>
 			<% } %>
 		</ul>
 

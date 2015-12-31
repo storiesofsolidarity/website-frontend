@@ -233,7 +233,7 @@ ul.nav {
     ul {
         margin-bottom: 0;
         &.right { text-align: right;
-            padding-right: 90px; // match width of tx-live-lang-container
+           right: 90px; // match width of tx-live-lang-container
         }
         &.links { a { color: $text-color; } }
         list-style-type: none;

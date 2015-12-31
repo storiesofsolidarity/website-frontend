@@ -1,7 +1,7 @@
 <div class="header"><a href="#view/<%=data.url %>"><%= _t('View Results') %></a></div>
 <div class="count">
-	<%= data.story_count +' '+
-        (data.story_count == 1 ? _t("story") : _t("stories"))+' '
-        +_t("from")+' '
-        +data.name %>
+	<%= '<var>'+data.story_count +'</var> '+
+        (data.story_count == 1 ? _t('Story') : _t('Stories'))+' '
+        +_t('From')+' '
+        +'<var>'+data.name+'</var>' %>
 </div>

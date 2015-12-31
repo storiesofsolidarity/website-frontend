@@ -1,6 +1,14 @@
 @import '_variables.scss';
 
 // navbar font size reduce
+@media screen and (min-width: $screen-md) {
+    html:lang(zh) {
+        ul.nav.navbar-nav > li {
+            font-size: 24px;
+        }
+    }
+}
+
 @media screen and (min-width: $grid-float-breakpoint) and (max-width: $screen-md) {
     .navbar.navbar-default {
         ul.nav.navbar-nav > li {
@@ -12,6 +20,7 @@
         a { font-size: 24px; }
     }
 }
+
 
 @media screen and (max-width: 875px) {
     .navbar-brand {    
