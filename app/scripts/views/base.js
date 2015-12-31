@@ -77,7 +77,9 @@ Solidarity.Views = Solidarity.Views || {};
             var fileItems = self.$form.find('input[type="file"]');
             _.each(fileItems, function(item) {
                 var $item = $(item);
-                formData.append($item.attr('name'), $item[0].files[0]);
+                if ($item[0].files[0]) {
+                    formData.append($item.attr('name'), $item[0].files[0]);
+                }
             });
 
             $.ajax({
