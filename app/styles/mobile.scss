@@ -1,5 +1,7 @@
 @import '_variables.scss';
 
+.mobileOnly { display: none; }
+
 // navbar font size reduce
 @media screen and (min-width: $screen-md) {
     html:lang(zh) {
@@ -65,6 +67,7 @@
                 margin-left: 0;
                 margin-right: 0;
                 background-color: $orange-dark;
+                box-shadow: none;
 
                 &:before, &:after {
                     width: 0;
@@ -72,6 +75,17 @@
                     right: 0;
                 }
             }
+
+            li.share {
+                padding-top: 0;
+                .icon-write { float: none; }
+                #shareBar {
+                    .mobileOnly { display: inline-block; }
+                    & > textarea { display: none; }
+                }
+            }
+
+            li.spacer { display: none; }
         }
 
         .navbar-search {
@@ -84,12 +98,21 @@
         }
     }
 
+    .navbar-collapse.in {
+        overflow-y: visible;
+    }
+
     .storyRead {
         padding-bottom: 100px;
     }
 
     .storyList {
         .item { width: 200px; }
+    }
+
+    .storyPost {
+        position: absolute;
+        top: 225px;
     }
 }
 

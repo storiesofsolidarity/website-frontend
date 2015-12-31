@@ -85,7 +85,7 @@
 
         &:last-child { border-right: 0; }
 
-        &> a {
+        a {
             color: $white;
             line-height: 26px;
             padding: 15px 0 10px 0;
@@ -121,6 +121,7 @@
         }
 
         #shareBar.closed {
+            position: relative;
             overflow-y: hidden;
             &> textarea {
                 width: calc(100% - 50px);

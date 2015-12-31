@@ -13,6 +13,7 @@ Solidarity.Views = Solidarity.Views || {};
         events: {
             'click textarea[name="content"]': 'show',
             'keyup textarea[name="content"].closed': 'show',
+            'click a.mobileOnly': 'show',
             'click button#geolocate': 'geolocate',
             'click button#cancel': 'hide',
         },
@@ -60,7 +61,7 @@ Solidarity.Views = Solidarity.Views || {};
             event.preventDefault(); // stop form submit
 
             // hide without replacing content
-            this.$el.animate({'height': '30px'}, 500).delay(500).addClass('closed');
+            this.$el.animate({'height': '100%'}, 500).delay(500).addClass('closed');
             $('textarea', this.$el).removeClass('open').addClass('closed');
             this.isOpen = false;
             
