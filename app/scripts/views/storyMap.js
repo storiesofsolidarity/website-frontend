@@ -2,6 +2,11 @@
 
 Solidarity.Views = Solidarity.Views || {};
 
+// log2 polyfill for IE
+Math.log2 = Math.log2 || function(x) {
+    return Math.log(x) / Math.LN2;
+};
+
 (function () {
     'use strict';
 
