@@ -1,4 +1,4 @@
-/*global Solidarity, Backbone, JST, jquery, Transifex */
+/*global Solidarity, Backbone, JST, $, Transifex */
 
 Solidarity.Views = Solidarity.Views || {};
 
@@ -22,7 +22,7 @@ Solidarity.Views = Solidarity.Views || {};
             var self = this;
 
             // set up background image switcher
-              $('.splash').bgswitcher({
+            $('.splash').bgswitcher({
                 images: [Solidarity.siteRoot+'images/splash/splash-1.jpg',
                          Solidarity.siteRoot+'images/splash/splash-2.jpg',
                          Solidarity.siteRoot+'images/splash/splash-3.jpg',
@@ -34,8 +34,8 @@ Solidarity.Views = Solidarity.Views || {};
                 loop: true,
                 start: false,
                 interval: 10*1000,
-                effect: 'fade',
-               });
+                effect: 'fade'
+            });
 
             // animate entrance
             $.when(
@@ -45,11 +45,11 @@ Solidarity.Views = Solidarity.Views || {};
               $('ul.languages li').eq(2).delay(1500).animate({'top': '0px', 'opacity': 1}, 1000).promise(),
               $('ul.languages li').eq(3).delay(2000).animate({'top': '0px', 'opacity': 1}, 1000).promise()
             ).done( function(){
-              Solidarity.log('Splash load complete.');
+                Solidarity.log('Splash load complete.');
 
-              // start language rotation, bound to backbone view
-              self.rotateLanguageTimer = setInterval(self.rotateLanguage.bind(self), 2.5*1000);
-              $('.splash').bgswitcher('start');
+                // start language rotation, bound to backbone view
+                self.rotateLanguageTimer = setInterval(self.rotateLanguage.bind(self), 2.5*1000);
+                $('.splash').bgswitcher('start');
             });
             
 
