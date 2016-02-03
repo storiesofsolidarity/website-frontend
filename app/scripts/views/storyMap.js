@@ -21,6 +21,8 @@ Math.log2 = Math.log2 || function(x) {
             counties: {},
             zips: {}
         },
+        width: 1000,
+        height: 600,
 
         initialize: function () {
             this.states = new Solidarity.Collections.States({});
@@ -59,21 +61,46 @@ Math.log2 = Math.log2 || function(x) {
             });
         },
 
+        mapPointToCoords: function(p) {
+            // takes map point [x, y], returns [lon, lat]
+            var w = this.width,
+                h = this.height,
+                s = this.zoom.scale();
+
+            // translate from map center to container xy
+            // then scale and invert
+            return this.projection.invert([
+              (w/2 - p[0]) / s,
+              (h/2 - p[1]) / s
+            ]);
+        },
+
+        coordsToMapPoint: function(c) {
+            // takes [lon, lat], returns map point [x, y] at current scale
+            var w = this.width,
+                h = this.height,
+                s = this.zoom.scale();
+
+            var p = this.projection(c);
+            if (p) { return [w/2 - p[0]*s, h/2 - p[1]*s]; }
+            else { return null; }
+            // coords not within map projection
+        },
 
         drawMap: function () {
-            var width = 960,
-                height = 500,
+            var self = this,
+                width = this.width,
+                height = this.height,
                 activeGeom = d3.select(null),
                 hoveredGeom = d3.select(null);
-            var self = this;
 
             this.colorBackground = '#3F3F3F';
             this.colorUnselected = '#E4E4E4';
 
             // map projection, Albers US & puerto rico
             var projection = d3.geo.albersUsaPr()
-                .scale(1000)
-                .translate([width / 2, height / 2]);
+                .scale(width) // full width of screen
+                .translate([width / 2, height / 2]); // centered
             var path = d3.geo.path()
                 .projection(projection);
             this.projection = projection;
@@ -100,7 +127,7 @@ Math.log2 = Math.log2 || function(x) {
                 .scale(1)
                 .scaleExtent([1, 256]) // 2^0 - 2^8
                 .on('zoom', zoomEvent)
-                .on('zoomend', coordsToHash);
+                .on('zoomend', saveMapCoordsToHash);
             this.zoom = zoom; // save to view
 
             // zoom slider from 1-8 (log2 scale)
@@ -232,13 +259,14 @@ Math.log2 = Math.log2 || function(x) {
                 }
             }
 
-            function coordsToHash() {
+            function saveMapCoordsToHash() {
               if (self.doneRendering) {
 
-                // save map params like #map/z/x?state=California&county=Alameda
+                // save map params like #map/scale/lat/lon?state=California&county=Alameda
+                var latlng = self.mapPointToCoords(self.zoom.translate());
                 var url = 'map/'+self.zoom.scale().toFixed(2) +
-                  '/'+self.zoom.translate()[1].toFixed(0) +
-                  '/'+self.zoom.translate()[0].toFixed(0);
+                  '/'+latlng[1].toFixed(2) +
+                  '/'+latlng[0].toFixed(2);
 
                 if (activeGeom && activeGeom.data()[0]) {
                   var p = activeGeom.data()[0].properties;

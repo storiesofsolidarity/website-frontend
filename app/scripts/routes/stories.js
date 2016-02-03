@@ -8,7 +8,7 @@ Solidarity.Routers = Solidarity.Routers || {};
     Solidarity.Routers.Stories = Solidarity.Routers.Base.extend({
         routes: {
             'map': 'storyMap',
-            'map/:z/:y/:x': 'storyMap',
+            'map/:scale/:lat/:lon': 'storyMap',
             'read': 'storyList',
             'read/story/:id': 'storyView',
             'view/:state_name': 'storyListState',
@@ -20,14 +20,25 @@ Solidarity.Routers = Solidarity.Routers || {};
             storyListLocation: {}
         },
 
-        storyMap: function(z, y, x) {
+        storyMap: function(scale, lat, lon) {
             var storyMap = this.cached.storyMap;
             if (storyMap === undefined) { storyMap = new Solidarity.Views.StoryMap(); }
             Solidarity.mainContent.show(storyMap, '#map');
 
-            if (z && y && x) {
-                storyMap.map.transition()
-                  .call(storyMap.zoom.translate([x,y]).scale(z).event);
+            if (scale && lat && lon) {
+                storyMap.zoom.scale(scale);
+                var tx = storyMap.coordsToMapPoint([lon, lat]);  // note flipped order here
+                if (tx) {
+                    storyMap.map.transition()
+                      .call(storyMap.zoom.translate(tx).scale(scale).event);
+                } else {
+                    // requested coords are outside projection area
+                    Solidarity.error('invalid initial coordinates', [lat, lon].join(','));
+                    // recenter to default
+                    storyMap.map.transition()
+                      .call(storyMap.zoom.translate([0, 0]).scale(1).event);
+                    Solidarity.log('reset translate and scale');
+                }
             }
             this.cached.storyMap = storyMap;
         },
