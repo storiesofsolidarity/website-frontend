@@ -98,7 +98,7 @@ Math.log2 = Math.log2 || function(x) {
             var zoom = d3.behavior.zoom()
                 .translate([0, 0])
                 .scale(1)
-                .scaleExtent([1, 256])
+                .scaleExtent([1, 256]) // 2^0 - 2^8
                 .on('zoom', zoomEvent)
                 .on('zoomend', coordsToHash);
             this.zoom = zoom; // save to view
@@ -109,7 +109,7 @@ Math.log2 = Math.log2 || function(x) {
                 .on('input', zoomInput);
 
             d3.selectAll('#zoom .btn')
-                .on('click', zoomClick);
+                .on('click', zoomInput);
             d3.selectAll('#reset .btn')
                 .on('click', zoomReset);
 
@@ -161,42 +161,51 @@ Math.log2 = Math.log2 || function(x) {
 
                 self.map.transition()
                   .duration(750)
-                  .call(zoom.translate([0, 0]).scale(1).event);
+                  .call(zoom.translate([0, 0]).scale(1)
+                  .event);
 
                 self.renderStoryCollection('USA', self.states, 'g.country path.feature');
             }
 
-            function zoomClick() {
+            function zoomInput() {
+                var e = d3.event;
+                var scale = zoom.scale();
+                var rescale = 1;
+                var dur = 250;
+
                 // zoom buttons have value 2^(val+incr)
                 // use Math.log2 to get new scale
-                var incr = 1;
-                if (d3.select(this).classed('out')) {
-                  incr = -1;
+                if (e.type === 'input') {
+                    var val = d3.select(this).property('value');
+                    rescale = Math.pow(2, val);
+                    dur = 0; // nix duration when user is interactive
                 }
 
-                var scale = zoom.scale();
+                if (e.type === 'click') {
+                    var incr = 1;
+                    if (d3.select(this).classed('out')) {
+                      incr = incr*-1;
+                    }
+
+                    rescale = Math.pow(2, Math.log2(scale) + incr);
+                }
+
                 var extent = zoom.scaleExtent();
                 var min = extent[0];
                 var max = extent[1];
-                
-                var rescale = zoom.scale() + incr;
                 if (rescale > max) { rescale = max; }
                 if (rescale < min) { rescale = min; }
-
+                
                 var t = zoom.translate();
                 var c = [width / 2, height / 2];
                 // zoom in to viewport center
-                zoom
-                  .translate(
+                self.map.transition()
+                  .duration(dur)
+                  .call(zoom.translate(
                     [c[0] + (t[0] - c[0]) / scale * rescale, 
                      c[1] + (t[1] - c[1]) / scale * rescale]) 
-                  .scale(rescale)
-                  .event(self.svg);
-            }
-
-            function zoomInput(){
-                zoom.scale(d3.select(this).property('value'))
-                  .event(self.svg);
+                    .scale(rescale)
+                  .event);
             }
 
             function zoomEvent() {
