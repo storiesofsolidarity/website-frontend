@@ -1,7 +1,15 @@
 <div class="header"><a href="#view/<%=data.url %>"><%= _t('View Results') %></a></div>
-<div class="count">
+<div class="body">
+    <div class="count">
 	<%= '<var>'+data.story_count +'</var> '+
         (data.story_count == 1 ? _t('Story') : _t('Stories'))+' '
         +_t('From')+' '
         +'<var>'+data.name+'</var>' %>
+    </div>
+
+    <ul class="preview cycle notranslate">
+    <% for (i in data.preview) { %>
+    <%='<li style="display:none;">'+data.preview[i]+'...</li>' %>
+    <% } %>
+    </ul>
 </div>

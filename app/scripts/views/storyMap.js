@@ -317,49 +317,11 @@ Math.log2 = Math.log2 || function(x) {
               // for most states, appear to the east
             }
 
-            function tooltipOffset(d) {
-              if (d.properties.type === 'state') {
-                // for states with crooked eastern borders, offset to the left
-                switch(d.properties.name) {
-                  case 'Alaska':
-                    return [0, -40];
-                  case 'California':
-                    return [0, -40];
-                  case 'Minnesota':
-                    return [0, -25];
-                  case 'New York':
-                    return [0, -25];
-                  case 'Idaho':
-                    return [0, -20];
-                  case 'Louisiana':
-                    return [0, -20];
-                  case 'Maine':
-                    return [0, 0];
-                  case 'Puerto Rico':
-                    return [0, -10];
-                  default:
-                    return [0, -10];
-                }
-              }
-
-              if (d.properties.type === 'location') {
-                // circle, offset to the right
-                return [0, 5];
-              }
-
-              if(d.properties.type === 'county') {
-                // unknown geom offset left
-                return [0, -5];
-              }
-
-              return [0, 0];
-            }
-
             // setup feature tooltips
             this.tip = d3.tip()
               .html(tooltipContent)
               .direction(tooltipDirection)
-              .offset(tooltipOffset);
+              .offset([0, 0]);
             this.svg.call(this.tip);
             d3.selectAll('#d3-tip').on('mouseout', this.tip.hide);
 
@@ -453,7 +415,7 @@ Math.log2 = Math.log2 || function(x) {
                   .data(features)
                 .enter().append('path')
                   .attr('d', path)
-                  .attr('class', 'feature state zoom-in')
+                  .attr('class', 'feature state')
                   .on('click', clickState);
 
                 // mesh borders
@@ -486,7 +448,7 @@ Math.log2 = Math.log2 || function(x) {
                   .data(features)
                 .enter().append('path')
                   .attr('d', path)
-                  .attr('class', 'feature county zoom-in')
+                  .attr('class', 'feature county')
                   .on('click', clickCounty);
 
                 // reset state background color
@@ -614,7 +576,11 @@ Math.log2 = Math.log2 || function(x) {
                     } else {
                       s = _.findWhere(stories, {zipcode: g.id});
                     }
-                    if (s) { g.properties.story_count = s.story_count; }
+                    if (s) {
+                      // pull specific items from story collection to geom
+                      g.properties.story_count = s.story_count;
+                      g.properties.preview = s.preview;
+                    }
                 }
 
                 return g;
@@ -642,13 +608,46 @@ Math.log2 = Math.log2 || function(x) {
             }
 
             // show tooltip on feature hover
+            var cycleInterval;
             this.map.selectAll(geomSelector)
               .on('mouseover', function(d) {
                 d3.select('.hover').classed('hover', false);
                 d3.select(this).classed('hover', true);
                 self.tip.show(d);
+
+                if (d.properties.preview && d.properties.preview.length > 0) {
+                  // show preview items
+                  $('#d3-tip .preview li:first-child').addClass('first active');
+                  $('#d3-tip .preview li:last-child').addClass('last');
+                  $('#d3-tip .preview .active').fadeIn(100);
+                } else {
+                  $('#d3-tip .preview').hide();
+                }
+                // cycle through the rest every 5 seconds
+                var cyclePreview = function() {
+                  if($('ul.cycle .last').is(':visible')) {
+                    $('ul.cycle .active').removeClass('active');
+                    $('ul.cycle .first').addClass('active');
+                    $('ul.cycle li:visible').fadeOut(400, function(){
+                      $('ul.cycle .active').fadeIn(400);
+                    });
+                  } else if($('ul.cycle .active').is(':visible')) {
+                      $('ul.cycle .active').removeClass('active');
+                      $('ul.cycle li:visible').next('li').addClass('active');
+                      $('ul.cycle .active').prev('li').fadeOut(400, function(){
+                        $('ul.cycle .active').fadeIn(400);
+                      });
+                  }
+                };
+                if (d.properties.preview && d.properties.preview.length > 1) {
+                  cycleInterval = setInterval(cyclePreview, 5000);
+                }
               })
               .on('mouseout', function(d) {
+                // stop cycle interval
+                clearInterval(cycleInterval); 
+
+                // un-set hover class on geom
                 // need to delay very slightly, so check happens after tooltip hides
                 var unhover = function() {
                   if (self.tip.style('opacity') < 1) {
