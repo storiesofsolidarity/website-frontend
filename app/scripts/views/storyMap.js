@@ -233,12 +233,6 @@ Math.log2 = Math.log2 || function(x) {
                 self.map.selectAll('g.locations circle')
                   .style('stroke-width', 1 / e.scale + 'px')
                   .attr('r', function() { return 8 / e.scale; });
-
-                // check if srcElement is at bounds 
-                if(e.sourceEvent && e.sourceEvent.type === 'wheel') {
-                  //console.log('wheel zoom on', e.sourceEvent.srcElement.__data__);
-                  // TODO
-                }
             }
 
             function saveMapStateToHash() {
@@ -330,7 +324,8 @@ Math.log2 = Math.log2 || function(x) {
             this.setActiveGeom = _.bind(setActiveGeom, this);
 
             function clickState(d) {
-                if (d === undefined) { d = this; }
+                if (d === undefined) { Solidarity.error('clickState d is undefined'); return false; }
+
                 Solidarity.log('clickState', d);
                 setActiveGeom(d);
                 
