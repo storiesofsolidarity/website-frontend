@@ -33,7 +33,7 @@ Solidarity.Routers = Solidarity.Routers || {};
                       .call(storyMap.zoom.translate(tx).scale(scale).event);
                 } else {
                     // requested coords are outside projection area
-                    Solidarity.error('invalid initial coordinates', [lat, lon].join(','));
+                    Solidarity.log('invalid initial coordinates', [lat, lon].join(','));
                     // recenter to default
                     storyMap.map.transition()
                       .call(storyMap.zoom.translate([0, 0]).scale(1).event);
@@ -43,7 +43,9 @@ Solidarity.Routers = Solidarity.Routers || {};
             this.cached.storyMap = storyMap;
         },
         storyList: function() {
-            if (this.cached.storyList === undefined) { this.cached.storyList = new Solidarity.Views.StoryList(); }
+            if (this.cached.storyList === undefined) {
+                this.cached.storyList = new Solidarity.Views.StoryList();
+            }
             Solidarity.mainContent.show(this.cached.storyList, '#read');
         },
         storyListState: function(state_name) {
@@ -55,7 +57,7 @@ Solidarity.Routers = Solidarity.Routers || {};
             Solidarity.mainContent.show(this.cached.storyListLocation[key], '#read');
         },
         storyListCounty: function(state_name, county) {
-             var key = state_name+':'+county;
+            var key = state_name+':'+county;
             if (this.cached.storyListLocation[key] === undefined) {
                 this.cached.storyListLocation[key] = new Solidarity.Views.StoryListLocation(
                     {state_name: state_name, county: county});
