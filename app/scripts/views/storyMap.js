@@ -37,28 +37,6 @@ Math.log2 = Math.log2 || function(x) {
             this.drawMap();
             this.states.fetch({
                 success: function(data) {
-                    //check for selected state or county in url params
-                    var stateSelected = window.urlParam('state');
-                    var countySelected = window.urlParam('county');
-
-                    // setup callbacks
-                    if (stateSelected) {
-                        Backbone.listenToOnce(self, 'render-states', function() {
-                            var state = d3.selectAll('g.country .feature.state').filter(function(d) {
-                                return d.properties.name === stateSelected;
-                            });
-                            self.clickState(state.data()[0]);
-                        });
-                    }
-                    if (countySelected) {
-                        Backbone.listenToOnce(self, 'render-counties', function() {
-                            var county = d3.selectAll('g.state .feature.county').filter(function(d) {
-                                return d.properties.name === countySelected;
-                            });
-                            self.clickCounty(county.data()[0]);
-                        });
-                    }
-
                     // do initial render
                     self.renderStoryCollection('states', data, 'g.country path.feature');
                     self.doneRendering = true;
@@ -75,8 +53,7 @@ Math.log2 = Math.log2 || function(x) {
             // translate from map center to container xy
             // then scale and invert
             return this.projection.invert([
-              (w/2 - p[0]) / s,
-              (h/2 - p[1]) / s
+              (w/2 - p[0])/s, (h/2 - p[1])/s
             ]);
         },
 
@@ -132,7 +109,7 @@ Math.log2 = Math.log2 || function(x) {
                 .scale(1)
                 .scaleExtent([1, 256]) // 2^0 - 2^8
                 .on('zoom', zoomEvent)
-                .on('zoomend', saveMapCoordsToHash);
+                .on('zoomend', saveMapStateToHash);
             this.zoom = zoom; // save to view
 
             // zoom slider from 1-8 (log2 scale)
@@ -264,24 +241,25 @@ Math.log2 = Math.log2 || function(x) {
                 }
             }
 
-            function saveMapCoordsToHash() {
+            function saveMapStateToHash() {
+              // save loaded geometries like #map/state/county
               if (self.doneRendering) {
-
-                // save map params like #map/scale/lat/lon?state=California&county=Alameda
-                var latlng = self.mapPointToCoords(self.zoom.translate());
-                var url = 'map/'+self.zoom.scale().toFixed(2) +
-                  '/'+latlng[1].toFixed(2) + // note order flip
-                  '/'+latlng[0].toFixed(2);
-
                 if (self.activeGeom && self.activeGeom.length) {
                   var p = self.activeGeom[0].properties;
+                  var url = 'map';
                   if (p && p.type === 'state') {
-                    url += '?state=' + p.name;
+                    url += '/' + p.name;
                   } else if (p && p.type === 'county') {
-                    url += '?state=' + p.state_name + '&county=' + p.name;
-                  }
-                  
+                    url += '/' + p.state_name + '/' + p.name;
+                  } 
                 }
+
+                // save map coords like #?lat&lon&scale
+                var latlng = self.mapPointToCoords(self.zoom.translate());
+                url += '?lat='+latlng[1].toFixed(2) + // note order flip
+                  '&lon='+latlng[0].toFixed(2)+
+                  '&zoom='+self.zoom.scale().toFixed(2);
+
                 Solidarity.routerStories.navigate(url);
               }
             }

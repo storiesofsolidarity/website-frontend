@@ -8,11 +8,12 @@ Solidarity.Routers = Solidarity.Routers || {};
     Solidarity.Routers.Stories = Solidarity.Routers.Base.extend({
         routes: {
             'map': 'storyMap',
-            'map/:scale/:lat/:lon': 'storyMap',
+            'map/:state_name': 'storyMap',
+            'map/:state_name/:county_name': 'storyMap',
             'read': 'storyList',
             'read/story/:id': 'storyView',
             'view/:state_name': 'storyListState',
-            'view/:state_name/:county': 'storyListCounty',
+            'view/:state_name/:county_name': 'storyListCounty',
             'view/:state_name/:city/:zipcode': 'storyListZipcode',
         },
 
@@ -20,10 +21,33 @@ Solidarity.Routers = Solidarity.Routers || {};
             storyListLocation: {}
         },
 
-        storyMap: function(scale, lat, lon) {
+        storyMap: function(state_name, county_name) {
             var storyMap = this.cached.storyMap;
             if (storyMap === undefined) { storyMap = new Solidarity.Views.StoryMap(); }
             Solidarity.mainContent.show(storyMap, '#map');
+
+            // load geometry callbacks
+            if (state_name) {
+                Backbone.listenToOnce(storyMap, 'render-states', function() {
+                    var state = d3.selectAll('g.country .feature.state').filter(function(d) {
+                        return d.properties.name === state_name;
+                    });
+                    if(state && state[0].length) { storyMap.clickState(state.data()[0]); }
+                });
+            }
+            if (county_name) {
+                Backbone.listenToOnce(storyMap, 'render-counties', function() {
+                    var county = d3.selectAll('g.state .feature.county').filter(function(d) {
+                        return d.properties.name === county_name;
+                    });
+                    if(county && county[0].length) { storyMap.clickCounty(county.data()[0]); }
+                });
+            }
+
+            // set map zoom, lat, lon
+            var scale = window.urlParam('zoom');
+            var lat = window.urlParam('lat');
+            var lon = window.urlParam('lon');
 
             if (scale && lat && lon) {
                 storyMap.zoom.scale(scale);
@@ -40,6 +64,8 @@ Solidarity.Routers = Solidarity.Routers || {};
                     Solidarity.log('reset translate and scale');
                 }
             }
+
+            // cache view
             this.cached.storyMap = storyMap;
         },
         storyList: function() {
@@ -56,11 +82,11 @@ Solidarity.Routers = Solidarity.Routers || {};
             }
             Solidarity.mainContent.show(this.cached.storyListLocation[key], '#read');
         },
-        storyListCounty: function(state_name, county) {
-            var key = state_name+':'+county;
+        storyListCounty: function(state_name, county_name) {
+            var key = state_name+':'+county_name;
             if (this.cached.storyListLocation[key] === undefined) {
                 this.cached.storyListLocation[key] = new Solidarity.Views.StoryListLocation(
-                    {state_name: state_name, county: county});
+                    {state_name: state_name, county: county_name});
             }
             Solidarity.mainContent.show(this.cached.storyListLocation[key], '#read');
         },
