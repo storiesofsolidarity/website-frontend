@@ -33,29 +33,34 @@ Math.log2 = Math.log2 || function(x) {
         
         onShow: function() {
             var self = this;
+
             this.drawMap();
             this.states.fetch({
                 success: function(data) {
-                    // do first render
-                    self.renderStoryCollection('USA', data, 'g.country path.feature');
-
-                    // after render, check for selected state or county in url params
+                    //check for selected state or county in url params
                     var stateSelected = window.urlParam('state');
                     var countySelected = window.urlParam('county');
 
+                    // setup callbacks
                     if (stateSelected) {
-                        var state = d3.selectAll('g.country .feature.state').filter(function(d) {
-                            return d.properties.name === stateSelected;
+                        Backbone.listenToOnce(self, 'render-states', function() {
+                            var state = d3.selectAll('g.country .feature.state').filter(function(d) {
+                                return d.properties.name === stateSelected;
+                            });
+                            self.clickState(state.data()[0]);
                         });
-                        self.clickState(state.data());
                     }
                     if (countySelected) {
-                        var county = d3.selectAll('g.state .feature.county').filter(function(d) {
-                            return d.properties.name === countySelected;
+                        Backbone.listenToOnce(self, 'render-counties', function() {
+                            var county = d3.selectAll('g.state .feature.county').filter(function(d) {
+                                return d.properties.name === countySelected;
+                            });
+                            self.clickCounty(county.data()[0]);
                         });
-                        self.clickCounty(county.data());
                     }
 
+                    // do initial render
+                    self.renderStoryCollection('states', data, 'g.country path.feature');
                     self.doneRendering = true;
                 }
             });
@@ -191,7 +196,7 @@ Math.log2 = Math.log2 || function(x) {
                   .call(zoom.translate([0, 0]).scale(1)
                   .event);
 
-                self.renderStoryCollection('USA', self.states, 'g.country path.feature');
+                self.renderStoryCollection('states', self.states, 'g.country path.feature');
             }
 
             function zoomInput() {
@@ -344,7 +349,7 @@ Math.log2 = Math.log2 || function(x) {
               // select new activeGeom
               self.activeGeom = d3.selectAll(d).classed('active', true);
             }
-            // this.setActiveGeom = _.bind(setActiveGeom, this);
+            this.setActiveGeom = _.bind(setActiveGeom, this);
 
             function clickState(d) {
                 if (d === undefined) { d = this; }
@@ -373,7 +378,7 @@ Math.log2 = Math.log2 || function(x) {
                     .defer(d3.json, Solidarity.dataRoot + 'geography/counties/'+fn+'.topo.json')
                     .await(drawCounties);
             }
-            // this.clickState = _.bind(clickState, this);
+            this.clickState = _.bind(clickState, this);
 
             function clickCounty(d) {
                 if (d === undefined) { d = this; }
@@ -384,7 +389,7 @@ Math.log2 = Math.log2 || function(x) {
 
                 setActiveGeom(d, true);
             }
-            // this.clickCounty = _.bind(clickCounty, this);
+            this.clickCounty = _.bind(clickCounty, this);
 
             function clickLocation(d) {
                 Solidarity.log('clickLocation', d.id);
@@ -464,7 +469,7 @@ Math.log2 = Math.log2 || function(x) {
                 self.counties.fetch({
                   data: {state_name: stateName},
                   success: function() {
-                    self.renderStoryCollection(stateName, self.counties,
+                    self.renderStoryCollection('counties', self.counties,
                       'g.state path.county',
                       'g.country path.feature');
                   }
@@ -517,7 +522,7 @@ Math.log2 = Math.log2 || function(x) {
                                                  a.properties.story_count);
                           });
 
-                        self.renderStoryCollection(stateName, self.locations,
+                        self.renderStoryCollection('locations', self.locations,
                           'g.locations circle');
                     }
                 });
@@ -561,7 +566,10 @@ Math.log2 = Math.log2 || function(x) {
             
         },
 
-        renderStoryCollection: function(name, collection, geomSelector, geomUnselector) {
+        renderStoryCollection: function(type, collection, geomSelector, geomUnselector) {
+            // trigger render event by type
+            this.trigger('render-'+type);
+
             // extract model attributes from the backbone collection
             var stories = collection.models.map(function(s) { return s.attributes; });
             var geoms = this.map.selectAll(geomSelector).data();
