@@ -90,9 +90,9 @@ Math.log2 = Math.log2 || function(x) {
         drawMap: function () {
             var self = this,
                 width = this.width,
-                height = this.height,
-                activeGeom = d3.select(null),
-                hoveredGeom = d3.select(null);
+                height = this.height;
+            this.activeGeom = d3.select(null);
+            this.hoveredGeom = d3.select(null);
 
             this.colorBackground = '#3F3F3F';
             this.colorUnselected = '#E4E4E4';
@@ -176,12 +176,12 @@ Math.log2 = Math.log2 || function(x) {
 
             function zoomReset() {
                 // reset active features to normal colors
-                activeGeom
+                self.activeGeom
                   .style('fill', self.colorUnselected)
                   .classed('feature', true)
                   .classed('background', false)
                   .classed('active', false);
-                activeGeom = d3.select(null);
+                self.activeGeom = d3.select(null);
 
                 // remove existing state geometry
                 d3.selectAll('g.state').remove();
@@ -265,14 +265,14 @@ Math.log2 = Math.log2 || function(x) {
                 // save map params like #map/scale/lat/lon?state=California&county=Alameda
                 var latlng = self.mapPointToCoords(self.zoom.translate());
                 var url = 'map/'+self.zoom.scale().toFixed(2) +
-                  '/'+latlng[1].toFixed(2) +
+                  '/'+latlng[1].toFixed(2) + // note order flip
                   '/'+latlng[0].toFixed(2);
 
-                if (activeGeom && activeGeom.data()[0]) {
-                  var p = activeGeom.data()[0].properties;
-                  if (p.type === 'state') {
+                if (self.activeGeom && self.activeGeom.length) {
+                  var p = self.activeGeom[0].properties;
+                  if (p && p.type === 'state') {
                     url += '?state=' + p.name;
-                  } else if (p.type === 'county') {
+                  } else if (p && p.type === 'county') {
                     url += '?state=' + p.state_name + '&county=' + p.name;
                   }
                   
@@ -326,24 +326,23 @@ Math.log2 = Math.log2 || function(x) {
             d3.selectAll('#d3-tip').on('mouseout', this.tip.hide);
 
             function setActiveGeom(d, background) {
-              // reset activeGeom colors
+              // reset current activeGeom colors
               if (background) {
-                activeGeom
+                self.activeGeom
                   .style('fill', self.colorBackground)
-                  .classed('feature', true)
-                  .classed('background', true)
-                  .classed('active', false);
+                  .classed({'feature': true,
+                            'background': true,
+                            'active': false});
               } else {
-                activeGeom
+                self.activeGeom
                   .style('fill', self.colorUnselected)
-                  .classed('feature', true)
-                  .classed('background', false)
-                  .classed('active', false);
+                  .classed({'feature': true,
+                            'background': false,
+                            'active': false});
               }
 
               // select new activeGeom
-              activeGeom = d3.select(this)
-                .classed('active', true);
+              self.activeGeom = d3.selectAll(d).classed('active', true);
             }
             // this.setActiveGeom = _.bind(setActiveGeom, this);
 
