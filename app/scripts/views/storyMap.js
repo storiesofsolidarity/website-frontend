@@ -264,7 +264,7 @@ Math.log2 = Math.log2 || function(x) {
 
             function geomUrl(p) {
                 if (p.type === 'state') {
-                    return d.name;
+                    return p.name;
                 }
                 if (p.type === 'county') {
                     var state_name = d3.select('g.state').attr('id');
@@ -283,10 +283,10 @@ Math.log2 = Math.log2 || function(x) {
             }
 
             function tooltipContent(d) {
-                var data = d.properties;
+                var data = d.properties || {};
                 data.story_count = data.story_count || 0;
                 data.name = data.name || d.id;
-                data.url = geomUrl(d.properties);
+                data.url = geomUrl(data);
 
                 return self.templateTip(data);
             }
