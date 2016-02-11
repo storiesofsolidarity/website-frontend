@@ -127,6 +127,7 @@
 .storyPost {
     float: left;
     width: calc(100% - 50px);
+    max-width: 600px;
 
     margin: 0 10px;
     background-color: transparent;

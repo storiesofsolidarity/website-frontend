@@ -120,11 +120,15 @@
             font-size: 30px;
         }
 
-        #shareBar.closed {
-            position: relative;
-            overflow-y: hidden;
+        #shareBar {
+            max-width: 600px;
+            &.closed {
+                position: relative;
+                overflow-y: hidden;
+            }
             &> textarea {
                 width: calc(100% - 50px);
+
                 height: 30px;
                 padding: 7px 20px;
             }
