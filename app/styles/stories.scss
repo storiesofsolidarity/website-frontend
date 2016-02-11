@@ -111,13 +111,13 @@
 
             .text { 
                 @include make-sm-column(6);   
+                -webkit-columns: auto;
+                -moz-columns: auto;
+                columns: auto;
             }
             .photo {
                 @include make-sm-column(6);
                 img { width: 100%; }
-                -webkit-columns: 0;
-                -moz-columns: 0;
-                columns: 0;
             }
         }
     }
