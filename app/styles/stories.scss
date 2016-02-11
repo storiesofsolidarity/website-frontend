@@ -85,6 +85,11 @@
         @include make-sm-column(6);
         @include make-sm-column-offset(3);
 
+        .text {
+            //color: #f8f4e7; // "slightly creamy"
+            white-space: pre-line;
+        }
+
         &.one-col-right {
             @include make-sm-column(3);
             @include make-sm-column-offset(6);
@@ -109,7 +114,10 @@
             }
             .photo {
                 @include make-sm-column(6);
-                img { width: 100%; }   
+                img { width: 100%; }
+                -webkit-columns: 0;
+                -moz-columns: 0;
+                columns: 0;
             }
         }
     }
