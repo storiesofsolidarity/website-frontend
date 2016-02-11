@@ -277,7 +277,14 @@ Math.log2 = Math.log2 || function(x) {
                 }
                 if (data.type === 'location') {
                   data.state_name = d3.select('g.state').attr('id');
-                  data.url = data.state_name + '/' + (data.city || 'zip') + '/' + data.zipcode;
+                  if (data.zipcode) {
+                    // default state/city/zip
+                    data.url = data.state_name + '/' + (data.city || 'zip') + '/' + data.zipcode;
+                  } else {
+                    // fallback to state/county
+                    data.url = data.state_name + '/' + data.name;
+                  }
+                  
                 }
 
                 return self.templateTip(data);
