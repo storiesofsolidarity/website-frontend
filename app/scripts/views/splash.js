@@ -16,6 +16,7 @@ Solidarity.Views = Solidarity.Views || {};
         languages: ['zh', 'en', 'es', 'tl'], // defined in display order
         langIndex: 0,
         rotateLanguageTimer: undefined,
+        changeLanguageDelay: 5*1000, // seconds
 
         render: function () {
             this.$el.html(this.template());
@@ -33,7 +34,7 @@ Solidarity.Views = Solidarity.Views || {};
                 shuffle: true,
                 loop: true,
                 start: false,
-                interval: 10*1000,
+                interval: this.languages.length*this.changeLanguageDelay,
                 effect: 'fade'
             });
 
@@ -48,7 +49,7 @@ Solidarity.Views = Solidarity.Views || {};
                 Solidarity.log('Splash load complete.');
 
                 // start language rotation, bound to backbone view
-                self.rotateLanguageTimer = setInterval(self.rotateLanguage.bind(self), 2.5*1000);
+                self.rotateLanguageTimer = setInterval(self.rotateLanguage.bind(self), self.changeLanguageDelay);
                 $('.splash').bgswitcher('start');
             });
             
