@@ -72,7 +72,9 @@ Solidarity.Views = Solidarity.Views || {};
             this.$form = $(this.form);
 
             // init bootstrap form plugins
-            $('.selectpicker').selectpicker();          
+            $('.selectpicker').selectpicker({
+                size: '5', // show this many by default
+            });          
         },
 
         onSuccess: function(resp) {

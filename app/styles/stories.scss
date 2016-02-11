@@ -275,11 +275,16 @@
         border: none;
         border-radius: 0;
         box-shadow: none;
+        height: 150px;
 
         & > li {
             background-color: $white;
+
             & > a {
                 color: $black;
+                padding: 5px 10px;
+                line-height: 20px;
+
                 &:focus {
                     outline: 0 !important;
                     outline-offset: 0 !important;
