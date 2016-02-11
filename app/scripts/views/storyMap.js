@@ -262,30 +262,31 @@ Math.log2 = Math.log2 || function(x) {
                 if (d3.event.defaultPrevented) { d3.event.stopPropagation(); }
             }
 
+            function geomUrl(p) {
+                if (p.type === 'state') {
+                    return d.name;
+                }
+                if (p.type === 'county') {
+                    var state_name = d3.select('g.state').attr('id');
+                    return (state_name + '/' + p.name);
+                }
+                if (p.type === 'location') {
+                  var state_name = d3.select('g.state').attr('id');
+                  if (p.zipcode) {
+                    // default state/city/zip
+                    return state_name + '/' + (p.city || 'zip') + '/' + p.zipcode;
+                  } else {
+                    // fallback to state/county
+                    return state_name + '/' + p.name;
+                  }
+              }
+            }
+
             function tooltipContent(d) {
                 var data = d.properties;
                 data.story_count = data.story_count || 0;
                 data.name = data.name || d.id;
-
-                if (data.type === 'state') {
-                    data.state_name = data.name;
-                    data.url = data.state_name;
-                }
-                if (data.type === 'county') {
-                    data.state_name = d3.select('g.state').attr('id');
-                    data.url = data.state_name + '/' + data.name;
-                }
-                if (data.type === 'location') {
-                  data.state_name = d3.select('g.state').attr('id');
-                  if (data.zipcode) {
-                    // default state/city/zip
-                    data.url = data.state_name + '/' + (data.city || 'zip') + '/' + data.zipcode;
-                  } else {
-                    // fallback to state/county
-                    data.url = data.state_name + '/' + data.name;
-                  }
-                  
-                }
+                data.url = geomUrl(d.properties);
 
                 return self.templateTip(data);
             }
@@ -363,17 +364,26 @@ Math.log2 = Math.log2 || function(x) {
             function clickCounty(d) {
                 if (d === undefined) { d = this; }
                 Solidarity.log('clickCounty', d.properties.name);
-                d3.selectAll(d).style('fill', 'transparent');
-                zoomToBounds(d);
-                drawLocations(d);
 
-                setActiveGeom(d, true);
+                if (d === self.activeGeom[0]) {
+                  // navigate to view county
+                  Backbone.history.navigate('#view/'+geomUrl(d.properties), {trigger: true});
+                } else {
+                  // zoom to the new geom
+                  d3.selectAll(d).style('fill', 'transparent');
+                  zoomToBounds(d);
+                  drawLocations(d);
+
+                  setActiveGeom(d, true);
+              }
             }
             this.clickCounty = _.bind(clickCounty, this);
 
             function clickLocation(d) {
                 Solidarity.log('clickLocation', d.id);
-                
+
+                //navigate to view geomUrl
+                Backbone.history.navigate('#view/'+geomUrl(d.properties), {trigger: true});
             }
 
             function drawStates(error, data) {
