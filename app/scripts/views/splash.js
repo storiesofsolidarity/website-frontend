@@ -20,6 +20,10 @@ Solidarity.Views = Solidarity.Views || {};
 
         render: function () {
             this.$el.html(this.template());
+            return this;
+        },
+
+        onShow: function() {
             var self = this;
 
             // set up background image switcher
@@ -52,8 +56,6 @@ Solidarity.Views = Solidarity.Views || {};
                 self.rotateLanguageTimer = setInterval(self.rotateLanguage.bind(self), self.changeLanguageDelay);
                 $('.splash').bgswitcher('start');
             });
-            
-
 
             return this;
         },

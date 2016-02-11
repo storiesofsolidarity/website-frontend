@@ -17,15 +17,12 @@ Solidarity.Routers = Solidarity.Routers || {};
         },
 
         index: function() {
-            // on fresh view, go to splash
-            if (Solidarity.mainContent.freshView()) {
-                Backbone.history.navigate('splash', {trigger: true});
-            } else {
-                // show the map
-                Backbone.history.navigate('map', {trigger: true});
-            }
+            Backbone.history.navigate('splash', {trigger: true});
         },
         splash: function() {
+            // hide header and footer
+            $('nav.navbar-default').addClass('hidden');
+            $('footer.footer').addClass('hidden');
             Solidarity.mainContent.show(new Solidarity.Views.Splash({}));
         },
         learn: function() {
