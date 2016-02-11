@@ -20,7 +20,7 @@ Solidarity.Views = Solidarity.Views || {};
         },
 
         search: _.debounce(function() {
-            var search = $('input[name="search"]').val().trim();
+            var search = $('input[name="search"]').val();
             if (search === '') {
                 return;
             }
@@ -34,7 +34,8 @@ Solidarity.Views = Solidarity.Views || {};
                         'count': data.count,
                         'results': data.results
                     });
-                    $('input[name="search"]').click();
+                    // return focus to input, without highlighting
+                    $('input[name="search"]').focus().val('').val(search);
                 } 
             });
         }, 500),
