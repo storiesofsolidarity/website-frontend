@@ -41,7 +41,9 @@ Solidarity.Views = Solidarity.Views || {};
                 translatedVideo = $('.videoTranslate iframe[lang=en]', this.$el);
             }
             translatedVideo.show();
-            translatedVideo.contents().find('button.play').click();
+            // can't access translatedVideo.contents() bc of cross-domain embed
+            // translatedVideo.contents().find('button.play').click();
+            // hope ?autoplay=1 works after iframe show()
         }
     });
 
