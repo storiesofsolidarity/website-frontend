@@ -26,7 +26,7 @@ Solidarity.Routers = Solidarity.Routers || {};
             Solidarity.mainContent.show(new Solidarity.Views.Splash({}));
         },
         learn: function() {
-            Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/learn.html'), '#learn');
+            Solidarity.mainContent.show(new Solidarity.Views.Video('app/templates/learn.html'), '#learn');
         },
         about: function() {
             Solidarity.mainContent.show(new Solidarity.Views.Page('app/templates/about.html'), null, '#about');

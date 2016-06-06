@@ -1,4 +1,4 @@
-/*global Solidarity, Backbone, JST*/
+/*global Solidarity, Backbone, JST, Transifex */
 
 Solidarity.Views = Solidarity.Views || {};
 
@@ -22,6 +22,27 @@ Solidarity.Views = Solidarity.Views || {};
             return this;
         }
 
+    });
+
+    Solidarity.Views.Video = Solidarity.Views.Page.extend({
+        render: function () {
+            this.$el.html(this.template());
+            this.setVideoLanguage($('html').attr('lang'));
+            Transifex.live.onTranslatePage(this.setVideoLanguage);
+            return this;
+        },
+
+        setVideoLanguage: function(langCode) {
+            $('.videoTranslate iframe', this.$el).hide();
+            var lang = langCode || 'en';
+            console.log('setVideoLanguage', lang);
+            var translatedVideo = $('.videoTranslate iframe[lang='+lang+']', this.$el);
+            if (translatedVideo.length === 0) {
+                translatedVideo = $('.videoTranslate iframe[lang=en]', this.$el);
+            }
+            translatedVideo.show();
+            translatedVideo.contents().find('button.play').click();
+        }
     });
 
 })();
