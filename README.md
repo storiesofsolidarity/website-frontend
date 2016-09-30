@@ -1,8 +1,10 @@
 # Stories of Solidarity
 
+A social media tool that helps workers in low wage, precarious jobs to build new forms of solidarity and mutual aid.
+
 ## Frontend 
 
-A static site to pull stories from the [stories-of-solidarity-api](https://github.com/spacedogXYZ/stories-of-solidarity-api) and display them visually. Provides user login capability and new story additions, sending submissions over the API to be saved in the database.
+This is a static site to pull stories from the [database](https://github.com/storiesofsolidarity/story-database) and display them visually. Provides user login capability and new story additions, sending submissions over the API to be saved in the database.
 
 ### Technologies
 
@@ -40,7 +42,7 @@ To add new icons to the custom font, put the SVG file in `/app/images/icons` and
 
 Using GitHub Pages, build and push the resulting `dist` directory to the gh-pages branch.
 
-``bash
+```bash
 $ grunt build
 $ grunt buildcontrol:live
-``
+```
