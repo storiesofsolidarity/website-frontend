@@ -302,13 +302,28 @@ Math.log2 = Math.log2 || function(x) {
               // for most states, appear to the east
             }
 
+            function tooltipOffset(d) {
+              switch(d.properties.name) {
+                case 'Alaska':
+                  return [0, -50];
+                case 'California':
+                  return [0, -30];
+                case 'Idaho':
+                  return [0, -20];
+                default:
+                  return [0, -10];
+              }
+              // for most states, appear on the eastern border
+            }
+
             // setup feature tooltips
             this.tip = d3.tip()
+              .attr('id', 'd3-tip')
               .html(tooltipContent)
               .direction(tooltipDirection)
-              .offset([0, 0]);
+              .offset(tooltipOffset);
             this.svg.call(this.tip);
-            d3.selectAll('#d3-tip').on('mouseout', this.tip.hide);
+            d3.selectAll('#d3-tip').on('mouseleave', this.tip.hide);
 
             function setActiveGeom(d, background) {
               // reset current activeGeom colors
@@ -607,7 +622,7 @@ Math.log2 = Math.log2 || function(x) {
             // show tooltip on feature hover
             var cycleInterval;
             this.map.selectAll(geomSelector)
-              .on('mouseover', function(d) {
+              .on('mouseenter', function(d) {
                 d3.select('.hover').classed('hover', false);
                 d3.select(this).classed('hover', true);
                 self.tip.show(d);
@@ -640,20 +655,28 @@ Math.log2 = Math.log2 || function(x) {
                   cycleInterval = setInterval(cyclePreview, 5000);
                 }
               })
-              .on('mouseout', function(d) {
+              .on('mouseleave', function() {
                 // stop cycle interval
                 clearInterval(cycleInterval); 
 
                 // un-set hover class on geom
                 // need to delay very slightly, so check happens after tooltip hides
-                var unhover = function() {
+                setTimeout(_.bind(function() {
                   if (self.tip.style('opacity') < 1) {
                     d3.select(this).classed('hover', false);
                   }
-                };
-                setTimeout(_.bind(unhover, this), 10);
-                self.tip.hide(d);
+                }, this), 10);
+
+                // don't actually hide here
+                // causes tooltips to be unreachable
+                // self.tip.hide();
               });
+
+            // instead, just let tooltips overwrite on show, 
+            // and hide when the mouse leaves the map rect
+            d3.selectAll('rect').on('mouseleave', function(d) {
+              self.tip.hide(); 
+            });
         },
 
     });
