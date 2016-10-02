@@ -308,7 +308,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-build-control');
 
     grunt.registerTask('default', [
-        'jshint',
-        'build'
+        'serve'
     ]);
 };
