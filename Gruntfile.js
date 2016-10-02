@@ -243,12 +243,6 @@ module.exports = function (grunt) {
               push: true,
               message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
             },
-            redesign: {
-              options: {
-                remote: 'git@github.com:storiesofsolidarity/website-redesign.git',
-                branch: 'gh-pages'
-              }
-            },
             live: {
               options: {
                 remote: 'git@github.com:storiesofsolidarity/website-frontend.git',
