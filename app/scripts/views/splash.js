@@ -107,7 +107,7 @@ Solidarity.Views = Solidarity.Views || {};
             Transifex.live.translateTo(lang, true);
             Solidarity.log('transifex translateTo: '+lang);
 
-            Backbone.history.navigate('#map', {trigger: true});
+            Backbone.history.navigate('#/map', {trigger: true});
         }
 
     });
