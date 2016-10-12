@@ -240,11 +240,14 @@ Math.log2 = Math.log2 || function(x) {
               if (self.doneRendering) {
                 if (self.activeGeom && self.activeGeom.length) {
                   var p = self.activeGeom[0].properties;
+                  if (!p) { return; }
                   var url = 'map';
+                  var p_name = p.name.replace(' ', '_');
                   if (p && p.type === 'state') {
-                    url += '/' + p.name;
+                    url += '/' + p_name;
                   } else if (p && p.type === 'county') {
-                    url += '/' + p.state_name + '/' + p.name;
+                    var state_name = p.state_name.replace(' ', '_');
+                    url += '/' + state_name + '/' + p_name;
                   } 
                 }
 
@@ -254,7 +257,7 @@ Math.log2 = Math.log2 || function(x) {
                   '&lon='+latlng[0].toFixed(2)+
                   '&zoom='+self.zoom.scale().toFixed(2);
 
-                Solidarity.routerStories.navigate(url);
+                Solidarity.routerStories.navigate(url); // DO NOT TRIGGER HERE, WE ARE NOT RELOADING
               }
             }
 
@@ -262,22 +265,26 @@ Math.log2 = Math.log2 || function(x) {
                 if (d3.event.defaultPrevented) { d3.event.stopPropagation(); }
             }
 
-            function geomUrl(p) {
-                if (p.type === 'state') {
-                    return p.name;
+            function geomUrl(preview) {
+                var selected_state = d3.select('g.state');
+                if (!selected_state[0][0]) { return ''; }
+                var state_name = selected_state.attr('id').replace(' ', '_');
+                var geom_name = preview.name.replace(' ', '_');
+
+                if (preview.type === 'state') {
+                    return state_name;
                 }
-                if (p.type === 'county') {
-                    var state_name = d3.select('g.state').attr('id');
-                    return (state_name + '/' + p.name);
+                if (preview.type === 'county') {
+                    return (state_name + '/' + geom_name);
                 }
-                if (p.type === 'location') {
-                  var state_name = d3.select('g.state').attr('id');
-                  if (p.zipcode) {
+                if (preview.type === 'location') {
+                  if (preview.zipcode) {
                     // default state/city/zip
-                    return state_name + '/' + (p.city || 'zip') + '/' + p.zipcode;
+                    var geom_city = preview.city.replace(' ', '_') || 'zip';
+                    return state_name + '/' + geom_city + '/' + preview.zipcode;
                   } else {
                     // fallback to state/county
-                    return state_name + '/' + p.name;
+                    return state_name + '/' + geom_name;
                   }
               }
             }

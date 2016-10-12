@@ -30,7 +30,7 @@ Solidarity.Routers = Solidarity.Routers || {};
             if (state_name) {
                 Backbone.listenToOnce(storyMap, 'render-states', function() {
                     var state = d3.selectAll('g.country .feature.state').filter(function(d) {
-                        return d.properties.name === state_name;
+                        return d.properties.name === state_name.replace('_', ' ');
                     });
                     if(state && state[0].length) { storyMap.clickState(state.data()[0]); }
                 });
@@ -38,7 +38,7 @@ Solidarity.Routers = Solidarity.Routers || {};
             if (county_name) {
                 Backbone.listenToOnce(storyMap, 'render-counties', function() {
                     var county = d3.selectAll('g.state .feature.county').filter(function(d) {
-                        return d.properties.name === county_name;
+                        return d.properties.name === county_name.replace('_', ' ');
                     });
                     if(county && county[0].length) { storyMap.clickCounty(county.data()[0]); }
                 });
@@ -75,6 +75,7 @@ Solidarity.Routers = Solidarity.Routers || {};
             Solidarity.mainContent.show(this.cached.storyList, '#/read');
         },
         storyListState: function(state_name) {
+            state_name = state_name.replace('_', ' ');
             var key = state_name;
             if (this.cached.storyListLocation[key] === undefined) {
                 this.cached.storyListLocation[key] = new Solidarity.Views.StoryListLocation(
@@ -83,6 +84,8 @@ Solidarity.Routers = Solidarity.Routers || {};
             Solidarity.mainContent.show(this.cached.storyListLocation[key], '#/read');
         },
         storyListCounty: function(state_name, county_name) {
+            state_name = state_name.replace('_', ' ');
+            county_name = county_name.replace('_', ' ');
             var key = state_name+':'+county_name;
             if (this.cached.storyListLocation[key] === undefined) {
                 this.cached.storyListLocation[key] = new Solidarity.Views.StoryListLocation(
@@ -91,6 +94,8 @@ Solidarity.Routers = Solidarity.Routers || {};
             Solidarity.mainContent.show(this.cached.storyListLocation[key], '#/read');
         },
         storyListZipcode: function(state_name, city, zipcode) {
+         state_name = state_name.replace('_', ' ');
+         city = city.replace('_', ' ');
          var key = state_name+':'+zipcode;
             if (this.cached.storyListLocation[key] === undefined) {
                 this.cached.storyListLocation[key] = new Solidarity.Views.StoryListLocation(
