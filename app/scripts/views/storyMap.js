@@ -266,10 +266,11 @@ Math.log2 = Math.log2 || function(x) {
             }
 
             function geomUrl(preview) {
-                var selected_state = d3.select('g.state');
-                if (!selected_state[0][0]) { return ''; }
-                var state_name = selected_state.attr('id').replace(' ', '_');
                 var geom_name = preview.name.replace(' ', '_');
+
+                var selected_state = d3.select('g.state');
+                if (!selected_state[0][0]) { return geom_name; }
+                var state_name = selected_state.attr('id').replace(' ', '_');
 
                 if (preview.type === 'state') {
                     return state_name;
