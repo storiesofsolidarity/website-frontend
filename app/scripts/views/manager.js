@@ -45,7 +45,7 @@ Solidarity.RegionManager = (function (Backbone, $) {
 
         if (navButton) {
             $(navbar + ' li.button.active').removeClass('active');
-            $(navbar + ' li.button a[href='+navButton+']')
+            $(navbar + ' li.button a[href="'+navButton+'"]')
                 .parent('li.button').addClass('active');
         } else {
             $(navbar + ' li.button.active').removeClass('active');
@@ -53,7 +53,7 @@ Solidarity.RegionManager = (function (Backbone, $) {
 
         if (footerLink) {
             $('.footer ul.links a.active').removeClass('active');
-            $('.footer ul.links a[href='+footerLink+']').addClass('active');
+            $('.footer ul.links a[href="'+footerLink+'"]').addClass('active');
         } else {
             $('.footer ul.links a.active').removeClass('active');
         }

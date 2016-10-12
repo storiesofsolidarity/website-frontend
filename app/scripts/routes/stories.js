@@ -24,7 +24,7 @@ Solidarity.Routers = Solidarity.Routers || {};
         storyMap: function(state_name, county_name) {
             var storyMap = this.cached.storyMap;
             if (storyMap === undefined) { storyMap = new Solidarity.Views.StoryMap(); }
-            Solidarity.mainContent.show(storyMap, '#map');
+            Solidarity.mainContent.show(storyMap, '#/map');
 
             // load geometry callbacks
             if (state_name) {
@@ -72,7 +72,7 @@ Solidarity.Routers = Solidarity.Routers || {};
             if (this.cached.storyList === undefined) {
                 this.cached.storyList = new Solidarity.Views.StoryList();
             }
-            Solidarity.mainContent.show(this.cached.storyList, '#read');
+            Solidarity.mainContent.show(this.cached.storyList, '#/read');
         },
         storyListState: function(state_name) {
             var key = state_name;
@@ -80,7 +80,7 @@ Solidarity.Routers = Solidarity.Routers || {};
                 this.cached.storyListLocation[key] = new Solidarity.Views.StoryListLocation(
                     {state_name: state_name});
             }
-            Solidarity.mainContent.show(this.cached.storyListLocation[key], '#read');
+            Solidarity.mainContent.show(this.cached.storyListLocation[key], '#/read');
         },
         storyListCounty: function(state_name, county_name) {
             var key = state_name+':'+county_name;
@@ -88,7 +88,7 @@ Solidarity.Routers = Solidarity.Routers || {};
                 this.cached.storyListLocation[key] = new Solidarity.Views.StoryListLocation(
                     {state_name: state_name, county: county_name});
             }
-            Solidarity.mainContent.show(this.cached.storyListLocation[key], '#read');
+            Solidarity.mainContent.show(this.cached.storyListLocation[key], '#/read');
         },
         storyListZipcode: function(state_name, city, zipcode) {
          var key = state_name+':'+zipcode;
@@ -96,13 +96,13 @@ Solidarity.Routers = Solidarity.Routers || {};
                 this.cached.storyListLocation[key] = new Solidarity.Views.StoryListLocation(
                     {state_name: state_name, city: city, zipcode: zipcode});
             }
-            Solidarity.mainContent.show(this.cached.storyListLocation[key], '#read');
+            Solidarity.mainContent.show(this.cached.storyListLocation[key], '#/read');
         },
         storyView: function(id) {
             Solidarity.mainContent.show(
                 new Solidarity.Views.Story({
                     model: new Solidarity.Models.Story({id: id}),
-                }), '#read');
+                }), '#/read');
         },
     });
 
