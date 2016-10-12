@@ -307,7 +307,7 @@ Math.log2 = Math.log2 || function(x) {
                 case 'Alaska':
                   return [0, -50];
                 case 'California':
-                  return [0, -30];
+                  return [0, -40];
                 case 'Idaho':
                   return [0, -20];
                 default:
