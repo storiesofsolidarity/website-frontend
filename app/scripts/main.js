@@ -72,6 +72,9 @@ window.urlParam = function(name) {
 };
 
 $(document).ready(function () {
+    if (window.Transifex) {
+        window._t = window.Transifex.live.translateText;
+    }
     Solidarity.init();
     if (!Solidarity.DEBUG) {
         Raven.config(window.Solidarity.ravenConfig).install();
