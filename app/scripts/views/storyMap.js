@@ -245,10 +245,12 @@ Math.log2 = Math.log2 || function(x) {
                   var p_name = p.name.replace(' ', '_');
                   if (p && p.type === 'state') {
                     url += '/' + p_name;
-                  } else if (p && p.type === 'county') {
+                  } else if (p && p.type === 'county' && p.state_name) {
                     var state_name = p.state_name.replace(' ', '_');
                     url += '/' + state_name + '/' + p_name;
-                  } 
+                  } else {
+                    url += '/' + p_name;
+                  }
                 }
 
                 // save map coords like #?lat&lon&scale
