@@ -45,7 +45,7 @@ Solidarity.Views = Solidarity.Views || {};
                 } else {
                     // force translations update
                     Solidarity.log('Transifex translateNode', this.$el);
-                    Transifex.live.translateNode(this.$el);
+                    if(Transifex) { Transifex.live.translateNode(this.$el); }
 
                     this.$el.animate({'height': '100%'}, 500);
                     $('textarea', this.$el).delay(500).removeClass('closed').addClass('open');

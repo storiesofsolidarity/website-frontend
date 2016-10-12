@@ -76,7 +76,7 @@ Solidarity.Views = Solidarity.Views || {};
             $('ul.statement li#'+lang).fadeIn(500);
             btn.addClass('active');
 
-            Transifex.live.translateTo(lang, true);
+            if(Transifex) { Transifex.live.translateTo(lang, true); }
         },
 
         clickLanguage: function(event) {
@@ -104,7 +104,7 @@ Solidarity.Views = Solidarity.Views || {};
 
             // set current language from button
             var lang = $(btn).data('lang');
-            Transifex.live.translateTo(lang, true);
+            if(Transifex) { Transifex.live.translateTo(lang, true); }
             Solidarity.log('transifex translateTo: '+lang);
 
             Backbone.history.navigate('#/map', {trigger: true});

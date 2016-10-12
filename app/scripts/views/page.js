@@ -28,7 +28,7 @@ Solidarity.Views = Solidarity.Views || {};
         render: function () {
             this.$el.html(this.template());
             this.setVideoLanguage($('html').attr('lang'));
-            Transifex.live.onTranslatePage(this.setVideoLanguage);
+            if(Transifex) { Transifex.live.onTranslatePage(this.setVideoLanguage); }
             return this;
         },
 
