@@ -169,7 +169,6 @@ Solidarity.Views = Solidarity.Views || {};
     Solidarity.Views.StoryListLocation = Solidarity.Views.StoryList.extend({
         filterData: function (options) {
             var geography;
-            console.log('storyListLocation', options);
 
             // send location filters to api as query params
             this.collection.queryParams = _.extend(this.collection.queryParams,

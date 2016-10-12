@@ -35,7 +35,6 @@ Solidarity.Views = Solidarity.Views || {};
         setVideoLanguage: function(langCode) {
             $('.videoTranslate iframe', this.$el).hide();
             var lang = langCode || 'en';
-            console.log('setVideoLanguage', lang);
             var translatedVideo = $('.videoTranslate iframe[lang='+lang+']', this.$el);
             if (translatedVideo.length === 0) {
                 translatedVideo = $('.videoTranslate iframe[lang=en]', this.$el);
