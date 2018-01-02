@@ -117,20 +117,18 @@ Solidarity.Views = Solidarity.Views || {};
 
         locationToCityState: function(position) {
             var self = this;
-            $.ajax('https://search.mapzen.com/v1/reverse', {
+            $.ajax('https://nominatim.openstreetmap.org/reverse', {
                 type: 'GET',
                 data: {
-                    'point.lat': position.coords.latitude,
-                    'point.lon': position.coords.longitude,
-                    'layers': 'address',
-                    'size': 1,
-                    'api_key': Solidarity.mapzenKey
+                    'lat': position.coords.latitude,
+                    'lon': position.coords.longitude,
+                    'format': 'jsonv2'
                 },
                 success: function(data) {
                     var match = data.features[0];
-                    $('input#city').val(match.properties.locality);
-                    $('input#county').val(match.properties.county);
-                    $('select#state').selectpicker('val', match.properties.region_a);
+                    $('input#city').val(match.address.city);
+                    $('input#county').val(match.address.county);
+                    $('select#state').selectpicker('val', match.address.state);
                     $('button#geolocate').attr('disabled','disabled');
                     $('.icon-locate').removeClass('pulse');
                 },
