@@ -125,7 +125,7 @@ Solidarity.Views = Solidarity.Views || {};
                     'format': 'jsonv2'
                 },
                 success: function(match) {
-                    $('input#city').val(match.address.city);
+                    $('input#city').val(match.address.city || match.address.town || match.address.village || match.address.hamlet);
                     $('input#county').val(match.address.county);
                     $('select#state').selectpicker('val', match.address.state);
                     $('button#geolocate').attr('disabled','disabled');
