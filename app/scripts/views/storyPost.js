@@ -124,8 +124,7 @@ Solidarity.Views = Solidarity.Views || {};
                     'lon': position.coords.longitude,
                     'format': 'jsonv2'
                 },
-                success: function(data) {
-                    var match = data.features[0];
+                success: function(match) {
                     $('input#city').val(match.address.city);
                     $('input#county').val(match.address.county);
                     $('select#state').selectpicker('val', match.address.state);
